@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 21:06:17 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/02/18 05:37:36 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/02/23 03:43:28 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ static void pass_token(char token, char **str)
 	}
 	else if (token == '$')
 	{
-		(*str)++;
-		while (**str && **str != ' ' && !is_token(*(*str+1)))
+		while (*((*str) + 1) && *((*str) + 1) != ' ' && !is_token(*((*str) + 1)))
 			(*str)++;
 	}
 }
@@ -123,22 +122,29 @@ static int	strcomp(char *str1, char *str2)
 	return (1);
 }
 
-static void	insert_types(t_token **tokens)
+static void	insert_types(t_token *tokens)
 {
-	if (strcomp((*tokens)->value, ">"))
-		(*tokens)->type = TOKEN_GREAT;
-	else if (strcomp((*tokens)->value, "<"))
-		(*tokens)->type = TOKEN_LESS;
-	else if (strcomp((*tokens)->value, ">>"))
-		(*tokens)->type = TOKEN_DGREAT;
-	else if (strcomp((*tokens)->value, "<<"))
-		(*tokens)->type = TOKEN_DLESS;
-	else if (strcomp((*tokens)->value, "|"))
-		(*tokens)->type = TOKEN_PIPE;
-	else if (strcomp((*tokens)->value, "\n"))
-		(*tokens)->type = TOKEN_NEWLINE;
-	else
-		(*tokens)->type = TOKEN_WORD;
+	int	i;
+	
+	i = 0;
+	while (tokens[i].value)
+	{
+		if (strcomp((tokens + i)->value, ">"))
+			(tokens + i)->type = TOKEN_GREAT;
+		else if (strcomp((tokens + i)->value, "<"))
+			(tokens + i)->type = TOKEN_LESS;
+		else if (strcomp((tokens + i)->value, ">>"))
+			(tokens + i)->type = TOKEN_DGREAT;
+		else if (strcomp((tokens + i)->value, "<<"))
+			(tokens + i)->type = TOKEN_DLESS;
+		else if (strcomp((tokens + i)->value, "|"))
+			(tokens + i)->type = TOKEN_PIPE;
+		else if (strcomp((tokens + i)->value, "\n"))
+			(tokens + i)->type = TOKEN_NEWLINE;
+		else
+			(tokens + i)->type = TOKEN_WORD;
+		i++;
+	}
 }
 
 t_token	*lexer(char *input)
@@ -160,9 +166,6 @@ t_token	*lexer(char *input)
 			split_tokens(&(tokens[++i].value), &input);
 	}
 	tokens[++i].value = NULL;
-	insert_types(&tokens);
-	i = -1;
-	while (tokens[++i].value)
-		printf("%s\n", tokens[i].value);
+	insert_types(tokens);
 	return (tokens);
 }
