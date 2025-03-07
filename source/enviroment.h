@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 06:08:59 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/02/27 19:16:38 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/03/04 22:42:31 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ typedef struct s_node
 {
 	char	*key;
 	char	*value;
-	int		export_lock;
 	/* EXPORT LOCK (if export lock = 1 dont export var)
 	in shell enviroment not all
 	enviroment varables exported to child processes.
@@ -35,6 +34,7 @@ typedef struct s_node
 		that do not need to be available to child processes.
 		**Temporary Variables: Variables that are only needed for the duration
 		of the current shell session or script.
+	We only use EXPORTED VALUES in minishell!!
 	*/
 	struct s_node	*next;
 }		t_node;
@@ -48,10 +48,11 @@ typedef struct s_enviroment
 int		setup_enviroment(t_enviroment *env);
 int		setup_paths(t_enviroment *env);
 char	*get_cwd(t_enviroment *env);
+char	*get_variable(t_enviroment *env, char *key);
 t_node	*find_variable(t_enviroment *env, char *key);
 void	delete_variable(t_enviroment *env, char *key);
-int		revalue_variable(t_enviroment *env, char *key, char *value, int lock);
-int		add_variable(t_enviroment	*env, char *key, char *value, int lock);
+int		revalue_variable(t_enviroment *env, char *key, char *value);
+int		add_variable(t_enviroment	*env, char *key, char *value);
 int		clear_enviroment(t_enviroment *env);
 
 #endif

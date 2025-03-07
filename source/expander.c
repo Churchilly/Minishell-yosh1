@@ -6,72 +6,78 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 05:04:51 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/02/26 23:35:35 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/03/07 04:04:00 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+#include "enviroment.h"
 #include "str.h"
 #include <stdlib.h>
 
-int		is_token(char c);
-char	*expand_dquote(char *token_value);
+void print_tokens(t_token *tokens); //for testing purposes
+char	*expand_dollar_in_dquote(char *token_value, t_enviroment *env);
+t_token	*expand_dollar(t_token *tokens, t_enviroment *env);
+char	*expand_quotes(char *token_value);
 
-
-char	*expand_dollar(char *token_value) // ADD ONLY $? NOT $_ OR $$ add struct for it
+int dollar_in_token(t_token *tokens)
 {
-	char	*ret;
-	char	*trim;
-	int		i;
-
-	i = 0;
-	if (!token_value[i + 1] || token_value[i + 1] == ' ' || is_token(token_value[i+1]))
-		return (ft_strndup("$", 0));
-	while (token_value[i+1] && token_value[i+1] != ' ' && !is_token(token_value[i+1]))
-		i++;
-	trim = ft_strndup(token_value + 1, i);
-	if (!trim)
-		return (NULL);
-	ret = getenv(trim);
-	free(trim);
-	if (!ret)
-		return (ft_strndup("", 0));
-	return (ft_strndup(ret, 0));
+	while (tokens->value)
+	{
+		if (*(tokens->value) == '$')
+			return (1);
+		tokens++;
+	}
+	return (0);
 }
 
-static char	*expand_quote(char *token_value)
+int	dollar_in_dquote(char *str)
 {
-	char	*ret;
-	int		len;
-	
-	len = ft_strlen(token_value);
-	ret = malloc(len - 1);
-	if (!ret)
-		return (NULL);
-	ft_strndup(token_value + 1, len - 2);
-	ret[len - 2] = '\0';
-	return (ret);
-}
+	int	dquote;
 
-void	expander(t_token *tokens)
+	dquote = 0;
+	while (*str)
+	{
+		if (*str == '\"')
+			dquote = !dquote;
+		else if (dquote && *str == '$')
+			return (1);
+		str++;
+	}
+	return (0);
+}
+int	have_quotes(char *str)
+{
+	while (*str)
+	{
+		if (*str == '\"' || *str == '\'')
+			return (1);
+		str++;
+	}
+	return (0);
+}
+void	expander(t_token **tokens, t_enviroment *env)
 {
 	char	*expanded;
 	int		i;
-
-	i = -1;
-	while ((tokens[++i].value))
+	if (dollar_in_token(*tokens))
 	{
-		if (*(tokens[i].value) == '\"') // "abc" -> abc && if arg=smthng "abc $arg" -> abc smthng
-			expanded = expand_dquote(tokens[i].value);
-		else if (*(tokens[i].value) == '\'') // 'abc' -> abc
-			expanded = expand_quote(tokens[i].value);
-		else if (*(tokens[i].value) == '$') // if arg=something $arg -> someting
-			expanded = expand_dollar(tokens[i].value);
+		(*tokens) = expand_dollar((*tokens), env);
+		if (!(*tokens))
+			return ;
+	}
+	i = -1;
+	while (((*tokens)[++i].value))
+	{
+		if (dollar_in_dquote((*tokens)[i].value))
+			expanded = expand_dollar_in_dquote((*tokens)[i].value, env);
+		else if (have_quotes((*tokens)[i].value)) // 'abc' -> abc
+			expanded = expand_quotes((*tokens)[i].value);
 		else
 			continue;
 		if (!expanded)
 			return ;
-		free(tokens[i].value);
-		tokens[i].value = expanded;
+		free((*tokens)[i].value);
+		(*tokens)[i].value = expanded;
 	}
 }

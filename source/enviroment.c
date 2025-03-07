@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 06:08:23 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/02/27 19:58:46 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/03/04 23:46:02 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,18 @@ char	*get_cwd(t_enviroment *env)
 	return (tmp->value);
 }
 
+char	*get_variable(t_enviroment *env, char *key)
+{
+	t_node	*tmp;
+	
+	if (ft_strcmp(key, "?"))
+		return (ft_strdup("42"));
+	tmp = find_variable(env, key);
+	if (!tmp)
+		return (ft_strdup(""));
+	return (tmp->value);
+}
+
 int	setup_paths(t_enviroment *env)
 {
 	t_node	*tmp;
@@ -35,23 +47,22 @@ int	setup_paths(t_enviroment *env)
 		return (-1);
 	if (tmp)
 	{
-		if (revalue_variable(env, "PWD", cwd, 0))
+		if (revalue_variable(env, "PWD", cwd))
 			return (-1);
 	}
 	else
-		if (add_variable(env, "PWD", cwd, 0))
+		if (add_variable(env, "PWD", cwd))
 			return (-1);
 	tmp = find_variable(env, "OLDPWD");
 	if (tmp)
 	{
-		if (revalue_variable(env, "OLDPWD", NULL, 0))
+		if (revalue_variable(env, "OLDPWD", NULL))
 			return (-1);
 	}
 	else
-		if (add_variable(env, "OLDPWD", NULL, 0))
+		if (add_variable(env, "OLDPWD", NULL))
 			return (-1);
 	tmp = find_variable(env, "OLDPWD");
-	printf("%s\n%s\n", get_cwd(env), tmp->value);
 	return (0);
 }
 
@@ -75,7 +86,7 @@ int	setup_enviroment(t_enviroment *env)
 		{
 			key = ft_strndup(environ[i], equal_sign - environ[i]);
 			value = ft_strdup(equal_sign + 1);
-			if (!key || !value || add_variable(env, key, value, 0) == -1)
+			if (!key || !value || add_variable(env, key, value) == -1)
 				return (clear_enviroment(env));
 			free(key);
 			free(value);

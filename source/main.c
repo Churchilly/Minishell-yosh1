@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
+/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:01:22 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/02/27 19:55:36 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/03/04 22:43:38 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,6 @@ static int	check_sequence_complete(char *input)
 	}
 	return (quote || dquote);
 }
-
-void free_tokens(t_token *tokens)
-{
-    int i = 0;
-    while (tokens[i].value)
-    {
-        free(tokens[i].value);
-        i++;
-    }
-    free(tokens);
-}
-
 
 void	print_tokens(t_token *tokens) // for testing purposes
 {
@@ -112,17 +100,22 @@ int main(void)
 			exit(1); // clear and exit ofc -- later implement
 		}
 		tokens = lexer(input);
+		printf("<LEXER TOKENS>\n");
+		print_tokens(tokens);
+		if (!tokens)
+			break ;
 		if (!tokens->value)
 		{
 			free(input);
-			continue;
+			continue ;
 		}
 		add_history(input);
-		expander(tokens); /* deletes quotes and dquotes
+		expander(&tokens, &env); /* deletes quotes and dquotes
 						and gets env variables */
 		// print_tokens(tokens); // for testing purposes
 		// parser
-
+		printf("<EXPANDER TOKENS>\n");
+		print_tokens(tokens);
 		root = init_node(tokens);
 		if (!root)
 		{
@@ -130,10 +123,10 @@ int main(void)
 			free(input);
 		}
 		parser(root);
-		execute_tree(root, &env);
-		free_asttree(root);
-		free(input);
-		print_env(&env);
+		//execute_tree(root, &env);
+		//free_asttree(root);
+		//free(input);
+		//print_env(&env);
 	}
 	rl_clear_history();
 	free(input);

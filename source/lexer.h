@@ -6,13 +6,15 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 19:03:49 by obastug           #+#    #+#             */
-/*   Updated: 2025/02/23 05:09:34 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/03/04 22:42:42 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
+#include "enviroment.h"
+# include <stdio.h> // >> for testing purposes <<
 // count the variables once after counted all of them add \n =
 typedef enum { 	// '\n' '\"' '\'' '>' '<' '>>' '<<' '$' '=' '|'
 	TOKEN_WORD,				// Generic word // {{$ARG -> WORD}}
@@ -39,7 +41,7 @@ typedef struct	s_token{
 }			t_token;
 
 t_token	*lexer(char *input);
-void	expander(t_token *tokens);
+void	expander(t_token **tokens, t_enviroment *env);
 
 #endif
 

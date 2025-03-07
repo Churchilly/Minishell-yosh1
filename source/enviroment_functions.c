@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 23:29:21 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/02/27 20:04:02 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/03/04 22:30:59 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	delete_variable(t_enviroment *env, char *key)
 	}
 }
 #include <stdio.h>
-int	revalue_variable(t_enviroment *env, char *key, char *value, int lock)
+int	revalue_variable(t_enviroment *env, char *key, char *value)
 {
 	t_node	*node;
 	char	*tmp;
@@ -68,11 +68,10 @@ int	revalue_variable(t_enviroment *env, char *key, char *value, int lock)
 	free(tmp);
 	if (!node->value)
 		return (-1);
-	node->export_lock = lock;
 	return (0);
 }
 
-int	add_variable(t_enviroment	*env, char *key, char *value, int lock)
+int	add_variable(t_enviroment	*env, char *key, char *value)
 {
 	t_node	*new;
 
@@ -85,7 +84,6 @@ int	add_variable(t_enviroment	*env, char *key, char *value, int lock)
 	new->value = ft_strdup(value);
 	if (!new->value)
 		return (-1);
-	new->export_lock = lock;
 	new->next = NULL;
 	if (!env->top)
 	{
