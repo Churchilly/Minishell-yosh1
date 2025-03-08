@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_print.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
+/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 01:05:28 by obastug           #+#    #+#             */
-/*   Updated: 2025/02/26 16:12:56 by obastug          ###   ########.fr       */
+/*   Updated: 2025/03/08 02:49:19 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,28 @@ void	print_token(t_token *tokens)
 		i++;
 	}
 	putchar('\n');
+}
+
+void	print_tokens(t_token *tokens) // for testing purposes
+{
+	int i = 0;
+	while (tokens[i].value)
+	{
+		printf("tokens: [%s]\n", tokens[i].value);
+		i++;
+	}
+	printf("END\n");
+}
+
+void	print_env(t_enviroment *env) // for testing purposes
+{
+	t_node *head = env->top;
+	while (head)
+	{
+		printf("key: [%s] value: [%s]\n", head->key, head->value);
+		head = head->next;
+	}
+	printf("END\n");
 }
 
 void	print_str_list(char	**str_list)

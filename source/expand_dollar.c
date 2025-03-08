@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 22:18:21 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/03/04 23:46:56 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/03/08 06:19:30 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,52 +14,12 @@
 #include "enviroment.h"
 #include "str.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 // only handles if token have $ sign at the begining
-void	print_tokens(t_token *tokens); // testing purposes
+t_token	*allocate_new_tokens(t_token * tokens, t_enviroment *env);
 
-static int	count_words(char const *s, char c)
+static int	insert_non_envs(t_token **new, char *var)
 {
-	int		i;
-	int		on_word;
-
-	i = 0;
-	on_word = 0;
-	while (*s)
-	{
-		if (*s != c && !on_word)
-		{
-			on_word = 1;
-			i++;
-		}
-		else if (*s == c && on_word)
-			on_word = 0;
-		s++;
-	}
-	return (i);
-}
-
-static int	get_expanded_size(t_token *tokens, t_enviroment *env)
-{ // $
-	int		ret;
-
-	ret = 0;
-	while (tokens->value)
-	{
-		if (*(tokens->value) == '$')
-			ret += count_words(get_variable(env, tokens->value + 1), ' ');
-		else
-			ret += 1;
-		tokens++;
-	}
-	return (ret);
-}
-
-int	insert_new_tokens(t_token **new, char *var, t_enviroment *env)
-{ // abc def ge
-	char	**vars;
-	
 	if (*var == '\0')
 	{
 		(*new)->value = ft_strdup("$");
@@ -69,9 +29,26 @@ int	insert_new_tokens(t_token **new, char *var, t_enviroment *env)
 		(*new)++;
 		return (0);
 	}
-	vars = ft_split(get_variable(env, var), ' ');
+	return (-1);
+}
+
+static int	insert_new_tokens(t_token **new, char *var, t_enviroment *env)
+{
+	char	**vars;
+	char	**vars_start;
+	int		is_env;
+	
+	is_env = insert_non_envs(new, var);
+	if (is_env >= 0)
+		return (is_env);
+	var = get_variable(env, var);
+	if (!var)
+		return (1);
+	vars = ft_split(var, ' ');
+	free(var);
 	if (!vars)
 		return (1);
+	vars_start = vars;
 	while (*vars)
 	{
 		(*new)->value = *vars;
@@ -79,35 +56,40 @@ int	insert_new_tokens(t_token **new, char *var, t_enviroment *env)
 		(*new)++;
 		vars++;
 	}
-	//free(vars); // only free the array pointer bucause we will use arrays inside
+	free(vars_start);
 	return (0);
+}
+
+static void	insert_old_tokens(t_token **new, t_token *tokens)
+{
+	(*new)->value = tokens->value;
+	(*new)->type = tokens->type;
+	(*new)++;
 }
 
 t_token	*expand_dollar(t_token *tokens, t_enviroment *env)
 {
 	t_token	*new_tokens;
 	t_token	*ret;
+	int		i;
 	
-	new_tokens = (t_token *)malloc(sizeof(t_token) * get_expanded_size(tokens, env));
+	new_tokens = allocate_new_tokens(tokens, env);
 	if (!new_tokens)
 		return (NULL);
+	i = -1;
 	ret = new_tokens;
-	while (tokens->value)
+	while (tokens[++i].value)
 	{
-		if (*(tokens->value) == '$')
+		if (*(tokens[i].value) == '$')
 		{
-			if (insert_new_tokens(&new_tokens, tokens->value + 1, env))
+			if (insert_new_tokens(&new_tokens, (tokens[i].value + 1), env))
 				return (NULL);
-			free(tokens->value);
+			free(tokens[i].value);
 		}
 		else
-		{
-			new_tokens->value = tokens->value;
-			new_tokens->type = tokens->type;
-			new_tokens++;
-		}
-		tokens++;
+			insert_old_tokens(&new_tokens, tokens + i);
 	}
+	free(tokens);
 	new_tokens->value = NULL;
 	return (ret);
 }

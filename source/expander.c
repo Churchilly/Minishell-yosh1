@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 05:04:51 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/03/07 04:04:00 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/03/08 04:03:38 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	expander(t_token **tokens, t_enviroment *env)
 {
 	char	*expanded;
 	int		i;
+	
 	if (dollar_in_token(*tokens))
 	{
 		(*tokens) = expand_dollar((*tokens), env);

@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:01:22 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/03/04 22:43:38 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/03/08 06:41:09 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ and must not provide any additional information or access to data.
 Therefore, using "norm" type structures in the global scope is
 forbidden.
 */
+
+void	print_tokens(t_token *tokens); // for testing purposes
+void	print_env(t_enviroment *env); // for testing purposes
+void	free_tokens(t_token *tokens);
+
 static int	check_sequence_complete(char *input)
 {
 	int	quote;
@@ -51,27 +56,7 @@ static int	check_sequence_complete(char *input)
 	return (quote || dquote);
 }
 
-void	print_tokens(t_token *tokens) // for testing purposes
-{
-	int i = 0;
-	while (tokens[i].value)
-	{
-		printf("tokens: [%s]\n", tokens[i].value);
-		i++;
-	}
-	printf("END\n");
-}
 
-void	print_env(t_enviroment *env) // for testing purposes
-{
-	t_node *head = env->top;
-	while (head)
-	{
-		printf("key: [%s] value: [%s]\n", head->key, head->value);
-		head = head->next;
-	}
-	printf("END\n");
-}
 
 int main(void)
 {
@@ -109,7 +94,8 @@ int main(void)
 			free(input);
 			continue ;
 		}
-		add_history(input);
+		
+		//add_history(input);
 		expander(&tokens, &env); /* deletes quotes and dquotes
 						and gets env variables */
 		// print_tokens(tokens); // for testing purposes
@@ -127,7 +113,9 @@ int main(void)
 		//free_asttree(root);
 		//free(input);
 		//print_env(&env);
+		free_tokens(tokens);
 	}
+	clear_enviroment(&env);
 	rl_clear_history();
 	free(input);
 	return (0);

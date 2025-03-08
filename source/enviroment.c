@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 06:08:23 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/03/04 23:46:02 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/03/08 03:27:38 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*get_variable(t_enviroment *env, char *key)
 	tmp = find_variable(env, key);
 	if (!tmp)
 		return (ft_strdup(""));
-	return (tmp->value);
+	return (ft_strdup(tmp->value));
 }
 
 int	setup_paths(t_enviroment *env)

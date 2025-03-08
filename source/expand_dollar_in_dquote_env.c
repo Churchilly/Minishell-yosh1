@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_dquote_env.c                                :+:      :+:    :+:   */
+/*   expand_dollar_in_dquote_env.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 03:56:25 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/03/07 04:00:03 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/03/08 06:33:39 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	is_token(char c);
 int	is_sequence(char c);
 int	is_space(char c);
 
-char	*get_dollar(char *token_value, t_enviroment *env) // ADD ONLY $? NOT $_ OR $$ add struct for it
+static char	*get_dollar(char *token_value, t_enviroment *env)
 {
 	char	*ret;
 	char	*trim;
@@ -37,8 +37,8 @@ char	*get_dollar(char *token_value, t_enviroment *env) // ADD ONLY $? NOT $_ OR 
 	ret = get_variable(env, trim);
 	free(trim);
 	if (!ret)
-		return (ft_strdup(""));
-	return (ft_strdup(ret));
+		return (NULL);
+	return (ret);
 }
 
 void	pass_env_var(char **token_val, char ***env_vars)
@@ -76,4 +76,16 @@ int	get_env_vars(char *token_value, char **env_vars, t_enviroment *env)
 		}
 	}
 	return (0);
+}
+
+void	free_env_vars(char **env_vars)
+{
+	int	i;
+
+	i = -1;
+	while (env_vars[++i])
+	{
+		free(env_vars[i]);
+	}
+	free(env_vars);
 }
