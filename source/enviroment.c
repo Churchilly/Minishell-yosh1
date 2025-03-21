@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 06:08:23 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/03/08 03:27:38 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/03/21 04:19:41 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
+
+extern volatile int g_signal;
+
+char	*ft_itoa(int n);
+
 char	*get_cwd(t_enviroment *env)
 {
 	t_node	*tmp;
@@ -28,9 +33,9 @@ char	*get_cwd(t_enviroment *env)
 char	*get_variable(t_enviroment *env, char *key)
 {
 	t_node	*tmp;
-	
+
 	if (ft_strcmp(key, "?"))
-		return (ft_strdup("42"));
+		return (ft_itoa(env->last_pipe));
 	tmp = find_variable(env, key);
 	if (!tmp)
 		return (ft_strdup(""));
@@ -74,8 +79,7 @@ int	setup_enviroment(t_enviroment *env)
 	char		*value;
 	int			i;
 	
-	env->bottom = NULL;
-	env->top = NULL;
+	ft_bzero(env, sizeof(t_enviroment));
 	if (!environ)
 		return (-1); // return ENV_ERROR -> int	clear_env
 	i = -1;

@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 06:08:59 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/03/04 22:42:31 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/03/21 01:22:03 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_node
 
 typedef struct s_enviroment
 {
+	int				last_pipe;
 	struct	s_node	*top;
 	struct	s_node	*bottom;
 }		t_enviroment;
