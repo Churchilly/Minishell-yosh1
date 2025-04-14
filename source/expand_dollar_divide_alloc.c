@@ -1,73 +1,77 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_dollar_size.c                               :+:      :+:    :+:   */
+/*   expand_dollar_divide_alloc.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/08 05:40:55 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/03/08 06:02:42 by yusudemi         ###   ########.fr       */
+/*   Created: 2025/04/14 23:50:36 by yusudemi          #+#    #+#             */
+/*   Updated: 2025/04/15 00:16:03 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "enviroment.h"
+#include "str.h"
 #include <stdlib.h>
 
-static int	count_words(char *s, char c)
+int	is_space(char c);
+
+int	count_divided(char *s)
 {
 	int		i;
 	int		on_word;
+	int		dquote;
+	int		quote;
 
 	i = 0;
 	on_word = 0;
+	dquote = 0;
+	quote = 0;
 	while (*s)
 	{
-		if (*s != c && !on_word)
+		if (*s == '\'')
+			quote = !quote;
+		else if (*s == '\"')
+			dquote = !dquote;
+		else if (!dquote && !quote && !is_space(*s) && !on_word)
 		{
 			on_word = 1;
 			i++;
 		}
-		else if (*s == c && on_word)
+		else if (!dquote && !quote && is_space(*s) && on_word)
 			on_word = 0;
 		s++;
 	}
 	return (i);
 }
 
-static int	get_expanded_size(t_token *tokens, t_enviroment *env)
-{ // $
+static int	get_divided_size(t_token *tokens)
+{
 	int		ret;
-	char	*tmp;
+	char	*current;
 
 	ret = 0;
 	while (tokens->value)
 	{
-		if (*(tokens->value) == '$')
-		{
-			tmp = get_variable(env, tokens->value + 1);
-			if (!tmp)
-				return (-1); //malloc err
-			ret += count_words(tmp, ' ');
-			free(tmp);
-		}
-		else
-			ret += 1;
+		current = tokens->value;
+		while (is_space(*current))
+			current++;
+		printf("curr:%s\n", current);
+		ret += count_divided(current);
 		tokens++;
 	}
 	return (ret);
 }
 
-t_token	*allocate_new_tokens(t_token *tokens, t_enviroment *env)
+t_token	*allocate_divided(t_token *tokens)
 {
-	int	size;
-	t_token	*new;
+	int		size;
+	t_token	*ret;
 
-	size = get_expanded_size(tokens, env) + 1;
-	if (size == -1)
+	size = get_divided_size(tokens);
+	ret = (t_token *)malloc((sizeof(t_token) * size) + 1);
+	if (!ret)
 		return (NULL);
-	new = (t_token *)malloc(sizeof(t_token) * size);
-	if (!new)
-		return (NULL);
-	return (new);
+	return (ret);
 }

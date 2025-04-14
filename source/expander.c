@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 05:04:51 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/03/08 04:03:38 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/13 21:46:08 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,49 +19,25 @@ void print_tokens(t_token *tokens); //for testing purposes
 char	*expand_dollar_in_dquote(char *token_value, t_enviroment *env);
 t_token	*expand_dollar(t_token *tokens, t_enviroment *env);
 char	*expand_quotes(char *token_value);
+t_token	*expand_heredoc(t_token *tokens, t_enviroment *env);
 
-int dollar_in_token(t_token *tokens)
-{
-	while (tokens->value)
-	{
-		if (*(tokens->value) == '$')
-			return (1);
-		tokens++;
-	}
-	return (0);
-}
+int	have_heredoc(t_token *tokens);
+int dollar_in_tokens(t_token *tokens);
+int	dollar_in_dquote(char *str);
+int	have_quotes(char *str);
 
-int	dollar_in_dquote(char *str)
-{
-	int	dquote;
-
-	dquote = 0;
-	while (*str)
-	{
-		if (*str == '\"')
-			dquote = !dquote;
-		else if (dquote && *str == '$')
-			return (1);
-		str++;
-	}
-	return (0);
-}
-int	have_quotes(char *str)
-{
-	while (*str)
-	{
-		if (*str == '\"' || *str == '\'')
-			return (1);
-		str++;
-	}
-	return (0);
-}
 void	expander(t_token **tokens, t_enviroment *env)
 {
 	char	*expanded;
 	int		i;
 	
-	if (dollar_in_token(*tokens))
+	if (have_heredoc(*tokens))
+	{
+		if (expand_heredoc(*tokens, env))
+			return ;
+	}
+	print_tokens(*tokens);
+	if (dollar_in_tokens(*tokens))
 	{
 		(*tokens) = expand_dollar((*tokens), env);
 		if (!(*tokens))

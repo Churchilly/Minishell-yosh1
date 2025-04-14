@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:01:22 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/03/21 07:30:54 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/13 19:01:14 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,12 @@ int main(void)
 	
 	ft_bzero(&env, sizeof(t_enviroment));
 	setup_enviroment(&env);
-	setup_parent_signals();
 	if (setup_paths(&env))
 		return (-1);
+
 	while (1)
 	{
+		setup_parent_signals();
 		//input = get_input(); // checks if input completed
 		input = readline("yosh1> "); // YEAP IT HAS LEAKS THAT WE CANT HANDLE -> https://cboard.cprogramming.com/c-programming/136521-memory-leak-readline.html
 		if (g_signal)
@@ -111,9 +112,8 @@ int main(void)
 		add_history(input);
 		expander(&tokens, &env); /* deletes quotes and dquotes
 						and gets env variables */
-		// print_tokens(tokens); // for testing purposes
 		printf("<EXPANDER TOKENS>\n");
-		print_tokens(tokens);
+		print_tokens(tokens);// for testing purposes
 		root = init_node(tokens);
 		if (!root)
 		{
@@ -122,7 +122,7 @@ int main(void)
 		}
 		//parser(root);
 		//executer(root, &env);
-		free_asttree(root);
+		//free_asttree(root);
 		free(input);
 	}
 	clear_enviroment(&env);

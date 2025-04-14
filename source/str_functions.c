@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_functions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
+/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 02:25:49 by obastug           #+#    #+#             */
-/*   Updated: 2025/02/26 13:06:49 by obastug          ###   ########.fr       */
+/*   Updated: 2025/04/11 16:01:57 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	ft_strlen(char const *s)
 	int	i;
 	
 	i = 0;
+	if (!s)
+		return (i);
 	while (s[i])
 		i++;
 	return (i);

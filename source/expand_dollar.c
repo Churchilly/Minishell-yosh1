@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/04 22:18:21 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/03/08 06:19:30 by yusudemi         ###   ########.fr       */
+/*   Created: 2025/04/14 18:49:42 by yusudemi          #+#    #+#             */
+/*   Updated: 2025/04/15 00:01:26 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,81 +15,24 @@
 #include "str.h"
 #include <stdlib.h>
 
-// only handles if token have $ sign at the begining
-t_token	*allocate_new_tokens(t_token * tokens, t_enviroment *env);
-
-static int	insert_non_envs(t_token **new, char *var)
-{
-	if (*var == '\0')
-	{
-		(*new)->value = ft_strdup("$");
-		(*new)->type = TOKEN_WORD;
-		if (!(*new)->value)
-			return (1);
-		(*new)++;
-		return (0);
-	}
-	return (-1);
-}
-
-static int	insert_new_tokens(t_token **new, char *var, t_enviroment *env)
-{
-	char	**vars;
-	char	**vars_start;
-	int		is_env;
-	
-	is_env = insert_non_envs(new, var);
-	if (is_env >= 0)
-		return (is_env);
-	var = get_variable(env, var);
-	if (!var)
-		return (1);
-	vars = ft_split(var, ' ');
-	free(var);
-	if (!vars)
-		return (1);
-	vars_start = vars;
-	while (*vars)
-	{
-		(*new)->value = *vars;
-		(*new)->type = TOKEN_WORD;
-		(*new)++;
-		vars++;
-	}
-	free(vars_start);
-	return (0);
-}
-
-static void	insert_old_tokens(t_token **new, t_token *tokens)
-{
-	(*new)->value = tokens->value;
-	(*new)->type = tokens->type;
-	(*new)++;
-}
+void	print_tokens(t_token *tokens); // for testing purposes
+int		replace_dollars(t_token *tokens, t_enviroment *env);
+t_token	*divide_tokens(t_token *tokens);
+void	free_tokens(t_token *tokens);
 
 t_token	*expand_dollar(t_token *tokens, t_enviroment *env)
 {
-	t_token	*new_tokens;
-	t_token	*ret;
-	int		i;
+	t_token	*new;
 	
-	new_tokens = allocate_new_tokens(tokens, env);
-	if (!new_tokens)
+	if (replace_dollars(tokens, env))
 		return (NULL);
-	i = -1;
-	ret = new_tokens;
-	while (tokens[++i].value)
-	{
-		if (*(tokens[i].value) == '$')
-		{
-			if (insert_new_tokens(&new_tokens, (tokens[i].value + 1), env))
-				return (NULL);
-			free(tokens[i].value);
-		}
-		else
-			insert_old_tokens(&new_tokens, tokens + i);
-	}
-	free(tokens);
-	new_tokens->value = NULL;
-	return (ret);
+	printf("<EXPANDER_DOLLAR STEP1>\n");
+	print_tokens(tokens);
+	new = divide_tokens(tokens);
+	if (!new)
+		return (NULL);
+	printf("<EXPANDER_DOLLAR STEP2>\n");
+	print_tokens(new);
+	free_tokens(tokens);
+	return (new);
 }

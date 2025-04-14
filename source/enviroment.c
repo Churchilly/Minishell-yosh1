@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 06:08:23 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/03/21 04:19:41 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/13 22:00:50 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ char	*get_variable(t_enviroment *env, char *key)
 {
 	t_node	*tmp;
 
+	if (!key)
+		return (NULL);
 	if (ft_strcmp(key, "?"))
 		return (ft_itoa(env->last_pipe));
 	tmp = find_variable(env, key);
