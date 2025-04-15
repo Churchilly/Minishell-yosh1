@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 01:02:35 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/16 02:53:56 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/16 02:57:55 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	gc_clean_list(t_gc_node **gc_list)
 	t_gc_node	*curr;
 	t_gc_node	*next;
 	
-	printf("gc::%p\n", (*gc_list));
 	curr = *gc_list;
 	while (curr)
 	{

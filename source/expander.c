@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 05:04:51 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/16 02:39:21 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/16 02:57:39 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	expander(t_token **tokens, t_enviroment *env)
 		if (expand_heredoc(*tokens, env))
 			return ;
 	}
-	print_tokens(*tokens);
 	if (dollar_in_tokens(*tokens))
 	{
 		(*tokens) = expand_dollar((*tokens), env);
