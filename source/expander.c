@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 05:04:51 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/13 21:46:08 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/16 02:39:21 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,11 @@ int dollar_in_tokens(t_token *tokens);
 int	dollar_in_dquote(char *str);
 int	have_quotes(char *str);
 
-void	expander(t_token **tokens, t_enviroment *env)
+static void	quotes(t_token **tokens, t_enviroment *env)
 {
 	char	*expanded;
 	int		i;
-	
-	if (have_heredoc(*tokens))
-	{
-		if (expand_heredoc(*tokens, env))
-			return ;
-	}
-	print_tokens(*tokens);
-	if (dollar_in_tokens(*tokens))
-	{
-		(*tokens) = expand_dollar((*tokens), env);
-		if (!(*tokens))
-			return ;
-	}
+
 	i = -1;
 	while (((*tokens)[++i].value))
 	{
@@ -57,4 +45,21 @@ void	expander(t_token **tokens, t_enviroment *env)
 		free((*tokens)[i].value);
 		(*tokens)[i].value = expanded;
 	}
+}
+
+void	expander(t_token **tokens, t_enviroment *env)
+{
+	if (have_heredoc(*tokens))
+	{
+		if (expand_heredoc(*tokens, env))
+			return ;
+	}
+	print_tokens(*tokens);
+	if (dollar_in_tokens(*tokens))
+	{
+		(*tokens) = expand_dollar((*tokens), env);
+		if (!(*tokens))
+			return ;
+	}
+	quotes(tokens, env);
 }

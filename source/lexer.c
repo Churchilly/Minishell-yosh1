@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 21:06:17 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/03/04 23:48:30 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/16 02:13:53 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int	is_space(char c);
-int	count_tokens(char *str);
-void	split_tokens(char **tokens, char **str);
+int		is_space(char c);
+int		count_tokens(char *str);
+void	split_tokens(char **tokens, char **str, t_garbage_collector *gc);
 void	insert_types(t_token *tokens);
 void	free_tokens(t_token *tokens);
 
-t_token	*lexer(char *input)
+t_token	*lexer(char *input, t_garbage_collector *gc)
 {
 	t_token	*tokens;
 	int		number_of_tokens;
@@ -28,7 +28,8 @@ t_token	*lexer(char *input)
 	
 	number_of_tokens = count_tokens(input);
 	printf("numb of tokens: [%d]\n", number_of_tokens);
-	tokens = (t_token *)malloc(sizeof(t_token) * (number_of_tokens + 1));
+	tokens = (t_token *)gc_calloc(sizeof(t_token) * (number_of_tokens + 1),
+		&(gc->tokens));
 	if (!tokens)
 		return ((t_token *)NULL);
 	i = -1;
@@ -38,7 +39,7 @@ t_token	*lexer(char *input)
 			input++;
 		else
 		{
-			split_tokens(&(tokens[++i].value), &input);
+			split_tokens(&(tokens[++i].value), &input, gc);
 			if (!(tokens[i].value))
 				return (free_tokens(tokens), NULL);
 		}

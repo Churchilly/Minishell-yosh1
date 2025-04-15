@@ -29,10 +29,13 @@ CFLAGS			= -Wall -Wextra -Werror
 LDFLAGS			= -lreadline
 NAME			= minishell
 
-MANDATORY_DIR 		= source
+MANDATORY_DIRS	= source
 
-SRC				= $(wildcard $(MANDATORY_DIR)/*.c)
+SRC				= $(wildcard $(MANDATORY_DIRS)/*.c)
 OBJ				= $(SRC:.c=.o)
+
+test: all clean
+	clear
 
 all: $(NAME)
 
@@ -46,5 +49,7 @@ fclean: clean
 	rm -rf $(NAME)
 
 re: fclean all
+
+
 
 .PHONY: all clean fclean re

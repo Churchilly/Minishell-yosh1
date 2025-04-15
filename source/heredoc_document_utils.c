@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 00:16:20 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/13 20:39:33 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/16 02:55:14 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	have_dollar(char *str)
 	}
 	return (0);
 }
-#include <stdio.h>
+
 int	strcmp_without_quotes(char *input, char *eof)
 {
 	if (!(*input))

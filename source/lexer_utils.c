@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 04:54:53 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/13 18:38:06 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/16 02:13:42 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ int	is_space(char c)
 	return (c == 9 || c == 10 || c == 11 || c == 12 || c == 13 || c == 32);
 }
 
-char	*token_dup(const char *s, int size)
+char	*token_dup(const char *s, int size, t_garbage_collector *gc)
 {
 	char	*dup;
 	int		i;
 
-	dup = malloc(sizeof(char) * size + 1);
+	dup = gc_calloc(sizeof(char) * size + 1, &(gc->tokens));
 	if (!dup)
-		return (NULL);
+		gc_exit(1, "Malloc failed.", gc);
 	i = 0;
 	while (i < size)
 	{

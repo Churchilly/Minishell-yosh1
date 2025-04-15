@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 23:29:21 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/03/04 22:30:59 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/16 00:14:27 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,5 +108,5 @@ int	clear_enviroment(t_enviroment *env)
 		free(tmp->value);
 		free(tmp);
 	}
-	return (-1); // return enviroment error equivalent error code.
+	return (-1);
 }

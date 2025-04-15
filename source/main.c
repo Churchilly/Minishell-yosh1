@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:01:22 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/13 19:01:14 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/16 02:30:54 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #include "executer.h"
 #include "str.h"
 #include "enviroment.h"
+#include "garbage_collector.h"
 
 volatile int g_signal = 0;
 /*
@@ -68,16 +69,16 @@ subject such as \ (backslash) or ; (semicolon).
 
 int main(void)
 {
-	char			*input;
-	t_token 		*tokens;
-	t_astnode		*root;
-	t_enviroment	env;
+	char				*input;
+	t_token 			*tokens;
+	t_astnode			*root;
+	t_enviroment		env;
+	t_garbage_collector gc;
 	
-	ft_bzero(&env, sizeof(t_enviroment));
 	setup_enviroment(&env);
 	if (setup_paths(&env))
 		return (-1);
-
+	gc_setup(&gc, &env);
 	while (1)
 	{
 		setup_parent_signals();
@@ -90,26 +91,27 @@ int main(void)
 			write(1, "exit\n", 5);
 			break ;
 		}
+		gc_add(input, &(gc.lexer));
 		if (check_sequence_complete(input))
 		/* err according to subject : • Not interpret
 		unclosed quotes or special characters 
 		which are not required by the subject 
 		such as \ (backslash) or ; (semicolon). */
 		{
-			free(input);
-			exit(1); // clear and exit ofc -- later implement
+			gc_exit(1, "seq err.", &gc);
 		}
-		tokens = lexer(input);
+		tokens = lexer(input, &gc);
 		printf("<LEXER TOKENS>\n");
 		print_tokens(tokens);
 		if (!tokens)
-			break ;
+			gc_exit(1, "token creation err", &gc);
 		if (!tokens->value)
 		{
-			free(input);
+			gc_clean_list(&(gc.lexer));
 			continue ;
 		}
 		add_history(input);
+		gc_clean_list(&(gc.lexer));
 		expander(&tokens, &env); /* deletes quotes and dquotes
 						and gets env variables */
 		printf("<EXPANDER TOKENS>\n");
@@ -118,15 +120,10 @@ int main(void)
 		if (!root)
 		{
 			perror("init_node");
-			free(input);
 		}
 		//parser(root);
 		//executer(root, &env);
 		//free_asttree(root);
-		free(input);
 	}
-	clear_enviroment(&env);
-	rl_clear_history();
-	free(input);
-	return (env.last_pipe);
+	gc_exit(env.last_pipe, NULL, &gc);
 }
