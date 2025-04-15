@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 08:35:50 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/13 20:35:44 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/15 19:14:52 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ extern volatile int g_signal;
 
 char	*ft_strjoin_nl(char const *s1, char const *s2);
 char	*expand_variables(char *input, t_enviroment *env);
-int	setup_heredoc_signals(void);
-int	setup_parent_signals(void);
+int		setup_heredoc_child_signals(void);
 char	*ft_itoa(int n);
 int	is_quoted(char *str);
 int	have_dollar(char *str);
@@ -139,7 +138,7 @@ char	*new_document(char *eof, t_enviroment *env)
 	char	*content;
 	char	*path;
 
-	if (setup_heredoc_signals())
+	if (setup_heredoc_child_signals())
 		return (NULL);
 	content = get_document_content(eof, env);
 	if (!content)

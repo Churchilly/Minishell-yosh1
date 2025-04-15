@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 04:31:33 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/13 20:39:43 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/15 19:27:16 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 #include "enviroment.h"
 #include "str.h"
 #include <stdlib.h>
+#include <sys/wait.h>
 #include <unistd.h>
 #include <readline/readline.h>
 
 void	*free_docs(char **docs);
 char	*new_document(char *eof, t_enviroment *env);
+int	setup_heredoc_signals(void);
 
 static int	count_heredocs(t_token *tokens)
 {
@@ -65,13 +67,13 @@ static char	**create_docs(t_token *tokens, t_enviroment *env)
 	return (paths);
 }
 
-int	expand_heredoc(t_token *tokens, t_enviroment *env)
+int	expand_heredoc_child(t_token *tokens, t_enviroment *env)
 {
 	char		**buffer;
 	
 	buffer = create_docs(tokens, env);
 	if (!buffer)
-		return (1);
+		exit(1);
 	while (*buffer)
 	{
 		while ((*tokens).type != TOKEN_DLESS)
@@ -80,11 +82,33 @@ int	expand_heredoc(t_token *tokens, t_enviroment *env)
 		free(tokens->value);
 		tokens->value = ft_strdup("<");
 		if (!tokens->value)
-			return (1);
+			exit(1);
 		tokens++;
 		free(tokens->value);
 		tokens->value = *buffer;
 		buffer++;
 	}
+	exit(0);
+}
+
+int	expand_heredoc(t_token *tokens, t_enviroment *env)
+{
+	pid_t	pid;
+	int		status;
+	
+	pid = fork();
+	if (pid == -1)
+		return (1);
+	if (setup_heredoc_signals())
+		return (1);
+	if (pid == 0)
+		expand_heredoc_child(tokens, env);
+	else
+	{
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+			return (1);
+	}
+	printf("here\n");
 	return (0);
 }
