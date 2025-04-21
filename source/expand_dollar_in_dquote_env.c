@@ -6,11 +6,12 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 03:56:25 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/03/08 06:33:39 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/21 21:34:13 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "enviroment.h"
+#include "garbage_collector.h"
 #include <stdlib.h>
 #include "str.h"
 
@@ -18,7 +19,7 @@ int	is_token(char c);
 int	is_sequence(char c);
 int	is_space(char c);
 
-static char	*get_dollar(char *token_value, t_enviroment *env)
+static char	*get_dollar(char *token_value)
 {
 	char	*ret;
 	char	*trim;
@@ -27,17 +28,12 @@ static char	*get_dollar(char *token_value, t_enviroment *env)
 	i = 0;
 	if (!token_value[i + 1] || is_space(token_value[i + 1]) ||
 		is_token(token_value[i + 1]) || (token_value[i + 1]) == '\"')
-		return (ft_strdup("$"));
+		return (ft_strdup("$", SECTION_LA));
 	while (token_value[i+1] && !is_space(token_value[i+1]) &&
 		!is_token(token_value[i+1]) && (token_value[i+1]) != '\"')
 		i++;
-	trim = ft_strndup(token_value + 1, i);
-	if (!trim)
-		return (NULL);
-	ret = get_variable(env, trim);
-	free(trim);
-	if (!ret)
-		return (NULL);
+	trim = ft_strndup(token_value + 1, i, SECTION_LA);
+	ret = get_variable(trim);
 	return (ret);
 }
 
@@ -54,7 +50,7 @@ void	pass_env_var(char **token_val, char ***env_vars)
 	(*env_vars)++;
 }
 
-int	get_env_vars(char *token_value, char **env_vars, t_enviroment *env)
+void	get_env_vars(char *token_value, char **env_vars)
 {
 	int	dquote;
 
@@ -63,9 +59,7 @@ int	get_env_vars(char *token_value, char **env_vars, t_enviroment *env)
 	{
 		if (dquote && *token_value == '$')
 		{
-			*env_vars = get_dollar(token_value, env);
-			if (!(*env_vars))
-				return (1);
+			*env_vars = get_dollar(token_value);
 			pass_env_var(&token_value, &env_vars);
 		}
 		else
@@ -75,17 +69,5 @@ int	get_env_vars(char *token_value, char **env_vars, t_enviroment *env)
 			token_value++;
 		}
 	}
-	return (0);
 }
 
-void	free_env_vars(char **env_vars)
-{
-	int	i;
-
-	i = -1;
-	while (env_vars[++i])
-	{
-		free(env_vars[i]);
-	}
-	free(env_vars);
-}

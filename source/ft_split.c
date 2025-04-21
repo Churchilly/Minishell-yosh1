@@ -3,27 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
+/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:53:09 by obastug           #+#    #+#             */
-/*   Updated: 2025/02/26 16:03:18 by obastug          ###   ########.fr       */
+/*   Updated: 2025/04/21 21:27:23 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "garbage_collector.h"
 #include <stdlib.h>
-
-void	free_str_list(char **str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
-}
 
 static size_t	ft_count_words(char const *s, char c)
 {
@@ -46,14 +34,12 @@ static size_t	ft_count_words(char const *s, char c)
 	return (i);
 }
 
-static char	*ft_word_dup(const char *s, size_t size)
+static char	*ft_word_dup(const char *s, size_t size, t_section sec)
 {
 	char	*dup;
 	size_t	i;
 
-	dup = malloc(sizeof(char) * size + 1);
-	if (!dup)
-		return (NULL);
+	dup = (char *)gc_calloc(sizeof(char) * size + 1, sec);
 	i = 0;
 	while (i < size)
 	{
@@ -64,7 +50,7 @@ static char	*ft_word_dup(const char *s, size_t size)
 	return (dup);
 }
 
-static int	ft_split_words(char **split, const char *s, char c)
+static int	ft_split_words(char **split, const char *s, char c, t_section sec)
 {
 	const char	*p;
 	size_t		i;
@@ -77,12 +63,7 @@ static int	ft_split_words(char **split, const char *s, char c)
 			p = s;
 			while (*s && *s != c)
 				s++;
-			split[i] = ft_word_dup(p, s - p);
-			if (!(split[i]))
-			{
-				free_str_list(split);
-				return (0);
-			}
+			split[i] = ft_word_dup(p, s - p, sec);
 			i++;
 		}
 		if (*s)
@@ -92,16 +73,14 @@ static int	ft_split_words(char **split, const char *s, char c)
 	return (1);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c, t_section section)
 {
 	char	**split;
 
 	if (!s)
-		return (NULL);
-	split = malloc(sizeof(char *) * (ft_count_words(s, c) + 1));
-	if (!split)
-		return (NULL);
-	if (!ft_split_words(split, s, c))
-		return (NULL);
+		exit(1);
+	split = (char **)gc_calloc(sizeof(char *) * (ft_count_words(s, c) + 1),
+		section);
+	ft_split_words(split, s, c, section);
 	return (split);
 }

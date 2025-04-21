@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 23:56:21 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/15 00:00:09 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/21 21:21:49 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "str.h"
 #include <stdlib.h>
 
-char	*create_new_value(char *token_val, t_enviroment *env);
+char	*create_new_value(char *token_val);
 
 static int	dollar_in_token(char *token_val)
 {
@@ -37,21 +37,12 @@ static int	dollar_in_token(char *token_val)
 	return (0);
 }
 
-int	replace_dollars(t_token *tokens, t_enviroment *env)
+void	replace_dollars(t_token *tokens)
 {
-	char	*tmp;
-	
 	while (tokens->value)
 	{
 		if (dollar_in_token(tokens->value))
-		{
-			tmp = create_new_value(tokens->value, env);
-			if (!tmp)
-				return (1);
-			free(tokens->value);
-			tokens->value = tmp;
-		}
+			tokens->value = create_new_value(tokens->value);
 		tokens++;
 	}
-	return (0);
 }

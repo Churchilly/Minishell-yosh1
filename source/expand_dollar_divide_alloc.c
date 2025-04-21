@@ -6,12 +6,13 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 23:50:36 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/15 00:16:03 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/22 01:20:56 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "enviroment.h"
+#include "garbage_collector.h"
 #include "str.h"
 #include <stdlib.h>
 
@@ -57,7 +58,6 @@ static int	get_divided_size(t_token *tokens)
 		current = tokens->value;
 		while (is_space(*current))
 			current++;
-		printf("curr:%s\n", current);
 		ret += count_divided(current);
 		tokens++;
 	}
@@ -70,8 +70,6 @@ t_token	*allocate_divided(t_token *tokens)
 	t_token	*ret;
 
 	size = get_divided_size(tokens);
-	ret = (t_token *)malloc((sizeof(t_token) * size) + 1);
-	if (!ret)
-		return (NULL);
+	ret = (t_token *)gc_calloc((sizeof(t_token) * (size+1)), SECTION_LA);
 	return (ret);
 }

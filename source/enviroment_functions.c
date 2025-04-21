@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 23:29:21 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/16 00:14:27 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/21 21:33:38 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,14 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-t_node	*find_variable(t_enviroment *env, char *key)
-{
-	t_node	*ret;
+void	*pointer_storage(int type, void *ptr);
 
+t_node	*find_variable(char *key)
+{
+	t_enviroment	*env;
+	t_node			*ret;
+
+	env = (t_enviroment *)pointer_storage(ENVIROMENT, NULL);
 	ret = env->top;
 	while (ret)
 	{
@@ -29,11 +33,13 @@ t_node	*find_variable(t_enviroment *env, char *key)
 	return (NULL);
 }
 
-void	delete_variable(t_enviroment *env, char *key)
+void	delete_variable(char *key)
 {
-	t_node	*prev;
-	t_node	*to_delete;
+	t_enviroment	*env;
+	t_node			*prev;
+	t_node			*to_delete;
 
+	env = (t_enviroment *)pointer_storage(ENVIROMENT, NULL);
 	to_delete = env->top;
 	prev = NULL;
 	while (to_delete)
@@ -55,51 +61,54 @@ void	delete_variable(t_enviroment *env, char *key)
 		to_delete = to_delete->next;
 	}
 }
-#include <stdio.h>
-int	revalue_variable(t_enviroment *env, char *key, char *value)
+
+int	revalue_variable(char *key, char *value)
 {
 	t_node	*node;
 	char	*tmp;
-	node = find_variable(env, key);
+
+	node = find_variable(key);
 	if (!node)
 	return (-1);
 	tmp = node->value;
-	node->value = ft_strdup(value);
+	node->value = ft_strdup(value, SECTION_ENV);
 	free(tmp);
 	if (!node->value)
 		return (-1);
 	return (0);
 }
 
-int	add_variable(t_enviroment	*env, char *key, char *value)
+void	add_variable(char *key, char *value)
 {
-	t_node	*new;
+	t_enviroment	*env;
+	t_node			*new;
 
+	env = (t_enviroment *)pointer_storage(ENVIROMENT, NULL);
 	new = (t_node *)malloc(sizeof(t_node));
 	if (!new)
-		return (-1); // malloc err
-	new->key = ft_strdup(key);
-	if (!new->key)
-		return (-1);
-	new->value = ft_strdup(value);
-	if (!new->value)
-		return (-1);
+		exit(1); // malloc err
+	new->key = ft_strdup(key, SECTION_ENV);
+	new->value = ft_strdup(value, SECTION_ENV);
 	new->next = NULL;
 	if (!env->top)
 	{
 		env->top = new;
 		env->bottom = new;
-		return (0);
+		return ;
 	}
 	env->bottom->next = new;
 	env->bottom = new;
-	return (0);
+	return ;
 }
 
-int	clear_enviroment(t_enviroment *env)
+void	clear_enviroment(void)
 {
-	t_node	*tmp;
+	t_node			*tmp;
+	t_enviroment	*env;
 	
+	env = (t_enviroment *)pointer_storage(ENVIROMENT, NULL);
+	if (!env)
+		return ;
 	while (env->top)
 	{
 		tmp = env->top;
@@ -108,5 +117,4 @@ int	clear_enviroment(t_enviroment *env)
 		free(tmp->value);
 		free(tmp);
 	}
-	return (-1);
 }

@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 02:58:05 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/03/21 04:17:22 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/21 21:27:41 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "garbage_collector.h"
 #include <stdlib.h>
 
 static size_t	get_digits(int n)
@@ -37,7 +38,7 @@ static size_t	get_digits(int n)
 	return (i);
 }
 
-char	*ft_itoa(int n)
+char	*ft_itoa(int n, t_section sec)
 {
 	char		*str_num;
 	size_t		digits;
@@ -50,7 +51,7 @@ char	*ft_itoa(int n)
 		num *= -1;
 		digits++;
 	}
-	str_num = (char *)malloc(sizeof(char) * (digits + 1));
+	str_num = gc_calloc(sizeof(char) * (digits + 1), sec);
 	if (!str_num)
 		return (NULL);
 	*(str_num + digits) = 0;

@@ -6,14 +6,14 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 05:48:02 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/03/08 06:38:39 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/21 21:19:01 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "str.h"
 #include "enviroment.h"
-
+#include "garbage_collector.h"
 #include <stdio.h>
 
 int	is_token(char c);
@@ -21,8 +21,7 @@ int	is_sequence(char c);
 int	is_space(char c);
 
 void	pass_env_var(char **token_val, char ***env_vars);
-int		get_env_vars(char *token_value, char **env_vars, t_enviroment *env);
-void	free_env_vars(char **env_vars);
+int		get_env_vars(char *token_value, char **env_vars);
 
 char	*expand_quotes(char *token_value);
 
@@ -101,7 +100,7 @@ static void	place_env_vars(char *token_val, char **env_vars, char *expanded)
 	}
 }
 
-char	*expand_dollar_in_dquote(char *token_value, t_enviroment *env)
+char	*expand_dollar_in_dquote(char *token_value)
 {
 	char	*tmp;
 	char	*ret;
@@ -109,22 +108,13 @@ char	*expand_dollar_in_dquote(char *token_value, t_enviroment *env)
 	int		len;
 	
 	len = count_dollars_in_dquotes(token_value);
-	env_vars = (char **)malloc(sizeof(char *) * (len + 1));
-	if (!env_vars)
-		return (free_env_vars(env_vars), NULL);
-	if (get_env_vars(token_value, env_vars, env))
-		return (free_env_vars(env_vars), NULL);
+	env_vars = (char **)gc_calloc(sizeof(char *) * (len + 1), SECTION_LA);
+	get_env_vars(token_value, env_vars);
 	env_vars[len] = NULL;
 	get_new_size(token_value, env_vars, &len);
 	tmp = malloc(sizeof(char) * (len + 1));
-	if (!tmp)
-		return (free_env_vars(env_vars), NULL);
 	place_env_vars(token_value, env_vars, tmp);
 	tmp[len] = '\0';
-	free_env_vars(env_vars);
 	ret = expand_quotes(tmp);
-	free(tmp);
-	if (!ret)
-		return (NULL);
 	return (ret);
 }

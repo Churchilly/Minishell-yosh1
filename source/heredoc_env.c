@@ -6,10 +6,11 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 06:39:01 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/14 20:06:32 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/19 17:59:15 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "garbage_collector.h"
 #include "enviroment.h"
 #include "str.h"
 #include <stdlib.h>
@@ -17,41 +18,32 @@
 int	is_alpha_numerical(char c);
 int	count_variables(char *str);
 char	*crop_variable(char *str);
-char	**alloc_buffer(char *input);
-void	free_buffer(char **buffer);
 
-int	insert_heredoc_variable(char *input, char **buffer, t_enviroment *env, int i)
+void	insert_heredoc_variable(char *input, char **buffer, int i)
 {
 	char	*key;
 	char	*var;
 	
 	key = crop_variable(input);
-	if (!key)
-		return (1);
-	var = get_variable(env, key);
-	free(key);
-	if (!var)
-		return (1);
+	var = get_variable(key);
 	buffer[i] = var;
-	return (0);
 }
 
-char	**get_variables(char *input, t_enviroment *env)
+char	**get_variables(char *input)
 {
 	char	**buffer;
+	int		size;
 	int		i;
 	
-	buffer = alloc_buffer(input);
-	if (!buffer)
-		return (NULL);
+	size = count_variables(input);
+	buffer = (char **)gc_calloc(sizeof(char *) * (size + 1), SECTION_LA);
 	i = -1;
 	while (*input)
 	{
 		if (*input == '$')
 		{
 			input++;
-			if (insert_heredoc_variable(input, buffer, env, ++i))
-				return (NULL);
+			insert_heredoc_variable(input, buffer, ++i);
 			while (is_alpha_numerical(*input))
 				input++;
 		}
@@ -112,21 +104,15 @@ void	insert_variables(char *input, char **buffer, char *new)
 	}
 }
 
-char	*expand_variables(char *input, t_enviroment *env)
+char	*expand_variables(char *input)
 {
 	char	**buffer;
 	int		len;
 	char	*ret;
 	
-	buffer = get_variables(input, env);
-	if (!buffer)
-		return (NULL);
+	buffer = get_variables(input);
 	len = get_new_len(input, buffer);
-	ret = malloc((sizeof(char) * len) + 1);
-	ret[len] = '\0';
-	if (!ret)
-		return (free_buffer(buffer), NULL);
+	ret = gc_calloc((sizeof(char) * len) + 1, SECTION_LA);
 	insert_variables(input, buffer, ret);
-	free_buffer(buffer);
 	return (ret);
 }

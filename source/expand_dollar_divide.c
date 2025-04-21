@@ -6,12 +6,13 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 20:46:54 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/15 00:15:37 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/22 01:31:46 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "enviroment.h"
+#include "garbage_collector.h"
 #include "str.h"
 #include <stdlib.h>
 
@@ -75,10 +76,7 @@ char	*get_divided_token(char *value, int *idx)
 	char	*new;
 
 	size = curr_divide_size(value + (*idx));
-	new = malloc((sizeof(char) * size) + 1);
-	if (!new)
-		return (NULL);
-	new[size] = '\0';
+	new = gc_calloc((sizeof(char) * (size + 1)), SECTION_LA);
 	insert_divided_token(value, idx, new);
 	return (new);
 }
@@ -91,8 +89,6 @@ t_token	*divide_tokens(t_token *tokens)
 	int		i;
 	
 	new = allocate_divided(tokens);
-	if (!new)
-		return (NULL);
 	ret = new;
 	while (tokens->value)
 	{
@@ -101,13 +97,10 @@ t_token	*divide_tokens(t_token *tokens)
 		while (curr_div_size--)
 		{
 			new->value = get_divided_token(tokens->value, &i);
-			if (!(new->value))
-				return (NULL);
 			new->type = TOKEN_WORD;
 			new++;
 		}
 		tokens++;
 	}
-	new->value = NULL;
 	return (ret);
 }

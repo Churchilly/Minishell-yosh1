@@ -6,10 +6,11 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 19:27:46 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/11 19:59:42 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/22 01:54:38 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "garbage_collector.h"
 #include <stdlib.h>
 
 int	is_alpha_numerical(char c);
@@ -37,9 +38,7 @@ char	*crop_variable(char *str)
 	size = 0;
 	while (is_alpha_numerical(str[size]))
 		size++;
-	cropped = (char *)malloc((sizeof(char) * size) + 1);
-	if (!cropped)
-		return (NULL);
+	cropped = (char *)gc_calloc((sizeof(char) * (size + 1)), SECTION_LA);
 	ret = cropped;
 	while (is_alpha_numerical(*str))
 	{
@@ -47,32 +46,5 @@ char	*crop_variable(char *str)
 		cropped++;
 		str++;
 	}
-	ret[size] = '\0';
 	return (ret);
-}
-
-char	**alloc_buffer(char *input)
-{
-	int		size;
-	char	**ret;
-
-	size = count_variables(input);
-	ret = (char **)malloc(sizeof(char *) * (size + 1));
-	if (!ret)
-		return (NULL);
-	ret[size] = NULL;
-	return (ret);
-}
-
-void	free_buffer(char **buffer)
-{
-	int	i;
-
-	i = 0;
-	while (buffer[i])
-	{
-		free(buffer[i]);
-		i++;
-	}
-	free(buffer);
 }

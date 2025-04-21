@@ -6,11 +6,12 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 20:42:49 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/15 00:00:03 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/22 01:53:26 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "enviroment.h"
+#include "garbage_collector.h"
 #include "lexer.h"
 #include "str.h"
 #include <stdlib.h>
@@ -24,10 +25,7 @@ static char	*crop_key(char *str)
 	len = 0;
 	while (str[len] && str[len] != '$' && str[len] != '\"' && str[len] != '\'')
 		len++;
-	cropped = malloc((sizeof(char *) * len) + 1);
-	if (!cropped)
-		return (NULL);
-	cropped[len] = '\0';
+	cropped = gc_calloc((sizeof(char *) * len) + 1, SECTION_LA);
 	ret = cropped;
 	while (*str && *str != '$' && *str != '\"' && *str != '\'')
 	{
@@ -38,43 +36,35 @@ static char	*crop_key(char *str)
 	return (ret);
 }
 
-static char	*create_variable(char *token_val, t_enviroment *env)
+static char	*create_variable(char *token_val)
 {
 	char	*cropped;
 	char	*ret;
 
 	cropped = crop_key(token_val);
-	if (!cropped)
-		return (NULL);
-	ret = get_variable(env, cropped);
-	if (!ret)
-		return (NULL);
+	ret = get_variable(cropped);
 	return (ret);
 }
 
 
 
-static int	insert_dollar_variable(char **val, char **new, t_enviroment *env)
+static void	insert_dollar_variable(char **val, char **new)
 {
 	char	*var;
 	
 	(*val)++;
-	var = create_variable(*val, env);
-	if (!var)
-		return (1);
+	var = create_variable(*val);
 	while (*var)
 	{
 		**new = *var;
 		(*new)++;
 		var++;
 	}
-	**new = '\0';
 	while (**val && **val != '$' && **val != '\"' && **val != '\'')
 		(*val)++;
-	return (0);
 }
 
-static int	get_new_value_size(char *val, t_enviroment *env)
+static int	get_new_value_size(char *val)
 {
 	int		ret;
 	char	*var;
@@ -85,11 +75,8 @@ static int	get_new_value_size(char *val, t_enviroment *env)
 		if (*val == '$')
 		{
 			val++;
-			var = create_variable(val, env);
-			if (!var)
-				return (-1);
+			var = create_variable(val);
 			ret += ft_strlen(var);
-			free(var);
 			while (*val && *val != '$' && *val != '\"' && *val != '\'')
 				val++;
 		}
@@ -102,26 +89,19 @@ static int	get_new_value_size(char *val, t_enviroment *env)
 	return (ret);
 }
 
-char	*create_new_value(char *token_val, t_enviroment *env)
+char	*create_new_value(char *token_val)
 {
 	char	*new;
 	char	*ret;
 	int		size;
 
-	size = get_new_value_size(token_val, env);
-	if (size == -1)
-		return (NULL);
-	new = malloc((sizeof(char) * size) + 1);
-	if (!new)
-		return (NULL);
+	size = get_new_value_size(token_val);
+	new = gc_calloc((sizeof(char) * (size + 1)), SECTION_LA);
 	ret = new;
 	while (*token_val)
 	{
 		if (*token_val == '$')
-		{
-			if (insert_dollar_variable(&token_val, &new, env))
-				return (NULL);
-		}
+			insert_dollar_variable(&token_val, &new);
 		else
 			*new++ = *token_val++;
 	}

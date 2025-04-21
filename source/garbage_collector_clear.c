@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 01:02:35 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/16 02:57:55 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/22 00:29:47 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,31 +17,41 @@
 #include <readline/history.h>
 
 int		ft_strlen(char const *s);
+void	**gc_get_section(t_section section);
 
-void	gc_clean_list(t_gc_node **gc_list)
+void	gc_clean_list(t_section section_name)
 {
 	t_gc_node	*curr;
 	t_gc_node	*next;
+	t_gc_node	**section;
 	
-	curr = *gc_list;
+	section = (t_gc_node **)gc_get_section(section_name);
+	if (!section)
+		return ;
+	curr = *section;
 	while (curr)
 	{
 		next = curr->next;
-		free(curr->data);
+		if (curr->data)
+			free(curr->data);
 		curr->data = NULL;
 		free(curr);
 		curr = next;
 	}
-	*gc_list = NULL;
+	*section = NULL;
 }
 
-void	gc_clean_paths(t_gc_node **gc_list)
+void	gc_clean_paths()
 {
 	t_gc_node	*curr;
 	t_gc_node	*next;
 	char		*path;
+	t_gc_node	**section;
 	
-	curr = *gc_list;
+	section = (t_gc_node **)gc_get_section(SECTION_PATHS);
+	if (!section)
+		return ;
+	curr = *section;
 	while (curr)
 	{
 		path = curr->data;
@@ -57,67 +67,23 @@ void	gc_clean_paths(t_gc_node **gc_list)
 		free(curr);
 		curr = next;
 	}
-	*gc_list = NULL;
+	*section = NULL;
 }
 
-static void	gc_cleanup(t_garbage_collector *gc)
+void	gc_cleanup()
 {
-	if (!gc)
-		return ;
-	if (gc->env)
-	{
-		clear_enviroment(gc->env);
-		write(1, "#env cleared#\n", 15);
-	}
-	if (gc->tokens)
-	{
-		gc_clean_list(&gc->tokens);
-		write(1, "#tokens cleared#\n", 18);
-	}
-	if (gc->lexer)
-	{
-		gc_clean_list(&gc->lexer);
-		write(1, "lexer cleared\n", 15);
-	}
-	if (gc->expander)
-	{
-		gc_clean_list(&gc->expander);
-		write(1, "expander cleared\n", 18);
-	}
-	if (gc->asttree)
-	{
-		gc_clean_list(&gc->asttree);
-		write(1, "asttree cleared\n", 17);
-	}
-	if (gc->parser)
-	{
-		gc_clean_list(&gc->parser);
-		write(1, "parser cleared\n", 16);
-	}
-	if (gc->executer)
-	{
-		gc_clean_list(&gc->executer);
-		write(1, "executer cleared\n", 18);
-	}
-	if (gc->fork)
-	{
-		gc_clean_list(&gc->fork);
-		write(1, "fork cleared\n", 14);
-	}
-	if (gc->paths)
-	{
-		gc_clean_paths(&gc->paths);
-		write(1, "paths cleared\n", 15);
-	}
-}
-
-void	gc_exit(int status ,char *msg, t_garbage_collector *gc)
-{
-	rl_clear_history();
-	write(1, "CLEANUP START\n", 15);
-	gc_cleanup(gc);
-	write(1, "CLEANUP END\n", 13);
-	if (msg)
-		write(1, msg, ft_strlen(msg));
-	exit(status);
+	clear_enviroment();
+	write(1, "#env cleared#\n", 15);
+	gc_clean_list(SECTION_LA);
+	write(1, "lexical analysis cleared\n", 26);
+	//gc_clean_list(&gc->asttree);
+	//write(1, "asttree cleared\n", 17);
+	//gc_clean_list(&gc->parser);
+	//write(1, "parser cleared\n", 16);
+	//gc_clean_list(&gc->executer);
+	//write(1, "executer cleared\n", 18);
+	gc_clean_list(SECTION_FORK);
+	write(1, "fork cleared\n", 14);
+	gc_clean_paths();
+	write(1, "paths cleared\n", 15);
 }

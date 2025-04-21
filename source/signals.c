@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 00:12:15 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/13 20:31:08 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/18 20:15:51 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ extern volatile int g_signal;
 #include <stddef.h>
 #include <unistd.h>
 #include <readline/readline.h>
+#include "enviroment.h"
 /*
    The termios structure
        Many of the functions described here have a termios_p argument that is a pointer to a
@@ -27,10 +28,15 @@ extern volatile int g_signal;
            tcflag_t c_lflag;       local modes 
            cc_t     c_cc[NCCS];    special characters 
 */
+void	*pointer_storage(int type, void *ptr);
 
 static void	handle_sigint(int sig)
 {
-	g_signal = sig;
+	t_enviroment *env;
+
+	(void)sig;
+	env = pointer_storage(ENVIROMENT, NULL);
+	env->last_pipe = 130;
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);

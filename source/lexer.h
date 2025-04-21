@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 19:03:49 by obastug           #+#    #+#             */
-/*   Updated: 2025/04/16 02:13:07 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/18 18:54:24 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ typedef struct	s_token{
 	char		*value;
 }			t_token;
 
-t_token	*lexer(char *input, t_garbage_collector *gc);
-void	expander(t_token **tokens, t_enviroment *env);
+t_token	*lexer(char *input);
+void	expander(t_token **tokens);
 
 #endif
 

@@ -14,18 +14,20 @@
 # define STR_H
 
 # include <stddef.h>
+# include "garbage_collector.h"
 
+char	*ft_strjoin(char const *s1, char const *s2, t_section sec);
+char	**ft_split(char const *s, char c, t_section sec);
+char	*ft_strdup(const char *str, t_section sec);
+char	*ft_strndup(const char	*str, int len, t_section sec);
+char	*ft_itoa(int n, t_section sec);
 int		ft_strcmp(char *str1, char *str2);
 int		ft_strlen(char const *s);
 void	ft_putchar(char c);
 void	ft_bzero(void *addr, int size);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
-char	**ft_split(char const *s, char c);
-char	*ft_strjoin(char const *s1, char const *s2);
 void	free_str_list(char **str);
 char	*ft_strchr(const char *s, int c);
 int		ft_strcmp(char *str1, char *str2);
-char	*ft_strdup(const char *str);
-char	*ft_strndup(const char	*str, int len);
 
 #endif

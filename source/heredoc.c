@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 04:31:33 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/15 19:27:16 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/22 01:54:19 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 #include <unistd.h>
 #include <readline/readline.h>
 
-void	*free_docs(char **docs);
-char	*new_document(char *eof, t_enviroment *env);
+char	*new_document(char *eof);
 int	setup_heredoc_signals(void);
+void	*pointer_storage(int type, void *ptr);
 
 static int	count_heredocs(t_token *tokens)
 {
@@ -38,7 +38,7 @@ static int	count_heredocs(t_token *tokens)
 	return (ret);
 }
 
-static char	**create_docs(t_token *tokens, t_enviroment *env)
+static char	**create_docs(t_token *tokens)
 {
 	char	**paths;
 	char	*eof;
@@ -46,69 +46,70 @@ static char	**create_docs(t_token *tokens, t_enviroment *env)
 	int		i;
 	
 	count = count_heredocs(tokens);
-	paths = (char **)malloc((sizeof(char *) * count) + 1);
+	paths = (char **)gc_calloc((sizeof(char *) * (count + 1)), SECTION_LA);
+	eof = NULL;
 	i = 0;
 	while (i < count)
 	{
-		while ((*tokens).type != TOKEN_DLESS)
+		while ((tokens)->type != TOKEN_DLESS)
 		{
 			tokens++;
 		}
-		eof = (*(tokens + 1)).value;
+		eof = (tokens + 1)->value;
+		printf("eof00::%s\n",eof);
 		if (!eof)
-			return (write(1, "yosh: syntax error\
- near unexpected token `newline'\n", 52), free_docs(paths));
-		paths[i] = new_document(eof, env);
-		if (!paths[i])
-			return (free_docs(paths));
+		{
+			printf("yosh: syntax error near unexpected token `newline'\n");
+			exit(1);
+		}
+		printf("eof0::%s\n",eof);
+		paths[i] = new_document(eof);
 		i++;
 	}
-	paths[count] = NULL;
+	write(1, "ducker\n", 8);
 	return (paths);
 }
 
-int	expand_heredoc_child(t_token *tokens, t_enviroment *env)
+int	expand_heredoc_child(t_token *tokens)
 {
 	char		**buffer;
 	
-	buffer = create_docs(tokens, env);
-	if (!buffer)
-		exit(1);
+	buffer = create_docs(tokens);
 	while (*buffer)
 	{
 		while ((*tokens).type != TOKEN_DLESS)
 			tokens++;
 		tokens->type = TOKEN_LESS;
-		free(tokens->value);
-		tokens->value = ft_strdup("<");
-		if (!tokens->value)
-			exit(1);
+		tokens->value = ft_strdup("<", SECTION_LA);
 		tokens++;
-		free(tokens->value);
 		tokens->value = *buffer;
 		buffer++;
 	}
 	exit(0);
 }
 
-int	expand_heredoc(t_token *tokens, t_enviroment *env)
+int	expand_heredoc(t_token *tokens)
 {
 	pid_t	pid;
 	int		status;
-	
+	t_garbage_collector *gc;
+
+	gc = pointer_storage(COLLECTOR, NULL);
+	gc->in_fork = 1;
+	printf("curr:%s\n", tokens->value);
 	pid = fork();
 	if (pid == -1)
-		return (1);
+		exit(1);
 	if (setup_heredoc_signals())
-		return (1);
+		exit(1);
 	if (pid == 0)
-		expand_heredoc_child(tokens, env);
+		expand_heredoc_child(tokens);
 	else
 	{
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
-			return (1);
+			exit(1);
 	}
-	printf("here\n");
+	gc->in_fork = 0;
 	return (0);
 }

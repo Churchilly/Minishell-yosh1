@@ -6,10 +6,11 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 04:02:11 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/03/07 04:20:01 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/22 01:53:42 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "garbage_collector.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -36,9 +37,7 @@ char	*expand_quotes(char *token_value)
 	int		len;
 
 	len =  get_new_size(token_value);
-	ret = malloc(sizeof(char) * len + 1);
-	if (!ret)
-		return (NULL);
+	ret = gc_calloc(sizeof(char) * (len + 1), SECTION_LA);
 	i = 0;
 	while (*token_value)
 	{
@@ -49,6 +48,5 @@ char	*expand_quotes(char *token_value)
 		}
 		token_value++;
 	}
-	ret[len] = '\0';
 	return (ret);
 }

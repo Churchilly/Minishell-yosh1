@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
+/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 18:29:28 by obastug           #+#    #+#             */
-/*   Updated: 2025/02/26 16:02:45 by obastug          ###   ########.fr       */
+/*   Updated: 2025/04/21 16:45:27 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	free_asttree(t_astnode *root)
 	if (!root)
 		return ;
 	if (root->args)
-		free_str_list(root->args);
+		exit(1);//free_str_list(root->args);
 	free_asttree(root->left);
 	free_asttree(root->right);
 	free(root);

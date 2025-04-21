@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
+/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 13:05:09 by obastug           #+#    #+#             */
-/*   Updated: 2025/02/27 12:14:41 by obastug          ###   ########.fr       */
+/*   Updated: 2025/04/21 21:37:21 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*is_file_executable_in_path(char **path_list, char *file_path)
 	i = 0;
 	while (path_list[i])
 	{
-		final_path = ft_strjoin(path_list[i], file_path);
+		final_path = ft_strjoin(path_list[i], file_path, SECTION_LA);
 		if (!final_path)
 		{
 			perror("ft_strjoin");
@@ -67,7 +67,7 @@ char	*search_executable_path(char *file_path)
 		perror("Environment PATH couldnt found.");
 		return (NULL);
 	}
-	path_list = ft_split(env_path, ':');
+	path_list = ft_split(env_path, ':', SECTION_LA);
 	if (!path_list)
 	{
 		perror("ft_split");
@@ -75,7 +75,7 @@ char	*search_executable_path(char *file_path)
 		return (NULL);
 	}
 	final_path = is_file_executable_in_path(path_list, file_path);
-	free_str_list(path_list);
+	//free_str_list(path_list);
 	return (final_path);
 }
 

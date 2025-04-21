@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strndup.c                                       :+:      :+:    :+:   */
+/*   pointer_storage.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/23 04:58:18 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/21 21:37:46 by yusudemi         ###   ########.fr       */
+/*   Created: 2025/04/18 14:55:50 by yusudemi          #+#    #+#             */
+/*   Updated: 2025/04/21 17:14:05 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "str.h"
 #include "garbage_collector.h"
+#include "enviroment.h"
+#include <stdio.h>
 
-char	*ft_strndup(const char	*str, int len, t_section section)
+void	*pointer_storage(int type, void *ptr)
 {
-	int i;
-	char	*ret;
+	static void	*collector;
+	static void	*enviroment;
 
-	ret = gc_calloc(sizeof(char) * (len + 1), section);
-	i = -1;
-	while(++i < len)
-		ret[i] = str[i];
-	ret[i] = '\0';
-	return (ret);
+	if (!ptr)
+	{
+		if (type == COLLECTOR)
+			return (collector);
+		else if (type == ENVIROMENT)
+			return (enviroment);
+	}
+	else
+	{
+		if (type == COLLECTOR)
+			collector = ptr;
+		else if (type == ENVIROMENT)
+			enviroment = ptr;
+	}
+	return (NULL);
 }

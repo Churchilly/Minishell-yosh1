@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 21:54:57 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/16 02:13:25 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/18 20:49:28 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 int	is_token(char c);
 int	is_sequence(char c);
 int	is_space(char c);
-char	*token_dup(const char *s, int size, t_garbage_collector *gc);
 int	ft_strcmp(char *str1, char *str2);
+char	*token_dup(const char *s, int size);
 
 static void	pass_sequence(char token, char	**str)
 {
@@ -76,7 +76,7 @@ int	count_tokens(char *str)
 	return (count);
 }
 
-void	split_tokens(char **tokens, char **str, t_garbage_collector *gc)
+void	split_tokens(char **tokens, char **str)
 {
 	char	*p;
 
@@ -84,7 +84,7 @@ void	split_tokens(char **tokens, char **str, t_garbage_collector *gc)
 	{
 		p = *str;
 		pass_token(**str, str);
-		*tokens = token_dup(p, ((*str) + 1) - p, gc);
+		*tokens = token_dup(p, ((*str) + 1) - p);
 		(*str)++;
 	}
 	else if (!is_space(**str))
@@ -96,7 +96,7 @@ void	split_tokens(char **tokens, char **str, t_garbage_collector *gc)
 				pass_sequence(**str, str);
 			(*str)++;
 		}
-		*tokens = token_dup(p, (*str) - p, gc);
+		*tokens = token_dup(p, (*str) - p);
 	}
 	else
 		(*str)++;

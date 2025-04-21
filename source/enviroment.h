@@ -6,12 +6,16 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 06:08:59 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/03/21 01:22:03 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/21 17:00:10 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENVIROMENT_VARIABLES_H
 # define ENVIROMENT_VARIABLES_H
+
+# ifndef ENVIROMENT
+#  define ENVIROMENT 1
+# endif
 
 typedef struct s_node
 {
@@ -46,14 +50,14 @@ typedef struct s_enviroment
 	struct	s_node	*bottom;
 }		t_enviroment;
 
-int		setup_enviroment(t_enviroment *env);
-int		setup_paths(t_enviroment *env);
-char	*get_cwd(t_enviroment *env);
-char	*get_variable(t_enviroment *env, char *key);
-t_node	*find_variable(t_enviroment *env, char *key);
-void	delete_variable(t_enviroment *env, char *key);
-int		revalue_variable(t_enviroment *env, char *key, char *value);
-int		add_variable(t_enviroment	*env, char *key, char *value);
-int		clear_enviroment(t_enviroment *env);
+void	setup_enviroment(void);
+void	setup_paths(void);
+char	*get_cwd();
+char	*get_variable(char *key);
+t_node	*find_variable(char *key);
+void	delete_variable(char *key);
+int		revalue_variable(char *key, char *value);
+void	add_variable(char *key, char *value);
+void 	clear_enviroment(void);
 
 #endif
