@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 08:35:50 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/21 21:38:47 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:34:11 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char	*get_document_content(char *eof)
 	{
 		input = readline("> ");
 		if (g_signal)
-			_exit(1);
+			exit(1);
 		if (!input || strcmp_without_quotes(input, eof))
 		{
 			if (!input)
@@ -67,7 +67,7 @@ static char	*create_unique_path(char *path)
 	char	*numeric;
 	char	*full;
 	
-	i = 0;
+	i = 1;
 	while (42)
 	{
 		numeric = ft_itoa(i, SECTION_LA);
@@ -76,7 +76,6 @@ static char	*create_unique_path(char *path)
 			break ;
 		i++;
 	}
-	gc_add(full, SECTION_PATHS);
 	return (full);
 }
 
@@ -85,8 +84,7 @@ static char	*create_temp_file(char *content)
 	char	*path;
 	int		fd;
 
-	path = ft_strdup("/tmp/yosh_heredoc_temp_", SECTION_LA);
-	path = create_unique_path(path);
+	path = create_unique_path("/tmp/yosh_heredoc_temp_");
 	fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0600);
 	if (fd == -1)
 	{
@@ -113,6 +111,5 @@ char	*new_document(char *eof)
 	if (!content)
 		return (NULL);
 	path = create_temp_file(content);
-	gc_add(path, SECTION_PATHS);
 	return (path);
 }

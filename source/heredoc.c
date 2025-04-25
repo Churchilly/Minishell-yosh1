@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 04:31:33 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/22 01:54:19 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:45:22 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,60 +56,94 @@ static char	**create_docs(t_token *tokens)
 			tokens++;
 		}
 		eof = (tokens + 1)->value;
-		printf("eof00::%s\n",eof);
 		if (!eof)
 		{
 			printf("yosh: syntax error near unexpected token `newline'\n");
 			exit(1);
 		}
-		printf("eof0::%s\n",eof);
 		paths[i] = new_document(eof);
+		tokens++;
 		i++;
 	}
-	write(1, "ducker\n", 8);
 	return (paths);
 }
 
-int	expand_heredoc_child(t_token *tokens)
+char	*reader(int fd)
 {
-	char		**buffer;
+	char	*buffer;
+	char	reader_buffer[1025];
+	int		readen;
 	
-	buffer = create_docs(tokens);
-	while (*buffer)
+	buffer = ft_strdup("\0", SECTION_LA);
+	readen = 1;
+	while (readen)
 	{
-		while ((*tokens).type != TOKEN_DLESS)
+		readen = read(fd, reader_buffer, 1024);
+		if (readen == -1)
+			exit(1);
+		reader_buffer[readen] = '\0';
+		buffer = ft_strjoin(buffer, reader_buffer, SECTION_ENV);
+	}
+	return (buffer);
+}
+
+static void	child_process(t_token *tokens, int pipe_fd[2])
+{
+	char	**buffer;
+	int		i;
+	
+	close(pipe_fd[0]);
+	buffer = create_docs(tokens);
+	i = -1;
+	while (buffer[++i])
+	{
+		write(pipe_fd[1], buffer[i], ft_strlen(buffer[i]));
+		write(pipe_fd[1], "\n", 1);
+	}
+	close(pipe_fd[1]);
+	exit(0);
+}
+
+static void	parent_process(t_token *tokens, int pipe_fd[2], pid_t pid)
+{
+	char	*pipe_buffer;
+	
+	close(pipe_fd[1]);
+	waitpid(pid, NULL, 0);
+	pipe_buffer = reader(pipe_fd[0]);
+	char **splitted = ft_split(pipe_buffer, '\n', SECTION_LA);
+	while (*splitted)
+	{
+		while (tokens->type != TOKEN_DLESS)
 			tokens++;
 		tokens->type = TOKEN_LESS;
 		tokens->value = ft_strdup("<", SECTION_LA);
 		tokens++;
-		tokens->value = *buffer;
-		buffer++;
+		tokens->value = *splitted;
+		gc_add(tokens->value, SECTION_PATHS);
+		splitted++;
 	}
-	exit(0);
 }
 
 int	expand_heredoc(t_token *tokens)
 {
 	pid_t	pid;
-	int		status;
-	t_garbage_collector *gc;
-
-	gc = pointer_storage(COLLECTOR, NULL);
-	gc->in_fork = 1;
-	printf("curr:%s\n", tokens->value);
+	int		pipe_fd[2];
+	
+	if (pipe(pipe_fd) == -1)
+	{
+		perror("pipe");
+		exit(1);
+	}
 	pid = fork();
 	if (pid == -1)
-		exit(1);
-	if (setup_heredoc_signals())
-		exit(1);
-	if (pid == 0)
-		expand_heredoc_child(tokens);
-	else
 	{
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
-			exit(1);
+		perror("fork");
+		exit(1);
 	}
-	gc->in_fork = 0;
+	if (pid == 0)
+		child_process(tokens, pipe_fd);
+	else
+		parent_process(tokens, pipe_fd, pid);
 	return (0);
 }

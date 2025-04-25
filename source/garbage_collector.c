@@ -6,12 +6,14 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 20:07:37 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/22 01:13:32 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:27:37 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "garbage_collector.h"
 #include <stdlib.h>
+
+#include <stdio.h>
 
 void	ft_bzero(void *addr, int size);
 void	*pointer_storage(int type, void *ptr);
@@ -40,7 +42,6 @@ void	gc_setup(t_garbage_collector *gc, t_enviroment *env)
 	pointer_storage(ENVIROMENT, env);
 	pointer_storage(COLLECTOR, gc);
 }
-
 void	gc_add(void *new, t_section section_name)
 {
 	t_gc_node	*new_gc_node;

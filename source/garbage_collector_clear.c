@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 01:02:35 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/22 00:29:47 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:33:48 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	gc_clean_list(t_section section_name)
 	t_gc_node	**section;
 	
 	section = (t_gc_node **)gc_get_section(section_name);
-	if (!section)
+	if (!(*section))
 		return ;
 	curr = *section;
 	while (curr)
@@ -40,7 +40,6 @@ void	gc_clean_list(t_section section_name)
 	}
 	*section = NULL;
 }
-
 void	gc_clean_paths()
 {
 	t_gc_node	*curr;
@@ -49,22 +48,19 @@ void	gc_clean_paths()
 	t_gc_node	**section;
 	
 	section = (t_gc_node **)gc_get_section(SECTION_PATHS);
-	if (!section)
+	if (!(*section))
 		return ;
 	curr = *section;
 	while (curr)
 	{
 		path = curr->data;
 		next = curr->next;
+		printf("curr_pathing::%s\n", path);
 		if (unlink(path) == -1)
 		{
 			write(2, "Failed to delete temp file\n", 28);
-			free(path);
 			exit (1);
 		}
-		free(path);
-		curr->data = NULL;
-		free(curr);
 		curr = next;
 	}
 	*section = NULL;
@@ -72,6 +68,8 @@ void	gc_clean_paths()
 
 void	gc_cleanup()
 {
+	gc_clean_paths();
+	write(1, "paths cleared\n", 15);
 	clear_enviroment();
 	write(1, "#env cleared#\n", 15);
 	gc_clean_list(SECTION_LA);
@@ -82,8 +80,4 @@ void	gc_cleanup()
 	//write(1, "parser cleared\n", 16);
 	//gc_clean_list(&gc->executer);
 	//write(1, "executer cleared\n", 18);
-	gc_clean_list(SECTION_FORK);
-	write(1, "fork cleared\n", 14);
-	gc_clean_paths();
-	write(1, "paths cleared\n", 15);
 }

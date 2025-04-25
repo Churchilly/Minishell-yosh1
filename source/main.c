@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:01:22 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/21 21:06:03 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/22 19:06:55 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int main(void)
 {
 	char				*input;
 	t_token 			*tokens;
-	t_astnode			*root;
+	//t_astnode			*root;
 	t_enviroment		env;
 	t_garbage_collector gc;
 	
@@ -82,9 +82,9 @@ int main(void)
 	setup_paths();
 	//after this point gc and env does not be sent anywhere
 	//but should be obtained from pointer storage
+	setup_parent_signals();
 	while (1)
 	{
-		setup_parent_signals();
 		//input = get_input(); // checks if input completed
 		input = readline("yosh1> "); // YEAP IT HAS LEAKS THAT WE CANT HANDLE -> https://cboard.cprogramming.com/c-programming/136521-memory-leak-readline.html
 		if (!input)
@@ -112,17 +112,14 @@ int main(void)
 			continue ;
 		}
 		add_history(input);
-		printf("::begining of expander::\n");
 		expander(&tokens);
-		/* deletes quotes and dquotes
-			and gets env variables */
 		printf("<EXPANDER TOKENS>\n");
 		print_tokens(tokens);// for testing purposes
-		root = init_node(tokens);
-		if (!root)
-		{
-			perror("init_node");
-		}
+		//root = init_node(tokens);
+		//if (!root)
+		//{
+		//	perror("init_node");
+		//}
 		//parser(root);
 		//executer(root, &env);
 		//free_asttree(root);
@@ -133,14 +130,7 @@ int main(void)
 void bye(void)
 {
 	t_enviroment	*env;
-	t_garbage_collector	*gc;
 
-	gc = pointer_storage(COLLECTOR, NULL);
-	if (gc->in_fork)
-	{
-		write(1, "NO CLEANUP\n", 12);
-		return ;
-	}
 	rl_clear_history();
 	write(1, "CLEANUP START\n", 15);
 	gc_cleanup();
