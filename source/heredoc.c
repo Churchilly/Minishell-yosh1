@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 04:31:33 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/25 18:45:22 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/29 19:03:05 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,14 @@ static char	**create_docs(t_token *tokens)
 char	*reader(int fd)
 {
 	char	*buffer;
-	char	reader_buffer[1025];
+	char	reader_buffer[256];
 	int		readen;
 	
 	buffer = ft_strdup("\0", SECTION_LA);
 	readen = 1;
 	while (readen)
 	{
-		readen = read(fd, reader_buffer, 1024);
+		readen = read(fd, reader_buffer, 256);
 		if (readen == -1)
 			exit(1);
 		reader_buffer[readen] = '\0';

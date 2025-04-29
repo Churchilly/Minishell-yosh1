@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 23:29:21 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/21 21:33:38 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/27 04:26:08 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	revalue_variable(char *key, char *value)
 
 	node = find_variable(key);
 	if (!node)
-	return (-1);
+		return (-1);
 	tmp = node->value;
 	node->value = ft_strdup(value, SECTION_ENV);
 	free(tmp);

@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:01:22 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/22 19:06:55 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/29 20:17:22 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	free_tokens(t_token *tokens);
 int	setup_parent_signals(void);
 void __attribute__((destructor)) bye(void);
 void	*pointer_storage(int type, void *ptr);
+void	print_asttree(t_astnode *parent);
 
 static int	check_sequence_complete(char *input)
 /*
@@ -68,12 +69,13 @@ subject such as \ (backslash) or ; (semicolon).
 	}
 	return (quote || dquote);
 }
+char	*get_exec_path(char	*command);
 
 int main(void)
 {
 	char				*input;
 	t_token 			*tokens;
-	//t_astnode			*root;
+	t_astnode			*ast;
 	t_enviroment		env;
 	t_garbage_collector gc;
 	
@@ -115,29 +117,20 @@ int main(void)
 		expander(&tokens);
 		printf("<EXPANDER TOKENS>\n");
 		print_tokens(tokens);// for testing purposes
-		//root = init_node(tokens);
-		//if (!root)
-		//{
-		//	perror("init_node");
-		//}
-		//parser(root);
-		//executer(root, &env);
-		//free_asttree(root);
+		ast = create_node(tokens);
+		parser(ast); // <- SEG
+		printf("parser end\n");
+		print_asttree(ast);
+		executer(ast);
+		gc_clean_paths();
 	}
 	exit(env.last_pipe);
 }
 
 void bye(void)
 {
-	t_enviroment	*env;
-
 	rl_clear_history();
 	write(1, "CLEANUP START\n", 15);
 	gc_cleanup();
 	write(1, "CLEANUP END\n", 13);
-	env = (t_enviroment *)pointer_storage(ENVIROMENT, NULL);
-	if (env)
-		exit(env->last_pipe);
-	else
-		exit(1);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_path.c                                        :+:      :+:    :+:   */
+/*   executer_path_finder.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 13:05:09 by obastug           #+#    #+#             */
-/*   Updated: 2025/04/21 21:37:21 by yusudemi         ###   ########.fr       */
+/*   Created: 2025/04/29 18:17:16 by yusudemi          #+#    #+#             */
+/*   Updated: 2025/04/29 19:44:10 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "str.h"
 #include "parser.h"
 
-int is_file_executable(const char *file_path)
+static int is_file_executable(const char *file_path)
 {
     struct stat sb;
 
@@ -30,7 +30,7 @@ int is_file_executable(const char *file_path)
     return (0);
 }
 
-char	*is_file_executable_in_path(char **path_list, char *file_path)
+static char	*is_file_executable_in_path(char **path_list, char *file_path)
 {
 	int		i;
 	char	*final_path;
@@ -39,15 +39,8 @@ char	*is_file_executable_in_path(char **path_list, char *file_path)
 	while (path_list[i])
 	{
 		final_path = ft_strjoin(path_list[i], file_path, SECTION_LA);
-		if (!final_path)
-		{
-			perror("ft_strjoin");
-			return (NULL);
-		}
 		if (is_file_executable(final_path))
 			return (final_path);
-		else
-			free(final_path);
 		i++;
 	}
 	return (NULL);
@@ -59,47 +52,13 @@ char	*search_executable_path(char *file_path)
 	char	**path_list;
 	char	*final_path;
 
+	file_path = ft_strjoin("/", file_path, SECTION_LA);
 	if (is_file_executable(file_path))
 		return (file_path);
-	env_path = getenv("PATH");
-	if (!env_path)
-	{
-		perror("Environment PATH couldnt found.");
-		return (NULL);
-	}
+	env_path = get_variable("PATH");
 	path_list = ft_split(env_path, ':', SECTION_LA);
-	if (!path_list)
-	{
-		perror("ft_split");
-		free(env_path);
-		return (NULL);
-	}
 	final_path = is_file_executable_in_path(path_list, file_path);
-	//free_str_list(path_list);
+	if (!final_path)
+		return (NULL);
 	return (final_path);
-}
-
-// 0 -> if command not found
-// 1 -> if command path successfully found
-// 2 -> node doesnt exists
-int	find_path_for_command(t_astnode *node)
-{
-	char	*path;
-	if (!node)
-		return (2);
-	else if (node->type == NODE_COMMAND)
-	{
-		path = search_executable_path(node->args[0]);
-		if (!path)
-		{
-			printf("invalid path: %s\n", node->args[0]);
-			return (0);
-		}
-		node->path = path;
-	}
-	if (!find_path_for_command(node->left))
-		return (0);
-	if (!find_path_for_command(node->right))
-		return (0);
-	return (1);
 }

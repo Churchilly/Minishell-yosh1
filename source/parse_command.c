@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
+/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 20:26:18 by obastug           #+#    #+#             */
-/*   Updated: 2025/02/26 16:12:19 by obastug          ###   ########.fr       */
+/*   Updated: 2025/04/29 13:55:53 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,7 @@ char	**token_to_command(t_token *tokens)
 	int		word;
 
 	word_count = count_words(tokens);
-	command_list = malloc(sizeof(char *) * (word_count + 1));
-	if (!command_list)
-		return (NULL);
-	command_list[word_count] = '\0';
+	command_list = gc_calloc(sizeof(char *) * (word_count + 1), SECTION_LA);
 	i = 0;
 	word = 0;
 	while (tokens[i].type != TOKEN_EON && tokens[i].value)
@@ -61,8 +58,6 @@ t_astnode	*parse_command(t_astnode *root)
 	if (root->type == UNINITIALIZED)
 	{
 		command_list = token_to_command(root->tokens);
-		if (!command_list)
-			return (NULL);
 		root->args = command_list;
 		root->type = NODE_COMMAND;
 	}

@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 01:05:28 by obastug           #+#    #+#             */
-/*   Updated: 2025/04/22 00:57:10 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/29 19:03:25 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	print_node(t_astnode *node)
 	{
 		printf("node type: command\n");
 		//print_token(node->tokens);
-		printf("execute path: '%s'\n", node->path);
 		print_str_list(node->args);
 	}
 	else if (node->type == NODE_PIPE)

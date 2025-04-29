@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 01:02:35 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/25 18:33:48 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/25 19:02:11 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	gc_clean_list(t_section section_name)
 	}
 	*section = NULL;
 }
+
 void	gc_clean_paths()
 {
 	t_gc_node	*curr;

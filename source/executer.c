@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 01:43:36 by obastug           #+#    #+#             */
-/*   Updated: 2025/03/14 20:57:17 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/29 20:20:39 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,24 @@
 #include <stdlib.h>
 #include <fcntl.h>
 
+
+int	create_redirection(t_astnode *node, int redirect_to, int redirect_from);
+
 extern char **__environ;
 // assuming node is type of NODE_COMMAND
 // return -1 on error
 int	execute_command_node(t_astnode *node)
 {
 	char	**env = __environ;
+	char	*path;
 
-	if (execve(node->path, node->args, env) == -1)
+	path = search_executable_path(node->args[0]);
+	if (!path)
+	{
+		printf("%s: command not found\n", *(node->args));
+		exit(1);
+	}
+	if (execve(path, node->args, env) == -1)
 	{
 		perror("execve");
 		return (-1);
@@ -35,107 +45,57 @@ int	execute_command_node(t_astnode *node)
 	return (0);
 }
 
+void	execute_redirection(t_astnode *node, int red_to, int red_from, int fd)
+{
+	pid_t	pid;
+	
+	if (red_from == STDOUT_FILENO)
+		red_from = fd;
+	if (node->left && node->left->type == NODE_REDIRECT)
+		create_redirection(node->left, red_to, red_from);
+	else if (node->left && node->left->type == NODE_COMMAND)
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			dup2(red_from, STDIN_FILENO);
+			dup2(red_to, STDOUT_FILENO);
+			close(red_from);
+			close(red_to);
+			execute_command_node(node->left);
+			exit(0);
+		}
+		else
+		{
+			close(red_from);
+			close(red_to);
+			waitpid(pid, NULL, 0);
+		}
+	}
+}
+
 //-2 no node
 //-1 no file
-int	execute_redirect(t_astnode *node, int redirect_to, int redirect_from)
+int	create_redirection(t_astnode *node, int redirect_to, int redirect_from)
 {
 	int		fd;
-	pid_t	pid;
+
 	if (!node)
 		return (-2);
 	if (node->redirect_type == TOKEN_GREAT)
 	{
-		if (redirect_to == STDIN_FILENO)
-		{
-			fd = open(node->file, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-			redirect_to = fd;
-			write(fd, NULL, 0);
-		}
-		if (node->left && node->left->type == NODE_REDIRECT)
-		{
-			execute_redirect(node->left, redirect_to, redirect_from);
-		}
-		else if (node->left && node->left->type == NODE_COMMAND)
-		{
-			pid = fork();
-			if (pid == 0)
-			{
-				dup2(redirect_from, STDIN_FILENO);
-				dup2(redirect_to, STDOUT_FILENO);
-				close(redirect_to);
-				close(redirect_to);
-				execute_command_node(node->left);
-				exit(0);
-			}
-			else
-			{
-				close(redirect_to);
-				close(redirect_to);
-				waitpid(pid, NULL, 0);
-			}
-		}
+		fd = open(node->file, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		execute_redirection(node, redirect_to, redirect_from, fd);
 	}
 	if (node->redirect_type == TOKEN_DGREAT)
 	{
-		if (redirect_to == STDIN_FILENO)
-		{
-			fd = open(node->file, O_WRONLY | O_CREAT | O_APPEND, 0666);
-			redirect_to = fd;
-		}
-		if (node->left && node->left->type == NODE_REDIRECT)
-		{
-			execute_redirect(node->left, redirect_to, redirect_from);
-		}
-		else if (node->left && node->left->type == NODE_COMMAND)
-		{
-			pid = fork();
-			if (pid == 0)
-			{
-				dup2(redirect_from, STDIN_FILENO);
-				dup2(redirect_to, STDOUT_FILENO);
-				close(redirect_to);
-				close(redirect_to);
-				execute_command_node(node->left);
-				exit(0);
-			}
-			else
-			{
-				close(redirect_to);
-				close(redirect_to);
-				waitpid(pid, NULL, 0);
-			}
-		}
+		fd = open(node->file, O_WRONLY | O_CREAT | O_APPEND, 0666);
+		execute_redirection(node, redirect_to, redirect_from, fd);
 	}
 	else if (node->redirect_type == TOKEN_LESS)
 	{
-		if (redirect_from == STDOUT_FILENO)
-		{
-			fd = open(node->file, O_RDONLY, 0666);
-			redirect_from = fd;
-		}
-		if (node->left && node->left->type == NODE_REDIRECT)
-		{
-			execute_redirect(node->left, redirect_to, redirect_from);
-		}
-		else if (node->left && node->left->type == NODE_COMMAND)
-		{
-			pid = fork();
-			if (pid == 0)
-			{
-				dup2(redirect_from, STDIN_FILENO);
-				dup2(redirect_to, STDOUT_FILENO);
-				close(redirect_from);
-				close(redirect_to);
-				execute_command_node(node->left);
-				exit(0);
-			}
-			else
-			{
-				close(redirect_from);
-				close(redirect_to);
-				waitpid(pid, NULL, 0);
-			}
-		}
+		fd = open(node->file, O_RDONLY, 0666);
+		execute_redirection(node, redirect_to, redirect_from, fd);
 	}
 	return (0);
 }
@@ -144,23 +104,17 @@ void	execute_pipe(t_astnode *node)
 {
 	int pipedes[2]; // File descriptors for the pipe
 	pid_t	pid;
-		// Create a pipe
 
-	pipe(pipedes);
-	// Fork the process
-	pid = fork();
+	pipe(pipedes); // Create a pipe
+	pid = fork(); // Fork the process
 	if (pid == 0)
 	{
 		close(pipedes[0]); // Close the read end of the pipe
 		dup2(pipedes[1], STDOUT_FILENO); // Redirect stdout to the write end of the pipe
 		if (node && node->left && node->left->type == NODE_PIPE)
-		{
 			execute_pipe(node->left);
-		}
 		else if (node && node->left && node->left->type == NODE_COMMAND)
-		{
 			execute_command_node(node->left);
-		}
 		close(pipedes[1]); // Close the write end after duplicating
 		exit(0);
 	}
@@ -176,27 +130,25 @@ void	execute_pipe(t_astnode *node)
 // 3 -> systemcall error
 // 2 -> execution error
 // 1 -> no node
-int	execute_valid_tree(t_astnode *node)
+void	execute_valid_tree(t_astnode *node)
 {
 	pid_t	pid;
 
-	if (!node)
-		return (1);
 	if (node->type == NODE_PIPE)
 	{
 		pid = fork();
 		if (pid == 0)
-		{
 			execute_pipe(node);
-		}
 		else
-		{
 			waitpid(pid, NULL, 0);
-		}
 	}
 	else if (node->type == NODE_REDIRECT)
 	{
-		execute_redirect(node, STDIN_FILENO, STDOUT_FILENO);
+		pid = fork();
+		if (pid == 0)
+			create_redirection(node, STDIN_FILENO, STDOUT_FILENO);
+		else
+			waitpid(pid, NULL, 0);
 	}
 	else if (node->type == NODE_COMMAND)
 	{
@@ -206,23 +158,11 @@ int	execute_valid_tree(t_astnode *node)
 		else
 			waitpid(pid, NULL, 0);
 	}
-	return (0);
 }
 
 // returns 0 on success
 // returns 1 on error
-int	executer(t_astnode *root, t_enviroment *env)
+void	executer(t_astnode *root)
 {
-	(void)env;
-	if (!find_path_for_command(root))
-	{
-		printf("command not found\n");
-		return (1);
-	}
-	if (execute_valid_tree(root))
-	{
-		perror("execute_valid_tree");
-		return (1);
-	}
-	return (0);
+	execute_valid_tree(root);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
+/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:00:14 by obastug           #+#    #+#             */
-/*   Updated: 2025/02/26 13:41:27 by obastug          ###   ########.fr       */
+/*   Updated: 2025/04/29 18:12:20 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,29 @@
 
 typedef enum
 {
+	REDIRECT_LESS,
+	REDIRECT_GREAT,
+	REDIRECT_DGREAT
+}	t_redirect_type;
+
+typedef enum
+{
 	UNINITIALIZED,
 	NODE_COMMAND,
 	NODE_REDIRECT,
 	NODE_PIPE
-} e_NodeType;
+} e_node_type;
 
 typedef struct s_astnode
 {
-	e_NodeType				type;
-	t_token					*tokens;
-	struct s_astnode		*left;
-	struct s_astnode		*right;
-	char					**args;
-	char					*path;
-	char					*file;
-	int						redirect_type;
+	e_node_type			type;
+	t_token				*tokens;
+	struct s_astnode	*left;
+	struct s_astnode	*right;
+	char				**args;
+	char				*file;
+	TokenType			redirect_type;
 } t_astnode;
 
-void		print_asttree(t_astnode *parent);
-void		print_token(t_token *tokens);
-t_astnode	*init_node(t_token *token);
-void		print_node(t_astnode *node);
-t_astnode	*parse_pipe(t_astnode *root);
-t_astnode	*parse_redirect(t_astnode *root);
-t_astnode	*parse_command(t_astnode *root);
-t_astnode	*parser(t_astnode *root);
-void		free_asttree(t_astnode *root);
+void	parser(t_astnode *root);
+t_astnode	*create_node(t_token *tokens);

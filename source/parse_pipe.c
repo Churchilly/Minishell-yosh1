@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
+/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:56:21 by obastug           #+#    #+#             */
-/*   Updated: 2025/02/22 19:31:28 by obastug          ###   ########.fr       */
+/*   Updated: 2025/04/29 14:00:52 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,13 @@
 #include "parser.h"
 #include <stdio.h>
 
+
 //when it sees a pipe, defines current
 //left and right nodes defined as follows
 t_astnode	*divide_pipe(t_astnode *node, int i)
 {
-	node->left = init_node(node->tokens);
-	if (!node->left)
-		return (NULL);
-	node->right = init_node(node->tokens + i + 1);
-	if (!node->right)
-		return (free(node->left), NULL);
+	node->left = create_node(node->tokens);
+	node->right = create_node(node->tokens + i + 1);
 	node->type = NODE_PIPE;
 	node->tokens[i].type = TOKEN_EON;
 	return (node);

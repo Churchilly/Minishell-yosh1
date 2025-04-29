@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirect.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
+/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 13:59:22 by obastug           #+#    #+#             */
-/*   Updated: 2025/02/23 01:05:57 by obastug          ###   ########.fr       */
+/*   Updated: 2025/04/29 14:00:51 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+
 //when a redirection comes by
 t_astnode	*redirect(t_astnode *node, int i)
 {
-	node->left = init_node(node->tokens);
-	if (!node->left)
-		return (NULL);
+	node->left = create_node(node->tokens);
 	node->file = node->tokens[i + 1].value;
 	node->redirect_type = node->tokens[i].type;
 	node->type = NODE_REDIRECT;
@@ -41,7 +40,6 @@ t_astnode	*parse_redirect(t_astnode *root)
 			&& root->tokens[i].value)
 	{
 		if (root->tokens[i].type == TOKEN_DGREAT
-				|| root->tokens[i].type == TOKEN_DLESS
 				|| root->tokens[i].type == TOKEN_LESS
 				|| root->tokens[i].type == TOKEN_GREAT)
 			breakpoint = i;

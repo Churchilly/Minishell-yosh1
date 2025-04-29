@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 20:08:32 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/25 18:08:29 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/04/28 16:39:52 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ typedef enum
 {
 	SECTION_ENV,
 	SECTION_LA,
-	SECTION_PATHS,
-	SECTION_FORK
+	SECTION_PATHS
 }	t_section;
 
 typedef struct s_gc_node
@@ -39,9 +38,6 @@ typedef struct	s_garbage_collector
 	t_enviroment	*env;
 	t_gc_node		*lexical_analysis;
 	t_gc_node		*paths;
-	t_gc_node		*asttree;
-	t_gc_node		*parser;
-	t_gc_node		*executer;
 }		t_garbage_collector;
 
 void	gc_setup(t_garbage_collector *gc, t_enviroment *env);
