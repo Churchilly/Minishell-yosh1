@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 20:08:32 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/28 16:39:52 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/09 22:41:58 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct	s_garbage_collector
 	t_enviroment	*env;
 	t_gc_node		*lexical_analysis;
 	t_gc_node		*paths;
+	int				in_fork;
 }		t_garbage_collector;
 
 void	gc_setup(t_garbage_collector *gc, t_enviroment *env);

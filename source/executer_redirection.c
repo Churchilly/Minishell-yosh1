@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:41:30 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/30 19:22:06 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/11 03:58:43 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,42 +16,51 @@
 #include <stdlib.h>
 #include <fcntl.h>
 
+int	safe_fork();
 void	execute_command(t_astnode *node);
 static void	find_redirection_type(t_astnode *node, int red_to, int red_from);
+char	*search_executable_path(char *file_path);
 
-static void	process_redirection(t_astnode *node, int red_to, int red_from, int fd)
+static void	process_redirection(t_astnode *node, int red_to, int red_from)
 {
 	pid_t	pid;
+	char	*path;
 	
-	if (red_from == STDOUT_FILENO)
-		red_from = fd;
 	if (node->left && node->left->type == NODE_REDIRECT)
 		find_redirection_type(node->left, red_to, red_from);
 	else if (node->left && node->left->type == NODE_COMMAND)
 	{
-		pid = fork();
+		pid = safe_fork();
 		if (pid == 0)
 		{
+			path = search_executable_path(node->left->args[0]);
+			if (!path)
+			{
+				printf("%s: command not found\n", *(node->left->args));
+				exit(1);
+			}
 			dup2(red_from, STDIN_FILENO);
 			dup2(red_to, STDOUT_FILENO);
-			close(red_from);
-			close(red_to);
 			execute_command(node->left);
+			exit(0);
 		}
 		else
 		{
-			close(red_from);
-			close(red_to);
 			waitpid(pid, NULL, 0);
 		}
 	}
 }
 
-static void	safe_open(int *fd, const char *__file, int __oflag)
+static void	safe_open(int *fd, int *red, const char *__file, int __oflag)
 {
 	(*fd) = open(__file, __oflag, 0666);
 	if ((*fd) == -1)
+	{
+		perror("error opening file");
 		exit(1);
+	}
+	if ((*red) == STDIN_FILENO || (*red) == STDOUT_FILENO)
+		(*red) = (*fd);
 }
 
 static void	find_redirection_type(t_astnode *node, int red_to, int red_from)
@@ -62,20 +71,18 @@ static void	find_redirection_type(t_astnode *node, int red_to, int red_from)
 		return ;
 	if (node->redirect_type == TOKEN_GREAT)
 	{
-		safe_open(&fd, node->file, O_WRONLY | O_CREAT | O_TRUNC);
-		process_redirection(node, red_to, red_from, fd);
+		safe_open(&fd, &red_to, node->file, O_WRONLY | O_CREAT | O_TRUNC);
 	}
 	else if (node->redirect_type == TOKEN_DGREAT)
 	{
-		safe_open(&fd, node->file, O_WRONLY | O_CREAT | O_APPEND);
-		process_redirection(node, red_to, red_from, fd);
+		safe_open(&fd, &red_to, node->file, O_WRONLY | O_CREAT | O_APPEND);
 	}
 	else if (node->redirect_type == TOKEN_LESS)
 	{
-		safe_open(&fd, node->file, O_RDONLY);
-		process_redirection(node, red_to, red_from, fd);
+		safe_open(&fd, &red_from, node->file, O_RDONLY);
 	}
-	exit(0);
+	process_redirection(node, red_to, red_from);
+	close(fd);
 }
 
 void	execute_redirection(t_astnode *node)

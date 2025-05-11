@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 04:31:33 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/29 19:03:05 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/09 22:51:07 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 char	*new_document(char *eof);
 int	setup_heredoc_signals(void);
 void	*pointer_storage(int type, void *ptr);
+int	safe_fork();
 
 static int	count_heredocs(t_token *tokens)
 {
@@ -135,12 +136,7 @@ int	expand_heredoc(t_token *tokens)
 		perror("pipe");
 		exit(1);
 	}
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("fork");
-		exit(1);
-	}
+	pid = safe_fork();
 	if (pid == 0)
 		child_process(tokens, pipe_fd);
 	else

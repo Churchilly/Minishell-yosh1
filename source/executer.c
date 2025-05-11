@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 01:43:36 by obastug           #+#    #+#             */
-/*   Updated: 2025/04/30 19:17:05 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/09 22:54:12 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 
+int	safe_fork();
 
 void	execute_pipe(t_astnode *node);
 void	execute_redirection(t_astnode *node);
@@ -34,9 +35,7 @@ static void	execute_valid_tree(void (*execute_func)(t_astnode *), t_astnode *nod
 {
 	pid_t	pid;
 
-	pid = fork();
-	if (pid == -1)
-		exit(1); // error handling
+	pid = safe_fork();
 	if (pid == 0)
 		execute_func(node);
 	else

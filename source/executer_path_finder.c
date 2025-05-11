@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 18:17:16 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/29 19:44:10 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/11 03:40:47 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static char	*is_file_executable_in_path(char **path_list, char *file_path)
 	i = 0;
 	while (path_list[i])
 	{
+		file_path = ft_strjoin("/", file_path, SECTION_LA);
 		final_path = ft_strjoin(path_list[i], file_path, SECTION_LA);
 		if (is_file_executable(final_path))
 			return (final_path);
@@ -52,7 +53,6 @@ char	*search_executable_path(char *file_path)
 	char	**path_list;
 	char	*final_path;
 
-	file_path = ft_strjoin("/", file_path, SECTION_LA);
 	if (is_file_executable(file_path))
 		return (file_path);
 	env_path = get_variable("PATH");

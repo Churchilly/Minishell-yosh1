@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:40:45 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/30 19:21:27 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/09 22:55:24 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <fcntl.h>
 #include <stdlib.h>
 
+int	safe_fork();
 void	execute_command(t_astnode *node);
 
 void	execute_pipe(t_astnode *node)
@@ -23,9 +24,7 @@ void	execute_pipe(t_astnode *node)
 	pid_t	pid;
 
 	pipe(pipedes); // Create a pipe
-	pid = fork(); // Fork the process
-	if (pid == -1)
-		exit(1);
+	pid = safe_fork(); // Fork the process
 	if (pid == 0)
 	{
 		close(pipedes[0]); // Close the read end of the pipe

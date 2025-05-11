@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 20:07:37 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/25 18:27:37 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/09 22:52:56 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	**gc_get_section(t_section section)
 		return ((void **)&gc->env);
 	if (section == SECTION_LA)
 		return ((void **)&gc->lexical_analysis);
-	if (section == SECTION_PATHS)
+	if (section == SECTION_PATHS && !(gc->in_fork))
 		return ((void **)&gc->paths);
 	return (NULL);
 }
