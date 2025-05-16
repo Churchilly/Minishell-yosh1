@@ -39,8 +39,10 @@ static void	process_redirection(t_astnode *node, int red_to, int red_from)
 				printf("%s: command not found\n", *(node->left->args));
 				exit(1);
 			}
-			dup2(red_from, STDIN_FILENO);
-			dup2(red_to, STDOUT_FILENO);
+			if (red_from != STDIN_FILENO)
+				dup2(red_from, STDIN_FILENO);
+			if (red_to   != STDOUT_FILENO)
+				dup2(red_to,   STDOUT_FILENO);
 			execute_command(node->left);
 			exit(0);
 		}
@@ -87,5 +89,5 @@ static void	find_redirection_type(t_astnode *node, int red_to, int red_from)
 
 void	execute_redirection(t_astnode *node)
 {
-	find_redirection_type(node, STDIN_FILENO, STDOUT_FILENO);
+	find_redirection_type(node, STDOUT_FILENO, STDIN_FILENO);
 }
