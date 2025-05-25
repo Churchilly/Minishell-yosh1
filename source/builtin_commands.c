@@ -17,7 +17,7 @@
 #include <stdio.h>
 #include "enviroment.h"
 
-int	echo(char	**args)
+int	echo(char **args)
 {
 	int	i;
 
@@ -69,20 +69,46 @@ int	pwd(char **args, t_enviroment *env)
 	return (0);
 }
 
-void	ft_export(char	**args)
+void	ft_export(char **args)
 {
-	(void)args;
-	// use find_variable if it exist use revalue_variable
-	// if itsnt use add_variable
-	return ;
+	int		i;
+	char	*equal_pos;
+	char	*key;
+	char	*value;
+
+	i = 1;
+	while (args[i])
+	{
+		equal_pos = ft_strchr(args[i], '=');
+		if (equal_pos)
+		{
+			key = ft_substr(args[i], 0, equal_pos - args[i], SECTION_ENV);
+			value = ft_strdup(equal_pos + 1, SECTION_ENV);
+			if (!find_variable(key))
+				add_variable(key, value);
+			else
+				revalue_variable(key, value);
+			free(key);
+			free(value);
+		}
+		i++;
+	}
 }
 
-void	unset(char	**args)
+
+void	unset(char **args)
 {
-	(void)args;
-	//use delete_variable command after find_variable xd
-	return ;
+	int	i;
+
+	i = 1;
+	while (args[i])
+	{
+		if (find_variable(args[i]))
+			delete_variable(args[i]);
+		i++;
+	}
 }
+
 
 void	printenv(char	**args, t_enviroment *env)
 {
