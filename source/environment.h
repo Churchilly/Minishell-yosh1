@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 06:08:59 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/21 17:00:10 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:51:29 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ typedef struct s_environment
 }		t_environment;
 
 void	setup_environment(void);
-void	setup_paths(void);
 char	*get_cwd(void);
 char	*get_variable(char *key);
 t_node	*find_variable(char *key);

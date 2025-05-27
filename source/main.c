@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:01:22 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/29 20:17:22 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:51:23 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	setup_parent_signals(void);
 void __attribute__((destructor)) bye(void);
 void	*pointer_storage(int type, void *ptr);
 void	print_asttree(t_astnode *parent);
+char	*get_exec_path(char	*command);
 
 static int	check_sequence_complete(char *input)
 /*
@@ -69,7 +70,6 @@ subject such as \ (backslash) or ; (semicolon).
 	}
 	return (quote || dquote);
 }
-char	*get_exec_path(char	*command);
 
 int main(void)
 {
@@ -81,7 +81,6 @@ int main(void)
 	
 	gc_setup(&gc, &env);
 	setup_environment();
-	setup_paths();
 	//after this point gc and env does not be sent anywhere
 	//but should be obtained from pointer storage
 	setup_parent_signals();
