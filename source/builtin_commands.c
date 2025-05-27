@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 02:19:21 by obastug           #+#    #+#             */
-/*   Updated: 2025/02/27 19:08:37 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/26 12:30:15 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "enviroment.h"
+
+char	*ft_substr(char const *s, unsigned int start, size_t len,
+	t_section section);
 
 int	echo(char **args)
 {
