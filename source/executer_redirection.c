@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:41:30 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/11 03:58:43 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:21:19 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <sys/wait.h>
 #include <stdlib.h>
 #include <fcntl.h>
+#include <errno.h>
 
 int			safe_fork(void);
 void		execute_command(t_astnode *node);
@@ -63,7 +64,7 @@ static void	safe_open(int *fd, int *red, const char *__file, int __oflag)
 	(*fd) = open(__file, __oflag, 0666);
 	if ((*fd) == -1)
 	{
-		perror("error opening file");
+		printf("open() failed: %d.\n", errno);
 		exit(1);
 	}
 	if ((*red) == STDIN_FILENO || (*red) == STDOUT_FILENO)

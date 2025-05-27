@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 22:22:10 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/22 02:00:59 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:14:36 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	handle_sigint_child_heredoc(int sig)
 	t_environment *env;
 
 	g_signal = sig;
-	env = pointer_storage(environment, NULL);
+	env = pointer_storage(ENVIRONMENT, NULL);
 	env->last_pipe = 130;
 	exit(0);
 }

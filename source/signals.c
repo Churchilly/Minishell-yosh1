@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 00:12:15 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/18 20:15:51 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:15:14 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	handle_sigint(int sig)
 	t_environment *env;
 
 	(void)sig;
-	env = pointer_storage(environment, NULL);
+	env = pointer_storage(ENVIRONMENT, NULL);
 	env->last_pipe = 130;
 	write(1, "\n", 1);
 	rl_on_new_line();

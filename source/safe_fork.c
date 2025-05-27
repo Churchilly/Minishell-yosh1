@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 22:44:07 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/09 22:59:54 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:18:46 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <errno.h>
 
 void	*pointer_storage(int type, void *ptr);
 
@@ -26,7 +27,7 @@ int	safe_fork()
 	pid = fork();
 	if (pid == -1)
 	{
-		perror("Fork error.");
+		printf("fork() failed: %d.\n", errno);
 		exit(1);
 	}
 	gc = pointer_storage(COLLECTOR, NULL);

@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 20:08:32 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/09 22:41:58 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:33:34 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,31 +20,35 @@
 #  define COLLECTOR 2
 # endif
 
-typedef enum
+typedef enum e_section				t_section;
+typedef struct s_gc_node			t_gc_node;
+typedef struct s_garbage_collector	t_garbage_collector;
+
+enum	e_section
 {
 	SECTION_ENV,
 	SECTION_LA,
 	SECTION_PATHS
-}	t_section;
+};
 
-typedef struct s_gc_node
+struct s_gc_node
 {
 	void				*data;
 	struct s_gc_node	*next;
-}		t_gc_node;
+};
 
-typedef struct	s_garbage_collector
+struct	s_garbage_collector
 {
 	t_environment	*env;
 	t_gc_node		*lexical_analysis;
 	t_gc_node		*paths;
 	int				in_fork;
-}		t_garbage_collector;
+};
 
 void	gc_setup(t_garbage_collector *gc, t_environment *env);
 void	gc_add(void *new, t_section section_name);
 void	*gc_calloc(size_t size, t_section section_name);
 void	gc_clean_list(t_section section_name);
-void	gc_clean_paths();
-void	gc_cleanup();
+void	gc_clean_paths(void);
+void	gc_cleanup(void);
 #endif

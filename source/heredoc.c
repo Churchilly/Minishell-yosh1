@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 04:31:33 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/09 22:51:07 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:17:22 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <errno.h>
 #include <readline/readline.h>
 
 char	*new_document(char *eof);
@@ -49,13 +50,11 @@ static char	**create_docs(t_token *tokens)
 	count = count_heredocs(tokens);
 	paths = (char **)gc_calloc((sizeof(char *) * (count + 1)), SECTION_LA);
 	eof = NULL;
-	i = 0;
-	while (i < count)
+	i = -1;
+	while (++i < count)
 	{
 		while ((tokens)->type != TOKEN_DLESS)
-		{
 			tokens++;
-		}
 		eof = (tokens + 1)->value;
 		if (!eof)
 		{
@@ -64,7 +63,6 @@ static char	**create_docs(t_token *tokens)
 		}
 		paths[i] = new_document(eof);
 		tokens++;
-		i++;
 	}
 	return (paths);
 }
@@ -81,7 +79,10 @@ char	*reader(int fd)
 	{
 		readen = read(fd, reader_buffer, 256);
 		if (readen == -1)
+		{
+			printf("read() failed: %d\n", errno);
 			exit(1);
+		}
 		reader_buffer[readen] = '\0';
 		buffer = ft_strjoin(buffer, reader_buffer, SECTION_ENV);
 	}

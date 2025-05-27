@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 20:23:10 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/27 17:51:06 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:26:42 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "str.h"
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <errno.h>
 
 void	*pointer_storage(int type, void *ptr);
 
@@ -24,7 +26,10 @@ static void	setup_paths(void)
 	
 	tmp = find_variable("PWD");
 	if (!getcwd(cwd, sizeof(cwd)))
+	{
+		printf("getcwd() failed: %d\n", errno);
 		exit(1);
+	}
 	if (tmp)
 		revalue_variable("PWD", cwd);
 	else

@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 01:02:35 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/09 22:51:57 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:30:40 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	gc_clean_list(t_section section_name)
 	t_gc_node	*curr;
 	t_gc_node	*next;
 	t_gc_node	**section;
-	
+
 	section = (t_gc_node **)gc_get_section(section_name);
 	if (!(*section))
 		return ;
@@ -41,13 +41,13 @@ void	gc_clean_list(t_section section_name)
 	*section = NULL;
 }
 
-void	gc_clean_paths()
+void	gc_clean_paths(void)
 {
 	t_gc_node	*curr;
 	t_gc_node	*next;
 	char		*path;
 	t_gc_node	**section;
-	
+
 	section = (t_gc_node **)gc_get_section(SECTION_PATHS);
 	if (!(*section))
 		return ;
@@ -67,7 +67,7 @@ void	gc_clean_paths()
 	*section = NULL;
 }
 
-void	gc_cleanup()
+void	gc_cleanup(void)
 {
 	gc_clean_paths();
 	write(1, "paths cleared\n", 15);
@@ -75,10 +75,4 @@ void	gc_cleanup()
 	write(1, "#env cleared#\n", 15);
 	gc_clean_list(SECTION_LA);
 	write(1, "lexical analysis cleared\n", 26);
-	//gc_clean_list(&gc->asttree);
-	//write(1, "asttree cleared\n", 17);
-	//gc_clean_list(&gc->parser);
-	//write(1, "parser cleared\n", 16);
-	//gc_clean_list(&gc->executer);
-	//write(1, "executer cleared\n", 18);
 }
