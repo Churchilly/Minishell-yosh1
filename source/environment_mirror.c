@@ -6,11 +6,11 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:24:35 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/27 14:17:27 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:56:12 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "enviroment.h"
+#include "environment.h"
 #include <stddef.h>
 #include <stdio.h>
 #include "garbage_collector.h"
@@ -58,20 +58,17 @@ char	*join_env_variable(char *key, char *value)
 
 char	**env_mirror()
 {
-	t_enviroment	*env;
+	t_environment	*env;
 	t_node			*head;
 	char			**mirror;
 	char			**ret;
 	
-	env = (t_enviroment *)pointer_storage(ENVIROMENT, NULL);
+	env = (t_environment *)pointer_storage(ENVIRONMENT, NULL);
 	head = env->top;
 	mirror = gc_calloc(sizeof(char *) * (count_variables(head) + 1), SECTION_LA);
 	ret = mirror;
 	while (head->next)
 	{
-		printf("key::%s\n",head->key);
-		printf("value::%s\n",head->value);
-		printf("joined::{%s}\n",join_env_variable(head->key, head->value));
 		*mirror = join_env_variable(head->key, head->value);
 		head = head->next;
 		mirror++;
