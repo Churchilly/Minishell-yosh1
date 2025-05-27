@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:42:39 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/30 19:21:03 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/26 12:34:29 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 // assuming node is type of NODE_COMMAND
 // return -1 on error
+// every fucking command must update _= (enviroment variable). 
 char	*search_executable_path(char *file_path);
 
 void	execute_command(t_astnode *node)
