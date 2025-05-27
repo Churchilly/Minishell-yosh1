@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifdef BUILTINS_H
+#ifndef BUILTINS_H
 # define BUILTINS_H
 
 int		pwd(char **args);

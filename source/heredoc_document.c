@@ -14,7 +14,7 @@ extern volatile int g_signal;
 
 #include <readline/readline.h>
 #include "lexer.h"
-#include "enviroment.h"
+#include "environment.h"
 #include "str.h"
 #include <stdlib.h>
 #include <unistd.h>

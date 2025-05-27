@@ -11,27 +11,27 @@
 /* ************************************************************************** */
 
 #include "garbage_collector.h"
-#include "enviroment.h"
+#include "environment.h"
 #include <stdio.h>
 
 void	*pointer_storage(int type, void *ptr)
 {
 	static void	*collector;
-	static void	*enviroment;
+	static void	*environment;
 
 	if (!ptr)
 	{
 		if (type == COLLECTOR)
 			return (collector);
-		else if (type == ENVIROMENT)
-			return (enviroment);
+		else if (type == environment)
+			return (environment);
 	}
 	else
 	{
 		if (type == COLLECTOR)
 			collector = ptr;
-		else if (type == ENVIROMENT)
-			enviroment = ptr;
+		else if (type == environment)
+			environment = ptr;
 	}
 	return (NULL);
 }

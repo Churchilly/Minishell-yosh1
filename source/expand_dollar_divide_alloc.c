@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "lexer.h"
-#include "enviroment.h"
+#include "environment.h"
 #include "garbage_collector.h"
 #include "str.h"
 #include <stdlib.h>
@@ -70,6 +70,6 @@ t_token	*allocate_divided(t_token *tokens)
 	t_token	*ret;
 
 	size = get_divided_size(tokens);
-	ret = (t_token *)gc_calloc((sizeof(t_token) * (size+1)), SECTION_LA);
+	ret = (t_token *)gc_calloc((sizeof(t_token) * (size + 1)), SECTION_LA);
 	return (ret);
 }

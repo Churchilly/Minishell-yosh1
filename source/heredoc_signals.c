@@ -18,16 +18,16 @@ extern volatile int g_signal;
 #include <readline/readline.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include "enviroment.h"
+#include "environment.h"
 
 void	*pointer_storage(int type, void *ptr);
 
 static void	handle_sigint_child_heredoc(int sig)
 {
-	t_enviroment *env;
+	t_environment *env;
 
 	g_signal = sig;
-	env = pointer_storage(ENVIROMENT, NULL);
+	env = pointer_storage(environment, NULL);
 	env->last_pipe = 130;
 	exit(0);
 }

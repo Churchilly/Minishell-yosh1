@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   enviroment.c                                       :+:      :+:    :+:   */
+/*   environment.c                                       :+:      :+:    :+:  */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,16 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "enviroment.h"
+#include "environment.h"
 #include "str.h"
 #include <unistd.h>
 #include <stdio.h>
 
-extern volatile int g_signal;
+extern volatile int	g_signal;
 
 void	*pointer_storage(int type, void *ptr);
 
-char	*get_cwd()
+char	*get_cwd(void)
 {
 	t_node			*tmp;
 
@@ -31,12 +31,12 @@ char	*get_cwd()
 
 char	*get_variable(char *key)
 {
-	t_enviroment	*env;
+	t_environment	*env;
 	t_node			*tmp;
 
 	if (!key)
 		return (NULL);
-	env = (t_enviroment *)pointer_storage(ENVIROMENT, NULL);
+	env = (t_environment *)pointer_storage(ENVIRONMENT, NULL);
 	if (ft_strcmp(key, "?"))
 		return (ft_itoa(env->last_pipe, SECTION_ENV));
 	tmp = find_variable(key);
@@ -44,4 +44,3 @@ char	*get_variable(char *key)
 		return (ft_strdup("", SECTION_ENV));
 	return (ft_strdup(tmp->value, SECTION_ENV));
 }
-

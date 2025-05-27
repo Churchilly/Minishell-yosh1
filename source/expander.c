@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "lexer.h"
-#include "enviroment.h"
+#include "environment.h"
 #include "str.h"
 #include <stdlib.h>
 

@@ -16,7 +16,7 @@ extern volatile int g_signal;
 #include <stddef.h>
 #include <unistd.h>
 #include <readline/readline.h>
-#include "enviroment.h"
+#include "environment.h"
 /*
    The termios structure
        Many of the functions described here have a termios_p argument that is a pointer to a
@@ -32,10 +32,10 @@ void	*pointer_storage(int type, void *ptr);
 
 static void	handle_sigint(int sig)
 {
-	t_enviroment *env;
+	t_environment *env;
 
 	(void)sig;
-	env = pointer_storage(ENVIROMENT, NULL);
+	env = pointer_storage(environment, NULL);
 	env->last_pipe = 130;
 	write(1, "\n", 1);
 	rl_on_new_line();

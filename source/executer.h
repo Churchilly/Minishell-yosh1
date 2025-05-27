@@ -13,7 +13,8 @@
 #ifndef EXECUTER_H
 # define EXECUTER_H
 
-# include "enviroment.h"
+# include "environment.h"
+
 void	executer(t_astnode *root);
 
 #endif

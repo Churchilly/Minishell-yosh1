@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "enviroment.h"
+#include "environment.h"
 #include "garbage_collector.h"
 #include <stdlib.h>
 #include "str.h"

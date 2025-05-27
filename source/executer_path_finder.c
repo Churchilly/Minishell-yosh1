@@ -18,16 +18,16 @@
 #include "str.h"
 #include "parser.h"
 
-static int is_file_executable(const char *file_path)
+static int	is_file_executable(const char *file_path)
 {
-    struct stat sb;
+	struct stat	sb;
 
 	if (!ft_strchr(file_path, '/'))
 		return (0);
-    if (stat(file_path, &sb) == 0 && S_ISREG(sb.st_mode)
-			&& (sb.st_mode & S_IXUSR))
-        return (1);
-    return (0);
+	if (stat(file_path, &sb) == 0 && S_ISREG(sb.st_mode)
+		&& (sb.st_mode & S_IXUSR))
+		return (1);
+	return (0);
 }
 
 static char	*is_file_executable_in_path(char **path_list, char *file_path)

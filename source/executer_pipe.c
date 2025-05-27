@@ -15,29 +15,29 @@
 #include <fcntl.h>
 #include <stdlib.h>
 
-int	safe_fork();
+int		safe_fork(void);
 void	execute_command(t_astnode *node);
 
 void	execute_pipe(t_astnode *node)
 {
-	int pipedes[2]; // File descriptors for the pipe
+	int		pipedes[2];
 	pid_t	pid;
 
-	pipe(pipedes); // Create a pipe
-	pid = safe_fork(); // Fork the process
+	pipe(pipedes);
+	pid = safe_fork();
 	if (pid == 0)
 	{
-		close(pipedes[0]); // Close the read end of the pipe
-		dup2(pipedes[1], STDOUT_FILENO); // Redirect stdout to the write end of the pipe
+		close(pipedes[0]);
+		dup2(pipedes[1], STDOUT_FILENO);
 		if (node && node->left && node->left->type == NODE_PIPE)
 			execute_pipe(node->left);
 		else if (node && node->left && node->left->type == NODE_COMMAND)
 			execute_command(node->left);
-		close(pipedes[1]); // Close the write end after duplicating
+		close(pipedes[1]);
 		exit(0);
 	}
-	close(pipedes[1]); // Close the write end of the pipe
-	dup2(pipedes[0], STDIN_FILENO); // Redirect stdin to the read end of the pipe
+	close(pipedes[1]);
+	dup2(pipedes[0], STDIN_FILENO);
 	execute_command(node->right);
-	close(pipedes[0]); // Close the read end after duplicating
+	close(pipedes[0]);
 }

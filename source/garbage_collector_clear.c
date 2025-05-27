@@ -71,7 +71,7 @@ void	gc_cleanup()
 {
 	gc_clean_paths();
 	write(1, "paths cleared\n", 15);
-	clear_enviroment();
+	clear_environment();
 	write(1, "#env cleared#\n", 15);
 	gc_clean_list(SECTION_LA);
 	write(1, "lexical analysis cleared\n", 26);

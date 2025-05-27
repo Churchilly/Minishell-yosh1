@@ -21,9 +21,9 @@ char	*search_executable_path(char *file_path);
 
 void	execute_command(t_astnode *node)
 {
-	char	**env = __environ;
 	char	*path;
 
+	
 	path = search_executable_path(node->args[0]);
 	if (!path)
 	{

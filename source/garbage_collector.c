@@ -34,12 +34,12 @@ void	**gc_get_section(t_section section)
 	return (NULL);
 }
 
-void	gc_setup(t_garbage_collector *gc, t_enviroment *env)
+void	gc_setup(t_garbage_collector *gc, t_environment *env)
 {
 	ft_bzero(gc, sizeof(t_garbage_collector));
-	ft_bzero(env, sizeof(t_enviroment));
+	ft_bzero(env, sizeof(t_environment));
 	gc->env = env;
-	pointer_storage(ENVIROMENT, env);
+	pointer_storage(environment, env);
 	pointer_storage(COLLECTOR, gc);
 }
 void	gc_add(void *new, t_section section_name)

@@ -23,7 +23,7 @@
 #include <unistd.h>
 #include "executer.h"
 #include "str.h"
-#include "enviroment.h"
+#include "environment.h"
 #include "garbage_collector.h"
 
 volatile int g_signal = 0;
@@ -35,7 +35,7 @@ forbidden.
 */
 
 void	print_tokens(t_token *tokens); // for testing purposes
-void	print_env(t_enviroment *env); // for testing purposes
+void	print_env(t_environment *env); // for testing purposes
 void	free_tokens(t_token *tokens);
 int	setup_parent_signals(void);
 void __attribute__((destructor)) bye(void);
@@ -76,11 +76,11 @@ int main(void)
 	char				*input;
 	t_token 			*tokens;
 	t_astnode			*ast;
-	t_enviroment		env;
+	t_environment		env;
 	t_garbage_collector gc;
 	
 	gc_setup(&gc, &env);
-	setup_enviroment();
+	setup_environment();
 	setup_paths();
 	//after this point gc and env does not be sent anywhere
 	//but should be obtained from pointer storage

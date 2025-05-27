@@ -16,16 +16,24 @@
 #include <stdlib.h>
 #include <fcntl.h>
 
-int	safe_fork();
-void	execute_command(t_astnode *node);
+int			safe_fork(void);
+void		execute_command(t_astnode *node);
 static void	find_redirection_type(t_astnode *node, int red_to, int red_from);
-char	*search_executable_path(char *file_path);
+char		*search_executable_path(char *file_path);
+
+void	create_dup(int red_to, int red_from)
+{
+	if (red_from != STDIN_FILENO)
+		dup2(red_from, STDIN_FILENO);
+	if (red_to != STDOUT_FILENO)
+		dup2(red_to, STDOUT_FILENO);
+}
 
 static void	process_redirection(t_astnode *node, int red_to, int red_from)
 {
 	pid_t	pid;
 	char	*path;
-	
+
 	if (node->left && node->left->type == NODE_REDIRECT)
 		find_redirection_type(node->left, red_to, red_from);
 	else if (node->left && node->left->type == NODE_COMMAND)
@@ -39,10 +47,7 @@ static void	process_redirection(t_astnode *node, int red_to, int red_from)
 				printf("%s: command not found\n", *(node->left->args));
 				exit(1);
 			}
-			if (red_from != STDIN_FILENO)
-				dup2(red_from, STDIN_FILENO);
-			if (red_to   != STDOUT_FILENO)
-				dup2(red_to,   STDOUT_FILENO);
+			create_dup(red_to, red_from);
 			execute_command(node->left);
 			exit(0);
 		}

@@ -14,7 +14,7 @@
 # define GARBAGE_COLLECTOR_H
 
 # include <stddef.h>
-# include "enviroment.h"
+# include "environment.h"
 
 # ifndef COLLECTOR
 #  define COLLECTOR 2
@@ -35,13 +35,13 @@ typedef struct s_gc_node
 
 typedef struct	s_garbage_collector
 {
-	t_enviroment	*env;
+	t_environment	*env;
 	t_gc_node		*lexical_analysis;
 	t_gc_node		*paths;
 	int				in_fork;
 }		t_garbage_collector;
 
-void	gc_setup(t_garbage_collector *gc, t_enviroment *env);
+void	gc_setup(t_garbage_collector *gc, t_environment *env);
 void	gc_add(void *new, t_section section_name);
 void	*gc_calloc(size_t size, t_section section_name);
 void	gc_clean_list(t_section section_name);

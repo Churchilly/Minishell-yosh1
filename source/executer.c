@@ -16,22 +16,17 @@
 #include <errno.h>
 #include <stdio.h>
 #include <sys/wait.h>
-#include "enviroment.h"
+#include "environment.h"
 #include <stdlib.h>
 #include <fcntl.h>
 
-int	safe_fork();
-
+int		safe_fork(void);
 void	execute_pipe(t_astnode *node);
 void	execute_redirection(t_astnode *node);
 void	execute_command(t_astnode *node);
 
-extern char **__environ;
-
-// 3 -> systemcall error
-// 2 -> execution error
-// 1 -> no node
-static void	execute_valid_tree(void (*execute_func)(t_astnode *), t_astnode *node)
+static void	execute_valid_tree(void (*execute_func)(t_astnode *),
+		t_astnode *node)
 {
 	pid_t	pid;
 

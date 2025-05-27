@@ -40,7 +40,7 @@ void	print_tokens(t_token *tokens) // for testing purposes
 	printf("END\n");
 }
 
-void	print_env(t_enviroment *env) // for testing purposes
+void	print_env(t_environment *env) // for testing purposes
 {
 	t_node *head = env->top;
 	while (head)

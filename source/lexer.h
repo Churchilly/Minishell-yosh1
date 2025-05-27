@@ -13,7 +13,7 @@
 #ifndef LEXER_H
 # define LEXER_H
 
-#include "enviroment.h"
+#include "environment.h"
 #include "garbage_collector.h"
 # include <stdio.h> // >> for testing purposes <<
 // count the variables once after counted all of them add \n =

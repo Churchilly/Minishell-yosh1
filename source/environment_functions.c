@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   enviroment_functions.c                             :+:      :+:    :+:   */
+/*   environment_functions.c                             :+:      :+:    :+:  */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "enviroment.h"
+#include "environment.h"
 #include "str.h"
 #include <stdlib.h>
 #include <unistd.h>
@@ -19,10 +19,10 @@ void	*pointer_storage(int type, void *ptr);
 
 t_node	*find_variable(char *key)
 {
-	t_enviroment	*env;
+	t_environment	*env;
 	t_node			*ret;
 
-	env = (t_enviroment *)pointer_storage(ENVIROMENT, NULL);
+	env = (t_environment *)pointer_storage(ENVIRONMENT, NULL);
 	ret = env->top;
 	while (ret)
 	{
@@ -35,11 +35,11 @@ t_node	*find_variable(char *key)
 
 void	delete_variable(char *key)
 {
-	t_enviroment	*env;
+	t_environment	*env;
 	t_node			*prev;
 	t_node			*to_delete;
 
-	env = (t_enviroment *)pointer_storage(ENVIROMENT, NULL);
+	env = (t_environment *)pointer_storage(ENVIRONMENT, NULL);
 	to_delete = env->top;
 	prev = NULL;
 	while (to_delete)
@@ -80,13 +80,13 @@ int	revalue_variable(char *key, char *value)
 
 void	add_variable(char *key, char *value)
 {
-	t_enviroment	*env;
+	t_environment	*env;
 	t_node			*new;
 
-	env = (t_enviroment *)pointer_storage(ENVIROMENT, NULL);
+	env = (t_environment *)pointer_storage(ENVIRONMENT, NULL);
 	new = (t_node *)malloc(sizeof(t_node));
 	if (!new)
-		exit(1); // malloc err
+		exit(1);
 	new->key = ft_strdup(key, SECTION_ENV);
 	new->value = ft_strdup(value, SECTION_ENV);
 	new->next = NULL;
@@ -101,12 +101,12 @@ void	add_variable(char *key, char *value)
 	return ;
 }
 
-void	clear_enviroment(void)
+void	clear_environment(void)
 {
 	t_node			*tmp;
-	t_enviroment	*env;
-	
-	env = (t_enviroment *)pointer_storage(ENVIROMENT, NULL);
+	t_environment	*env;
+
+	env = (t_environment *)pointer_storage(ENVIRONMENT, NULL);
 	if (!env)
 		return ;
 	while (env->top)

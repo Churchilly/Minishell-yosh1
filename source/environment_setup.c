@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   enviroment_setup.c                                 :+:      :+:    :+:   */
+/*   environment_setup.c                                 :+:      :+:    :+:  */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "enviroment.h"
+#include "environment.h"
 #include "str.h"
 #include <unistd.h>
 #include <stdlib.h>
@@ -21,7 +21,7 @@ void	setup_paths(void)
 {
 	t_node	*tmp;
 	char	cwd[8000];
-	
+
 	tmp = find_variable("PWD");
 	if (!getcwd(cwd, sizeof(cwd)))
 		exit(1);
@@ -37,16 +37,16 @@ void	setup_paths(void)
 	tmp = find_variable("OLDPWD");
 }
 
-void	setup_enviroment(void)
+void	setup_environment(void)
 {
 	extern char	**environ;
 	char		*equal_sign;
 	char		*key;
 	char		*value;
 	int			i;
-	
+
 	if (!environ)
-		exit(1); // return ENV_ERROR -> int	clear_env
+		exit(1);
 	i = -1;
 	while (environ[++i])
 	{
