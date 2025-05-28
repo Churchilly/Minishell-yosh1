@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   environment.c                                       :+:      :+:    :+:  */
+/*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 06:08:23 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/21 21:32:04 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/28 17:01:58 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 extern volatile int	g_signal;
 
 void	*pointer_storage(int type, void *ptr);
+int	is_alpha_numerical(char c);
 
 char	*get_cwd(void)
 {
@@ -38,9 +39,29 @@ char	*get_variable(char *key)
 		return (NULL);
 	env = (t_environment *)pointer_storage(ENVIRONMENT, NULL);
 	if (ft_strcmp(key, "?"))
-		return (ft_itoa(env->last_pipe, SECTION_ENV));
+		return (ft_itoa(env->last_pipe, SECTION_LA));
 	tmp = find_variable(key);
 	if (!tmp)
-		return (ft_strdup("", SECTION_ENV));
-	return (ft_strdup(tmp->value, SECTION_ENV));
+		return (ft_strdup("", SECTION_LA));
+	return (ft_strdup(tmp->value, SECTION_LA));
+}
+
+void	update_last_execute(char *path)
+{
+	t_node	*last_exec;
+	
+	last_exec = find_variable("_");
+	if (!last_exec)
+		add_variable("_", path);
+	else
+		revalue_variable("_", path);
+	return ;
+}
+
+void	update_last_pipe(int status)
+{
+	t_environment	*env;
+
+	env = pointer_storage(ENVIRONMENT, NULL);
+	env->last_pipe = status;
 }

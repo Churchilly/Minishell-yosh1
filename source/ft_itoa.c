@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 02:58:05 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/21 21:27:41 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/28 11:50:46 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static size_t	get_digits(int n)
 	size_t	i;
 
 	i = 0;
+	if (n == 0)
+		return (1);
 	while (n)
 	{
 		n /= 10;
@@ -52,8 +54,6 @@ char	*ft_itoa(int n, t_section sec)
 		digits++;
 	}
 	str_num = gc_calloc(sizeof(char) * (digits + 1), sec);
-	if (!str_num)
-		return (NULL);
 	*(str_num + digits) = 0;
 	while (digits--)
 	{

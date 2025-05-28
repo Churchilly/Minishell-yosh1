@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 08:35:50 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/25 18:34:11 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:41:04 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ extern volatile int g_signal;
 
 char	*ft_strjoin_nl(char const *s1, char const *s2);
 char	*expand_variables(char *input);
-int		setup_heredoc_child_signals(void);
+void	setup_heredoc_child_signals(void);
 int	is_quoted(char *str);
 int	have_dollar(char *str);
 int	strcmp_without_quotes(char *input, char *eof);

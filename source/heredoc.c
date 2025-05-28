@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 04:31:33 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/27 18:17:22 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:53:39 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 #include <readline/readline.h>
 
 char	*new_document(char *eof);
-int	setup_heredoc_signals(void);
 void	*pointer_storage(int type, void *ptr);
 int	safe_fork();
 
@@ -134,7 +133,7 @@ int	expand_heredoc(t_token *tokens)
 	
 	if (pipe(pipe_fd) == -1)
 	{
-		perror("pipe");
+		printf("pipe() failed: %d.\n", errno);
 		exit(1);
 	}
 	pid = safe_fork();

@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 01:02:35 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/27 18:30:40 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/28 17:44:50 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 int		ft_strlen(char const *s);
 void	**gc_get_section(t_section section);
+void	*pointer_storage(int type, void *ptr);
 
 void	gc_clean_list(t_section section_name)
 {
@@ -55,6 +56,8 @@ void	gc_clean_paths(void)
 	while (curr)
 	{
 		path = curr->data;
+		if (!path)
+			return ;
 		next = curr->next;
 		printf("curr_pathing::%s\n", path);
 		if (unlink(path) == -1)
@@ -69,8 +72,15 @@ void	gc_clean_paths(void)
 
 void	gc_cleanup(void)
 {
-	gc_clean_paths();
-	write(1, "paths cleared\n", 15);
+	t_garbage_collector	*gc;
+
+	gc = pointer_storage(COLLECTOR, NULL);
+	
+	if (!gc->in_fork)
+	{
+		gc_clean_paths();
+		write(1, "paths cleared\n", 15);
+	}
 	clear_environment();
 	write(1, "#env cleared#\n", 15);
 	gc_clean_list(SECTION_LA);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   environment_functions.c                             :+:      :+:    :+:  */
+/*   environment_functions.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 23:29:21 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/27 04:26:08 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/28 13:53:23 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	revalue_variable(char *key, char *value)
 		return (-1);
 	return (0);
 }
-
+#include <stdio.h>
 void	add_variable(char *key, char *value)
 {
 	t_environment	*env;
@@ -87,18 +87,19 @@ void	add_variable(char *key, char *value)
 	new = (t_node *)malloc(sizeof(t_node));
 	if (!new)
 		exit(1);
-	new->key = ft_strdup(key, SECTION_ENV);
-	new->value = ft_strdup(value, SECTION_ENV);
-	new->next = NULL;
 	if (!env->top)
 	{
 		env->top = new;
 		env->bottom = new;
-		return ;
 	}
-	env->bottom->next = new;
-	env->bottom = new;
-	return ;
+	else
+	{
+		env->bottom->next = new;
+		env->bottom = new;
+	}
+	new->key = ft_strdup(key, SECTION_ENV);
+	new->value = ft_strdup(value, SECTION_ENV);
+	new->next = NULL;
 }
 
 void	clear_environment(void)
