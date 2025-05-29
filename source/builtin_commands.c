@@ -21,21 +21,24 @@
 int	builtin_echo(char **args)
 {
 	int	i;
+	int j;
 
 	i = 1;
+	j = 0;
 	if (ft_strcmp(args[i], "-n"))
 		i++;
 	while (args[i])
 	{
-		if (i != 0)
+		if (j)
 			ft_putchar(' ');
 		write(STDOUT_FILENO, args[i], ft_strlen(args[i]));
 		i++;
+		j = 1;
 	}
-	if (ft_strcmp(args[i], "-n"))
+	if (ft_strcmp(args[1], "-n") == 0)
 		putchar('\n');
 	return (0);
-}
+}	
 
 // if no arguments were given go to home directory
 // if 1 argument were given go to that directory
