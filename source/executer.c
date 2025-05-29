@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 01:43:36 by obastug           #+#    #+#             */
-/*   Updated: 2025/05/28 17:55:12 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/29 18:26:18 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	execute_redirection(t_astnode *node);
 void	execute_command(t_astnode *node);
 void	update_last_pipe(int status);
 void	*pointer_storage(int type, void *ptr);
+int setup_child_signals(void);
 
 static int	safe_fork()
 {
@@ -39,7 +40,9 @@ static int	safe_fork()
 	}
 	gc = pointer_storage(COLLECTOR, NULL);
  	if (pid == 0)
+	{
 		gc->in_fork = 1;
+	}
 	return (pid);
 }
 
@@ -48,10 +51,13 @@ static int	execute_valid_tree(void (*execute_func)(t_astnode *),
 {
 	pid_t	pid;
 	int		status;
-
+	
 	pid = safe_fork();
 	if (pid == 0)
+	{
 		execute_func(node);
+		exit(0);
+	}
 	else
 	{
 		if (waitpid(pid, &status, 0) == -1) {
@@ -69,6 +75,7 @@ static int	execute_valid_tree(void (*execute_func)(t_astnode *),
 // returns 1 on error
 void	executer(t_astnode *root)
 {
+	setup_child_signals();
 	if (root->type == NODE_PIPE)
 		execute_valid_tree(execute_pipe, root);
 	else if (root->type == NODE_REDIRECT)

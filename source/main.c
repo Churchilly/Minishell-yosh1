@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:01:22 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/29 17:57:33 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/29 18:27:26 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,9 @@ int main(void)
 	setup_environment();
 	//after this point gc and env does not be sent anywhere
 	//but should be obtained from pointer storage
-	setup_parent_signals();
 	while (1)
 	{
+		setup_parent_signals();
 		//input = get_input(); // checks if input completed
 		input = readline("yosh1> "); // YEAP IT HAS LEAKS THAT WE CANT HANDLE -> https://cboard.cprogramming.com/c-programming/136521-memory-leak-readline.html
 		if (!input)
