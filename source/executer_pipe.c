@@ -47,8 +47,6 @@ void	execute_pipe(t_astnode *node)
 	}
 	pid = safe_fork();
 	if (pid == 0) // childprocess
-		pipe_child(node, pipedes);
-	else
 	{
 		close(pipedes[1]);
 		dup2(pipedes[0], STDIN_FILENO);
@@ -56,4 +54,7 @@ void	execute_pipe(t_astnode *node)
 		execute_command(node->right);
 		waitpid(pid, NULL, 0);
 	}
+	else
+		pipe_child(node, pipedes);
+
 }
