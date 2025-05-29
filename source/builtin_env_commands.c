@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 02:19:21 by obastug           #+#    #+#             */
-/*   Updated: 2025/05/27 18:26:23 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:58:21 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	builtin_printenv(void)
 	t_environment	*env;
 
 	env = (t_environment *)pointer_storage(ENVIRONMENT, NULL);
-
 	head = env->top;
 	while (head)
 	{

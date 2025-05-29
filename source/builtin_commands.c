@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 02:19:21 by obastug           #+#    #+#             */
-/*   Updated: 2025/05/27 18:23:41 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:59:58 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,43 +67,43 @@ int	builtin_pwd(void)
 
 int	is_builtin(char *command)
 {
-	if (ft_strcmp(command, "echo") == 0)
+	if (ft_strcmp(command, "echo"))
 		return (1);
-	if (ft_strcmp(command, "cd") == 0)
+	if (ft_strcmp(command, "cd"))
 		return (1);
-	if (ft_strcmp(command, "pwd") == 0)
+	if (ft_strcmp(command, "pwd"))
 		return (1);
-	if (ft_strcmp(command, "export") == 0)
+	if (ft_strcmp(command, "export"))
 		return (1);
-	if (ft_strcmp(command, "unset") == 0)
+	if (ft_strcmp(command, "unset"))
 		return (1);
-	if (ft_strcmp(command, "printenv") == 0)
+	if (ft_strcmp(command, "env"))
 		return (1);
 	return (0);
 }
 
 int	execute_builtin(char *command, int argc, char **args)
 {
-	if (ft_strcmp(command, "echo") == 0)
+	if (ft_strcmp(command, "echo"))
 		return (builtin_echo(args));
-	if (ft_strcmp(command, "cd") == 0)
+	if (ft_strcmp(command, "cd"))
 	{
 		builtin_cd(argc, args);
 		return (0);
 	}
-	if (ft_strcmp(command, "pwd") == 0)
+	if (ft_strcmp(command, "pwd"))
 		return (builtin_pwd());
-	if (ft_strcmp(command, "export") == 0)
+	if (ft_strcmp(command, "export"))
 	{
 		builtin_export(args);
 		return (0);
 	}
-	if (ft_strcmp(command, "unset") == 0)
+	if (ft_strcmp(command, "unset"))
 	{
 		builtin_unset(args);
 		return (0);
 	}
-	if (ft_strcmp(command, "printenv") == 0)
+	if (ft_strcmp(command, "env"))
 	{
 		builtin_printenv();
 		return (0);

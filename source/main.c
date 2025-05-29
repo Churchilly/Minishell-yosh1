@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:01:22 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/28 13:53:52 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:57:33 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int main(void)
 		printf("<EXPANDER TOKENS>\n");
 		print_tokens(tokens);// for testing purposes
 		ast = create_node(tokens);
-		parser(ast); // <- SEG
+		parser(ast);
 		printf("parser end\n");
 		print_asttree(ast);
 		executer(ast);
