@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
+#include "builtins.h"
 
 // assuming node is type of NODE_COMMAND
 // return -1 on error
@@ -23,10 +24,27 @@ char	*search_executable_path(char *file_path);
 char	**env_mirror();
 void	update_last_execute(char *path);
 
+int	count_args(char **args)
+{
+	int	count;
+
+	count = 0;
+	while (args[count])
+		count++;
+	return (count);
+}
+
 void	execute_command(t_astnode *node)
 {
 	char	*path;
+	int		argc;
 
+	argc = count_args(node->args);
+	if (is_builtin(node->args[0]))
+	{
+		execute_builtin(node->args[0], argc, node->args);
+		return ;
+	}
 	path = search_executable_path(node->args[0]);
 	if (!path)
 	{

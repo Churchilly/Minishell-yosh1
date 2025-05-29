@@ -13,12 +13,15 @@
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-int		pwd(char **args);
-void	ft_export(char	**args);
-void	unset(char	**args);
-int		echo(char	**args);
-int		cd(int argc, char	**args);
-void	unset(char	**args);
-void	printenv(char	**args);
+#include "environment.h"
+
+int		builtin_echo(char **args);
+int		builtin_cd(int argc, char **args);
+int		builtin_pwd(void);
+void	builtin_export(char **args);
+void	builtin_unset(char **args);
+void	builtin_printenv(void);
+int		is_builtin(char *command);
+int		execute_builtin(char *command, int argc, char **args);
 
 #endif

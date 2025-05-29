@@ -18,10 +18,12 @@
 
 #include "environment.h"
 
+void	*pointer_storage(int type, void *ptr);
+
 char	*ft_substr(char const *s, unsigned int start, size_t len,
 	t_section section);
 
-void	ft_export(char **args)
+void	builtin_export(char **args)
 {
 	int		i;
 	char	*equal_pos;
@@ -47,7 +49,7 @@ void	ft_export(char **args)
 	}
 }
 
-void	unset(char **args)
+void	builtin_unset(char **args)
 {
 	int	i;
 
@@ -65,9 +67,12 @@ void	unset(char **args)
 	}
 }
 
-void	printenv(t_environment *env)
+void	builtin_printenv(void)
 {
 	t_node	*head;
+	t_environment	*env;
+
+	env = (t_environment *)pointer_storage(ENVIRONMENT, NULL);
 
 	head = env->top;
 	while (head)

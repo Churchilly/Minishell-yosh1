@@ -13,11 +13,12 @@
 #include "parser.h"
 #include "str.h"
 #include <unistd.h>
-#include <stdlib.h>
 #include <stdio.h>
 #include "environment.h"
+#include "builtins.h"
+#include "environment.h"
 
-int	echo(char **args)
+int	builtin_echo(char **args)
 {
 	int	i;
 
@@ -38,7 +39,7 @@ int	echo(char **args)
 
 // if no arguments were given go to home directory
 // if 1 argument were given go to that directory
-int	cd(int argc, char **args)
+int	builtin_cd(int argc, char **args)
 {
 	char	*home_dir;
 
@@ -55,11 +56,57 @@ int	cd(int argc, char **args)
 	return (0);
 }
 
-int	pwd(void)
+int	builtin_pwd(void)
 {
 	char	*buf;
 
 	buf = get_cwd();
 	printf("%s\n", buf);
 	return (0);
+}
+
+int	is_builtin(char *command)
+{
+	if (ft_strcmp(command, "echo") == 0)
+		return (1);
+	if (ft_strcmp(command, "cd") == 0)
+		return (1);
+	if (ft_strcmp(command, "pwd") == 0)
+		return (1);
+	if (ft_strcmp(command, "export") == 0)
+		return (1);
+	if (ft_strcmp(command, "unset") == 0)
+		return (1);
+	if (ft_strcmp(command, "printenv") == 0)
+		return (1);
+	return (0);
+}
+
+int	execute_builtin(char *command, int argc, char **args)
+{
+	if (ft_strcmp(command, "echo") == 0)
+		return (builtin_echo(args));
+	if (ft_strcmp(command, "cd") == 0)
+	{
+		builtin_cd(argc, args);
+		return (0);
+	}
+	if (ft_strcmp(command, "pwd") == 0)
+		return (builtin_pwd());
+	if (ft_strcmp(command, "export") == 0)
+	{
+		builtin_export(args);
+		return (0);
+	}
+	if (ft_strcmp(command, "unset") == 0)
+	{
+		builtin_unset(args);
+		return (0);
+	}
+	if (ft_strcmp(command, "printenv") == 0)
+	{
+		builtin_printenv();
+		return (0);
+	}
+	return (1);
 }
