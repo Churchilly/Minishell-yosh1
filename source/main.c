@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:01:22 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/31 16:19:06 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/31 20:13:12 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,45 @@ subject such as \ (backslash) or ; (semicolon).
 	return (quote || dquote);
 }
 
+int	check_syntax(t_token *tokens)
+{
+	int	i;
+
+	i = -1;
+	while (tokens[++i].value)
+	{
+		if (tokens[i].type == TOKEN_DGREAT || tokens[i].type == TOKEN_DLESS
+		|| tokens[i].type == TOKEN_LESS || tokens[i].type == TOKEN_GREAT)
+		{
+			if (tokens[i+1].type != TOKEN_WORD)
+			{
+				if (tokens[i+1].type == TOKEN_DGREAT)
+					return (printf("yosh1: syntax error near unexpected token `>>'\n"), 2);
+				else if (tokens[i+1].type == TOKEN_GREAT)
+					return (printf("yosh1: syntax error near unexpected token `>'\n"), 2);
+				else if (tokens[i+1].type == TOKEN_DLESS)
+					return (printf("yosh1: syntax error near unexpected token `<<'\n"), 2);
+				else if (tokens[i+1].type == TOKEN_LESS)
+					return (printf("yosh1: syntax error near unexpected token `<'\n"), 2);
+				else if (tokens[i+1].type == TOKEN_PIPE)
+					return (printf("yosh1: syntax error near unexpected token `|'\n"), 2);
+				else
+					return (printf("yosh1: syntax error near unexpected token `newline'\n"), 2);
+			}
+		}
+		if (tokens[i].type == TOKEN_PIPE)
+		{
+			if (i == 0)
+				return (printf("yosh1: syntax error near unexpected token `|'\n"), 2);
+			else if (!(tokens[i - 1].value) || tokens[i - 1].type != TOKEN_WORD)
+				return (printf("yosh1: syntax error near unexpected token `|'\n"), 2);
+			else if (!(tokens[i + 1].value) || tokens[i + 1].type != TOKEN_WORD)
+				return (printf("yosh1: syntax error near unexpected token `|'\n"), 2);
+		}
+	}
+	return (0);
+}
+
 int main(void)
 {
 	char				*input;
@@ -105,9 +144,7 @@ int main(void)
 		tokens = lexer(input);
 		printf("<LEXER TOKENS>\n");
 		print_tokens(tokens);
-		if (!tokens)
-			exit(1);
-		if (!tokens->value)
+		if (!tokens->value || check_syntax(tokens))
 		{
 			gc_clean_list(SECTION_LA);
 			continue ;

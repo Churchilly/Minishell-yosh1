@@ -6,11 +6,13 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 05:11:54 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/21 18:17:16 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/31 21:06:58 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+
+int	ft_isspace(char c);
 
 int	have_heredoc(t_token *tokens)
 {
@@ -74,4 +76,32 @@ int	have_quotes(char *str)
 		str++;
 	}
 	return (0);
+}
+
+int	tilde_in_tokens(t_token *tokens)
+{
+    int	dquote;
+    int	quote;
+    char	*current;
+    
+    dquote = 0;
+    quote = 0;
+    while (tokens->value)
+    {
+        current = tokens->value;
+        while (*current)
+        {
+            if (*(current) == '\"')
+                dquote = !dquote;
+            else if (*(current) == '\'')
+                quote = !quote;
+            else if (!dquote && !quote && *(current) == '~' &&
+				(*(current + 1) == '/' || ft_isspace(*(current + 1)) || *(current + 1) == '\0')
+			&& (ft_isspace(*(current - 1)) || *(current - 1) == '\0'))
+                return (1);
+            (current)++;
+        }
+        tokens++;
+    }
+    return (0);
 }

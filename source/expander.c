@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 05:04:51 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/22 00:34:46 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/31 21:08:00 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	have_heredoc(t_token *tokens);
 int dollar_in_tokens(t_token *tokens);
 int	dollar_in_dquote(char *str);
 int	have_quotes(char *str);
+int	tilde_in_tokens(t_token *tokens);
 
 static void	quotes(t_token **tokens)
 {
@@ -48,12 +49,15 @@ void	expander(t_token **tokens)
 {
 	if (have_heredoc(*tokens))
 	{
-		if (expand_heredoc(*tokens))
-			exit(1);
+		expand_heredoc(*tokens);
 	}
 	if (dollar_in_tokens(*tokens))
 	{
 		(*tokens) = expand_dollar((*tokens));
+	}
+	if (tilde_in_tokens(*tokens))
+	{
+		expand_tilde(*tokens);
 	}
 	quotes(tokens);
 }

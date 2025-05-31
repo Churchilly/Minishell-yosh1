@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 12:05:48 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/28 12:07:15 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/31 21:00:33 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	ft_isdigit(int c)
 	return (c >= '0' && c <= '9');
 }
 
-static int	ft_isspace(char c)
+int	ft_isspace(char c)
 {
 	return (c == 9 || c == 10 || c == 11 || c == 12 || c == 13 || c == 32);
 }
