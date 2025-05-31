@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 23:29:21 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/28 13:53:23 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/31 16:16:51 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	revalue_variable(char *key, char *value)
 		return (-1);
 	return (0);
 }
-#include <stdio.h>
+
 void	add_variable(char *key, char *value)
 {
 	t_environment	*env;
@@ -98,7 +98,10 @@ void	add_variable(char *key, char *value)
 		env->bottom = new;
 	}
 	new->key = ft_strdup(key, SECTION_ENV);
-	new->value = ft_strdup(value, SECTION_ENV);
+	if (!value)
+		new->value = NULL;
+	else
+		new->value = ft_strdup(value, SECTION_ENV);
 	new->next = NULL;
 }
 
@@ -114,8 +117,10 @@ void	clear_environment(void)
 	{
 		tmp = env->top;
 		env->top = env->top->next;
-		free(tmp->key);
-		free(tmp->value);
+		if (tmp->key)
+			free(tmp->key);
+		if (tmp->value)
+			free(tmp->value);
 		free(tmp);
 	}
 }

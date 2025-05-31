@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:01:22 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/29 18:27:26 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/31 16:19:06 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ int main(void)
 	t_garbage_collector gc;
 	
 	gc_setup(&gc, &env);
-	print_env(&env);
 	setup_environment();
 	//after this point gc and env does not be sent anywhere
 	//but should be obtained from pointer storage

@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 01:43:36 by obastug           #+#    #+#             */
-/*   Updated: 2025/05/29 18:26:18 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/31 14:46:03 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	execute_command(t_astnode *node);
 void	update_last_pipe(int status);
 void	*pointer_storage(int type, void *ptr);
 int setup_child_signals(void);
+int	is_builtin(char *command);
 
 static int	safe_fork()
 {
@@ -52,6 +53,11 @@ static int	execute_valid_tree(void (*execute_func)(t_astnode *),
 	pid_t	pid;
 	int		status;
 	
+	if (node->type == NODE_COMMAND && is_builtin(node->args[0]))
+	{
+		execute_func(node);
+		return (0);
+	}
 	pid = safe_fork();
 	if (pid == 0)
 	{
@@ -60,9 +66,10 @@ static int	execute_valid_tree(void (*execute_func)(t_astnode *),
 	}
 	else
 	{
-		if (waitpid(pid, &status, 0) == -1) {
+		if (waitpid(pid, &status, 0) == -1)
+		{
 			printf("waitpid() failed: %d.\n", errno);
-			return 31;
+			exit(1);
 		}
 		if ( WIFEXITED(status) )
 			status = WEXITSTATUS(status);
@@ -80,6 +87,6 @@ void	executer(t_astnode *root)
 		execute_valid_tree(execute_pipe, root);
 	else if (root->type == NODE_REDIRECT)
 		execute_valid_tree(execute_redirection, root);
-	else
+	else if (root->type == NODE_COMMAND)
 		execute_valid_tree(execute_command, root);
 }

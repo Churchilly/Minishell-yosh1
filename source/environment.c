@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 06:08:23 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/28 17:01:58 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/31 15:03:58 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 extern volatile int	g_signal;
 
 void	*pointer_storage(int type, void *ptr);
-int	is_alpha_numerical(char c);
 
 char	*get_cwd(void)
 {
@@ -46,7 +45,7 @@ char	*get_variable(char *key)
 	return (ft_strdup(tmp->value, SECTION_LA));
 }
 
-void	update_last_execute(char *path)
+void	update_execute(char *path)
 {
 	t_node	*last_exec;
 	
@@ -64,4 +63,12 @@ void	update_last_pipe(int status)
 
 	env = pointer_storage(ENVIRONMENT, NULL);
 	env->last_pipe = status;
+}
+
+int	is_env_char(char c)
+{
+	return ((c <= '9' && c >= '0')
+		|| (c <= 'z' && c >= 'a')
+		|| (c <= 'Z' && c >= 'A')
+		|| (c == '_'));
 }

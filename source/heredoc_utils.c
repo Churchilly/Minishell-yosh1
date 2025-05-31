@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 08:37:31 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/21 20:02:15 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/30 19:54:48 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,4 @@ char	*ft_strjoin_nl(char const *s1, char const *s2)
 	return (final_string);
 }
 
-int	is_alpha_numerical(char c)
-{
-	return ((c <= '9' && c >= '0')
-		|| (c <= 'z' && c >= 'a')
-		|| (c <= 'Z' && c >= 'A'));
-}
+

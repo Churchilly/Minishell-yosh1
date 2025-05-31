@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 04:54:53 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/22 01:54:52 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/31 14:55:12 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 
 int	is_token(char c)
 {
-	return (c == '=' || c == '|' ||
-			c == '>' || c == '<' || c == '\n');
+	return (c == '|' || c == '>' || c == '<' || c == '\n');
 }
 
 int	is_sequence(char c)

@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 06:39:01 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/19 17:59:15 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/30 19:56:36 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "str.h"
 #include <stdlib.h>
 
-int	is_alpha_numerical(char c);
+int	is_env_char(char c);
 int	count_variables(char *str);
 char	*crop_variable(char *str);
 
@@ -44,7 +44,7 @@ char	**get_variables(char *input)
 		{
 			input++;
 			insert_heredoc_variable(input, buffer, ++i);
-			while (is_alpha_numerical(*input))
+			while (is_env_char(*input))
 				input++;
 		}
 		else
@@ -64,7 +64,7 @@ int	get_new_len(char *input, char **buffer)
 		{
 			input++;
 			i += ft_strlen(*buffer);
-			while (is_alpha_numerical(*input))
+			while (is_env_char(*input))
 				input++;
 			buffer++;
 		}
@@ -95,7 +95,7 @@ void	insert_variables(char *input, char **buffer, char *new)
 				new++;
 				j++;
 			}
-			while (is_alpha_numerical(*input))
+			while (is_env_char(*input))
 				input++;
 			i++;
 		}

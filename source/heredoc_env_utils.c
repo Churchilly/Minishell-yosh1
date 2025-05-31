@@ -6,14 +6,14 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 19:27:46 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/22 01:54:38 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/30 19:56:36 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "garbage_collector.h"
 #include <stdlib.h>
 
-int	is_alpha_numerical(char c);
+int	is_env_char(char c);
 
 int	count_variables(char *str)
 {
@@ -36,11 +36,11 @@ char	*crop_variable(char *str)
 	int		size;
 	
 	size = 0;
-	while (is_alpha_numerical(str[size]))
+	while (is_env_char(str[size]))
 		size++;
 	cropped = (char *)gc_calloc((sizeof(char) * (size + 1)), SECTION_LA);
 	ret = cropped;
-	while (is_alpha_numerical(*str))
+	while (is_env_char(*str))
 	{
 		*cropped = *str;
 		cropped++;

@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 03:56:25 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/28 16:55:02 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/30 19:56:36 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 int	is_token(char c);
 int	is_sequence(char c);
 int	is_space(char c);
-int	is_alpha_numerical(char c);
+int	is_env_char(char c);
 
 static char	*get_dollar(char *token_value)
 {
@@ -29,9 +29,9 @@ static char	*get_dollar(char *token_value)
 	i = 0;
 	if (*(token_value + 1) == '?')
 		return (get_variable("?"));
-	if (!token_value[i + 1] || !is_alpha_numerical(token_value[i + 1]))
+	if (!token_value[i + 1] || !is_env_char(token_value[i + 1]))
 		return (ft_strdup("$", SECTION_LA));
-	while (token_value[i + 1] && is_alpha_numerical(token_value[i + 1]))
+	while (token_value[i + 1] && is_env_char(token_value[i + 1]))
 		i++;
 	trim = ft_strndup(token_value + 1, i, SECTION_LA);
 	ret = get_variable(trim);
@@ -43,7 +43,7 @@ void	pass_env_var(char **token_val, char ***env_vars)
 	(*token_val)++;
 	if (**token_val == '?')
 		(*token_val)++;
-	while (**token_val && is_alpha_numerical(**token_val))
+	while (**token_val && is_env_char(**token_val))
 	{
 		(*token_val)++;
 	}
