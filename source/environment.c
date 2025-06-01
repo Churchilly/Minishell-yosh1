@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 06:08:23 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/31 15:03:58 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/01 23:02:35 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 #include "str.h"
 #include <unistd.h>
 #include <stdio.h>
-
-extern volatile int	g_signal;
 
 void	*pointer_storage(int type, void *ptr);
 

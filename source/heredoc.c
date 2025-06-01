@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 04:31:33 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/01 18:20:16 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/01 23:01:01 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 char	*new_document(char *eof);
 void	*pointer_storage(int type, void *ptr);
-int	safe_fork();
+int		safe_fork();
 
 static int	count_heredocs(t_token *tokens)
 {

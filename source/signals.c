@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 00:12:15 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/01 16:36:34 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/01 23:03:19 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	handle_sigint(int sig)
 {
 	t_environment *env;
 
-	(void)sig;
+	g_signal = sig;
 	env = pointer_storage(ENVIRONMENT, NULL);
 	env->last_pipe = 130;
 	write(1, "\n", 1);
@@ -61,7 +61,7 @@ int	setup_parent_signals(void)
 
 void	handle_child_sigint(int sig)
 {
-	(void)sig;
+	g_signal = sig;
 	write(1, "\n", 1);
 }
 

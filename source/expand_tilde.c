@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_tilde.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
+/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 21:30:07 by obastug           #+#    #+#             */
-/*   Updated: 2025/06/01 21:51:34 by obastug          ###   ########.fr       */
+/*   Updated: 2025/06/01 22:56:47 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,12 @@ void	write_to_final_token(char *final_token, char *home, t_token *token)
 	i = 0;
 	while (token->value[i])
 	{
-		if (token->value[i] == '~' && i == 0)
+		if (token->value[i] == '~' && i == 0 && (token->value[i + 1] == '/' || token->value[i+1] == '\0'))
 			ft_strcpy(final_token + ft_strlen(final_token), home);
 		else
 			final_token[ft_strlen(final_token)] = token->value[i];
 		i++;
 	}
-	final_token[ft_strlen(final_token)] = '\0';
 	token->value = final_token;
 }
 
