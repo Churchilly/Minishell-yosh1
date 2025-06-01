@@ -31,7 +31,7 @@ static void	setup_paths(void)
 {
 	t_node	*tmp;
 	char	cwd[8000];
-	
+
 	if (!getcwd(cwd, sizeof(cwd)))
 	{
 		printf("getcwd() failed: %d\n", errno);
@@ -60,7 +60,7 @@ static char	*increase_charp(char *str)
 static void	setup_shlvl(void)
 {
 	t_node	*tmp;
-	
+
 	tmp = find_variable("SHLVL");
 	if (tmp)
 		revalue_variable("SHLVL", increase_charp(tmp->value));

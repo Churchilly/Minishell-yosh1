@@ -16,7 +16,7 @@
 int	builtin_echo(char **args)
 {
 	int	i;
-	int j;
+	int	j;
 	int	newline;
 
 	i = 1;
@@ -40,4 +40,4 @@ int	builtin_echo(char **args)
 		if (write(STDOUT_FILENO, "\n", 1) == -1)
 			return (1);
 	return (0);
-}	
+}

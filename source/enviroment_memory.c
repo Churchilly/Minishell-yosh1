@@ -21,7 +21,7 @@ void	ft_bzero(void *addr, int size);
 void	*env_calloc(size_t size)
 {
 	void	*new;
-	
+
 	new = malloc(size);
 	if (!new)
 	{
@@ -34,8 +34,8 @@ void	*env_calloc(size_t size)
 
 char	*create_env_value(char *str)
 {
-	int	len;
-	int	i;
+	int		len;
+	int		i;
 	char	*ret;
 
 	if (!str)
@@ -47,7 +47,7 @@ char	*create_env_value(char *str)
 		len++;
 	ret = env_calloc(sizeof(char) * (len + 1));
 	i = -1;
-	while(++i < len)
+	while (++i < len)
 		ret[i] = str[i];
 	return (ret);
 }

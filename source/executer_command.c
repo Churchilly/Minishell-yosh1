@@ -21,7 +21,7 @@
 // return -1 on error
 // every fucking command must update _= (enviroment variable). 
 char	*search_executable_path(char *file_path);
-char	**env_mirror();
+char	**env_mirror(void);
 void	update_execute(char *path);
 void	update_last_pipe(int status);
 
@@ -35,10 +35,10 @@ int	count_args(char **args)
 	return (count);
 }
 
-void	execute_command(t_astnode *node)
 // before run command check if it already a path
 // like /cat is different from cat
 // is a directory ?? 
+void	execute_command(t_astnode *node)
 {
 	char	*path;
 	int		argc;

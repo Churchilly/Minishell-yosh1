@@ -48,7 +48,7 @@ char	*get_variable(char *key)
 void	update_execute(char *path)
 {
 	t_node	*last_exec;
-	
+
 	last_exec = find_variable("_");
 	if (!last_exec)
 		add_variable("_", path);

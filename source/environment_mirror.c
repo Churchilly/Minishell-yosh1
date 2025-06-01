@@ -56,16 +56,17 @@ char	*join_env_variable(char *key, char *value)
 	return (ret);
 }
 
-char	**env_mirror()
+char	**env_mirror(void)
 {
 	t_environment	*env;
 	t_node			*head;
 	char			**mirror;
 	char			**ret;
-	
+
 	env = (t_environment *)pointer_storage(ENVIRONMENT, NULL);
 	head = env->top;
-	mirror = gc_calloc(sizeof(char *) * (count_variables(head) + 1), SECTION_LA);
+	mirror = gc_calloc(sizeof(char *)
+			* (count_variables(head) + 1), SECTION_LA);
 	ret = mirror;
 	while (head->next)
 	{

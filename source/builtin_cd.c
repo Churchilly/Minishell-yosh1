@@ -28,7 +28,7 @@ static void	print_cd_error(int status, char *dir)
 	else if (status == ENAMETOOLONG)
 		printf("yosh: cd: %s: File name too long\n", dir);
 	else if (status == ELOOP)
-	    printf("yosh: cd: %s: Too many levels of symbolic links\n", dir);
+		printf("yosh: cd: %s: Too many levels of symbolic links\n", dir);
 	else if (status == EIO)
 		printf("yosh: cd: %s: Input/output error\n", dir);
 	else if (status == ENOMEM)
@@ -39,11 +39,11 @@ static void	print_cd_error(int status, char *dir)
 		printf("yosh: cd: %s: %d\n", dir, errno);
 }
 
-static int	update_pwd()
+static int	update_pwd(void)
 {
 	t_node	*tmp;
 	char	cwd[8000];
-	
+
 	if (!getcwd(cwd, sizeof(cwd)))
 	{
 		printf("getcwd() failed: %d\n", errno);
@@ -60,7 +60,7 @@ static int	update_pwd()
 static void	update_oldpwd(char *old_dir)
 {
 	t_node	*tmp;
-	
+
 	tmp = find_variable("OLDPWD");
 	if (tmp)
 		revalue_variable("OLDPWD", old_dir);
@@ -74,8 +74,8 @@ int	builtin_cd(int argc, char **args)
 	char	*target_dir;
 	char	*old_dir;
 	int		status;
-	
-	home_dir = get_variable("HOME"); //getenv("HOME")
+
+	home_dir = get_variable("HOME");
 	if (!home_dir || !(*home_dir))
 	{
 		printf("yosh1: cd: HOME not set\n");

@@ -39,7 +39,7 @@ int	is_builtin(char *command)
 
 int	execute_builtin(char *command, int argc, char **args)
 {
-	int status;
+	int	status;
 
 	status = 1;
 	if (ft_strcmp(command, "echo"))

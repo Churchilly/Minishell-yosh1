@@ -15,16 +15,16 @@
 #include <unistd.h>
 #include <stdio.h>
 
-void *pointer_storage(int type, void *ptr);
+void	*pointer_storage(int type, void *ptr);
 void	update_last_pipe(int status);
-int	is_env_char(char c);
-char *ft_substr(char const *s, unsigned int start, size_t len,
-	t_section section);
+int		is_env_char(char c);
+char	*ft_substr(char const *s, unsigned int start, size_t len,
+			t_section section);
 
 void	print_all_variables(void)
 {
-	t_node *head;
-	t_environment *env;
+	t_node			*head;
+	t_environment	*env;
 
 	env = (t_environment *)pointer_storage(ENVIRONMENT, NULL);
 	head = env->top;
@@ -41,7 +41,7 @@ void	print_all_variables(void)
 int	is_valid_identifier(char *id)
 {
 	int	i;
-	
+
 	if (!id || !(*id))
 		return (0);
 	if (!is_env_char(*id) || (*id <= '9' && *id >= '0'))
@@ -60,7 +60,7 @@ int	add_export(char	*args, char *equal_pos)
 {
 	char	*key;
 	char	*value;
-	
+
 	if (equal_pos)
 	{
 		key = ft_substr(args, 0, equal_pos - args, SECTION_LA);
@@ -81,16 +81,17 @@ int	add_export(char	*args, char *equal_pos)
 	}
 	return (0);
 }
+
 void	builtin_export(char **args)
 {
-	int i;
-	int status;
-	char *equal_pos;
-	// If no args, print all exported variables
+	int		i;
+	int		status;
+	char	*equal_pos;
+
 	if (!args[1])
 	{
 		print_all_variables();
-		return;
+		return ;
 	}
 	i = 1;
 	while (args[i])

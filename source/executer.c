@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 01:43:36 by obastug           #+#    #+#             */
-/*   Updated: 2025/05/31 14:46:03 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/01 21:26:29 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ void	execute_redirection(t_astnode *node);
 void	execute_command(t_astnode *node);
 void	update_last_pipe(int status);
 void	*pointer_storage(int type, void *ptr);
-int setup_child_signals(void);
-int	is_builtin(char *command);
+int		setup_child_signals(void);
+int		is_builtin(char *command);
 
-static int	safe_fork()
+static int	safe_fork(void)
 {
 	t_garbage_collector	*gc;
 	pid_t				pid;
-	
+
 	pid = fork();
 	if (pid == -1)
 	{
@@ -40,7 +40,7 @@ static int	safe_fork()
 		exit(1);
 	}
 	gc = pointer_storage(COLLECTOR, NULL);
- 	if (pid == 0)
+	if (pid == 0)
 	{
 		gc->in_fork = 1;
 	}
@@ -52,12 +52,9 @@ static int	execute_valid_tree(void (*execute_func)(t_astnode *),
 {
 	pid_t	pid;
 	int		status;
-	
+
 	if (node->type == NODE_COMMAND && is_builtin(node->args[0]))
-	{
-		execute_func(node);
-		return (0);
-	}
+		return (execute_func(node), 0);
 	pid = safe_fork();
 	if (pid == 0)
 	{
@@ -71,7 +68,7 @@ static int	execute_valid_tree(void (*execute_func)(t_astnode *),
 			printf("waitpid() failed: %d.\n", errno);
 			exit(1);
 		}
-		if ( WIFEXITED(status) )
+		if (WIFEXITED(status))
 			status = WEXITSTATUS(status);
 		update_last_pipe(status);
 	}
