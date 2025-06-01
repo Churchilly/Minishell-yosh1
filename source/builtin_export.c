@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 19:01:29 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/31 19:03:16 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/01 16:14:53 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,5 @@ void	builtin_export(char **args)
 		if (status)
 			printf("yosh1: export: `%s': not a valid identifier\n", args[i]);
 		i++;
-		update_last_pipe(status);
 	}
 }

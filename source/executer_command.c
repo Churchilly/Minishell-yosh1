@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:42:39 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/30 20:53:00 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/01 16:24:08 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 char	*search_executable_path(char *file_path);
 char	**env_mirror();
 void	update_execute(char *path);
+void	update_last_pipe(int status);
 
 int	count_args(char **args)
 {
@@ -46,7 +47,7 @@ void	execute_command(t_astnode *node)
 	if (is_builtin(node->args[0]))
 	{
 		update_execute(node->args[argc - 1]);
-		execute_builtin(node->args[0], argc, node->args);
+		update_last_pipe(execute_builtin(node->args[0], argc, node->args));
 		return ;
 	}
 	path = search_executable_path(node->args[0]);

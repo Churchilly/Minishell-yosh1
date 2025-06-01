@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 20:08:32 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/27 18:33:34 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/01 18:13:43 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,8 @@ typedef struct s_garbage_collector	t_garbage_collector;
 
 enum	e_section
 {
-	SECTION_ENV,
 	SECTION_LA,
-	SECTION_PATHS
+	SECTION_PATHS,
 };
 
 struct s_gc_node
@@ -39,7 +38,6 @@ struct s_gc_node
 
 struct	s_garbage_collector
 {
-	t_environment	*env;
 	t_gc_node		*lexical_analysis;
 	t_gc_node		*paths;
 	int				in_fork;

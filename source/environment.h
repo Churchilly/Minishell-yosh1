@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 06:08:59 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/27 17:51:29 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/01 18:34:50 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ char	*get_variable(char *key);
 t_node	*find_variable(char *key);
 void	delete_variable(char *key);
 int		revalue_variable(char *key, char *value);
+void	update_last_pipe(int status);
 void	add_variable(char *key, char *value);
+char	*create_env_value(char *str);
 void	clear_environment(void);
 
 #endif

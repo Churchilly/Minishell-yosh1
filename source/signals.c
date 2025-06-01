@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 00:12:15 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/29 18:26:00 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/01 16:36:34 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int setup_child_signals(void)
 	struct sigaction	sa;
 
 	sa.sa_handler = handle_child_sigint;
+	sa.sa_flags = SA_RESTART;
 	if (sigemptyset(&sa.sa_mask) == -1 || sigaction(SIGINT, &sa, NULL) == -1)
 		return (1);
 	return (0);

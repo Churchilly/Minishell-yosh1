@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 18:57:30 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/31 20:48:12 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/01 16:28:00 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,17 +76,17 @@ int	builtin_cd(int argc, char **args)
 	int		status;
 	
 	home_dir = get_variable("HOME"); //getenv("HOME")
-	if (!home_dir)
+	if (!home_dir || !(*home_dir))
+	{
 		printf("yosh1: cd: HOME not set\n");
+		return (1);
+	}
 	else if (argc == 1)
 		target_dir = home_dir;
 	else if (argc == 2)
-	{
 		target_dir = args[1];
-	}
 	else if (argc != 1)
 		return (printf("yosh1: cd: too many arguments\n"));
-	printf("%s\n", target_dir);
 	old_dir = ft_strdup(get_cwd(), SECTION_LA);
 	status = chdir(target_dir);
 	if (status == -1)

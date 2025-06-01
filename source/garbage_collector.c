@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 20:07:37 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/27 18:29:23 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/01 18:22:29 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ void	**gc_get_section(t_section section)
 	gc = pointer_storage(COLLECTOR, NULL);
 	if (!gc)
 		return (NULL);
-	if (section == SECTION_ENV)
-		return ((void **)&gc->env);
 	if (section == SECTION_LA)
 		return ((void **)&gc->lexical_analysis);
 	if (section == SECTION_PATHS && !(gc->in_fork))
@@ -38,7 +36,6 @@ void	gc_setup(t_garbage_collector *gc, t_environment *env)
 {
 	ft_bzero(gc, sizeof(t_garbage_collector));
 	ft_bzero(env, sizeof(t_environment));
-	gc->env = env;
 	pointer_storage(ENVIRONMENT, env);
 	pointer_storage(COLLECTOR, gc);
 }

@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 23:29:21 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/31 16:16:51 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/01 18:18:22 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,9 @@ int	revalue_variable(char *key, char *value)
 	if (!node)
 		return (-1);
 	tmp = node->value;
-	node->value = ft_strdup(value, SECTION_ENV);
-	free(tmp);
+	node->value = create_env_value(value);
+	if (tmp)
+		free(tmp);
 	if (!node->value)
 		return (-1);
 	return (0);
@@ -97,30 +98,10 @@ void	add_variable(char *key, char *value)
 		env->bottom->next = new;
 		env->bottom = new;
 	}
-	new->key = ft_strdup(key, SECTION_ENV);
+	new->key = create_env_value(key);
 	if (!value)
 		new->value = NULL;
 	else
-		new->value = ft_strdup(value, SECTION_ENV);
+		new->value = create_env_value(value);
 	new->next = NULL;
-}
-
-void	clear_environment(void)
-{
-	t_node			*tmp;
-	t_environment	*env;
-
-	env = (t_environment *)pointer_storage(ENVIRONMENT, NULL);
-	if (!env)
-		return ;
-	while (env->top)
-	{
-		tmp = env->top;
-		env->top = env->top->next;
-		if (tmp->key)
-			free(tmp->key);
-		if (tmp->value)
-			free(tmp->value);
-		free(tmp);
-	}
 }

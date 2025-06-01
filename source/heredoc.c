@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 04:31:33 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/28 15:53:39 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/01 18:20:16 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*reader(int fd)
 			exit(1);
 		}
 		reader_buffer[readen] = '\0';
-		buffer = ft_strjoin(buffer, reader_buffer, SECTION_ENV);
+		buffer = ft_strjoin(buffer, reader_buffer, SECTION_LA);
 	}
 	return (buffer);
 }

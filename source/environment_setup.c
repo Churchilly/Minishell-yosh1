@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 20:23:10 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/29 17:56:55 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/01 17:36:35 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ void	setup_environment(void)
 		equal_sign = ft_strchr(environ[i], '=');
 		if (equal_sign)
 		{
-			key = ft_strndup(environ[i], equal_sign - environ[i], SECTION_ENV);
-			value = ft_strdup(equal_sign + 1, SECTION_ENV);
+			key = ft_strndup(environ[i], equal_sign - environ[i], SECTION_LA);
+			value = equal_sign + 1;
 			add_variable(key, value);
 		}
 	}

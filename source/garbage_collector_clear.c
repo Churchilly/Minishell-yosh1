@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 01:02:35 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/28 17:44:50 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/01 18:25:18 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	gc_clean_list(t_section section_name)
 		if (curr->data)
 			free(curr->data);
 		curr->data = NULL;
-		free(curr);
+		if (curr)
+			free(curr);
 		curr = next;
 	}
 	*section = NULL;
@@ -59,7 +60,6 @@ void	gc_clean_paths(void)
 		if (!path)
 			return ;
 		next = curr->next;
-		printf("curr_pathing::%s\n", path);
 		if (unlink(path) == -1)
 		{
 			write(2, "Failed to delete temp file\n", 28);
@@ -79,10 +79,6 @@ void	gc_cleanup(void)
 	if (!gc->in_fork)
 	{
 		gc_clean_paths();
-		write(1, "paths cleared\n", 15);
 	}
-	clear_environment();
-	write(1, "#env cleared#\n", 15);
 	gc_clean_list(SECTION_LA);
-	write(1, "lexical analysis cleared\n", 26);
 }
