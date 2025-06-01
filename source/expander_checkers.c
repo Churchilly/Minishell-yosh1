@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_checkers.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/10 05:11:54 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/31 21:06:58 by yusudemi         ###   ########.fr       */
+/*   Created: 2025/06/01 21:53:26 by obastug           #+#    #+#             */
+/*   Updated: 2025/06/01 21:54:12 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ int	have_heredoc(t_token *tokens)
 	return (0);
 }
 
-int dollar_in_tokens(t_token *tokens)
+int	dollar_in_tokens(t_token *tokens)
 {
-	int	dquote;
-	int	quote;
+	int		dquote;
+	int		quote;
 	char	*current;
-	
+
 	dquote = 0;
 	quote = 0;
 	while (tokens->value)
@@ -80,28 +80,29 @@ int	have_quotes(char *str)
 
 int	tilde_in_tokens(t_token *tokens)
 {
-    int	dquote;
-    int	quote;
-    char	*current;
-    
-    dquote = 0;
-    quote = 0;
-    while (tokens->value)
-    {
-        current = tokens->value;
-        while (*current)
-        {
-            if (*(current) == '\"')
-                dquote = !dquote;
-            else if (*(current) == '\'')
-                quote = !quote;
-            else if (!dquote && !quote && *(current) == '~' &&
-				(*(current + 1) == '/' || ft_isspace(*(current + 1)) || *(current + 1) == '\0')
-			&& (ft_isspace(*(current - 1)) || *(current - 1) == '\0'))
-                return (1);
-            (current)++;
-        }
-        tokens++;
-    }
-    return (0);
+	int		dquote;
+	int		quote;
+	char	*current;
+
+	dquote = 0;
+	quote = 0;
+	while (tokens->value)
+	{
+		current = tokens->value;
+		while (*current)
+		{
+			if (*(current) == '\"')
+				dquote = !dquote;
+			else if (*(current) == '\'')
+				quote = !quote;
+			else if (!dquote && !quote && *(current) == '~'
+				&& (*(current + 1) == '/' || ft_isspace(*(current + 1))
+					|| *(current + 1) == '\0')
+				&& (ft_isspace(*(current - 1)) || *(current - 1) == '\0'))
+				return (1);
+			(current)++;
+		}
+		tokens++;
+	}
+	return (0);
 }
