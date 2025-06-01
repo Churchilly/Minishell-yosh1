@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dollar_divide.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 20:46:54 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/22 01:31:46 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/01 21:28:05 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,15 @@
 #include "str.h"
 #include <stdlib.h>
 
-int	is_space(char c);
-t_token	*allocate_divided(t_token *tokens);
-int	count_divided(char *s);
-
+int			is_space(char c);
+t_token		*allocate_divided(t_token *tokens);
+int			count_divided(char *s);
 
 int	curr_divide_size(char *str)
 {
 	int	ret;
-	int dquote;
-	int quote;
+	int	dquote;
+	int	quote;
 
 	ret = 0;
 	dquote = 0;
@@ -50,8 +49,8 @@ int	curr_divide_size(char *str)
 void	insert_divided_token(char *value, int *idx, char *new)
 {
 	int	dquote;
-	int quote;
-	
+	int	quote;
+
 	dquote = 0;
 	quote = 0;
 	while (is_space(value[(*idx)]))
@@ -87,7 +86,7 @@ t_token	*divide_tokens(t_token *tokens)
 	t_token	*ret;
 	int		curr_div_size;
 	int		i;
-	
+
 	new = allocate_divided(tokens);
 	ret = new;
 	while (tokens->value)

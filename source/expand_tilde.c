@@ -1,11 +1,55 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand_tilde.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/01 21:30:07 by obastug           #+#    #+#             */
+/*   Updated: 2025/06/01 21:51:34 by obastug          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lexer.h"
 #include "environment.h"
 #include "str.h"
 
-void    expand_tilde(t_token *tokens)
+int	tilde_counter(char *string)
 {
-	int 	i;
-	int		j;
+	int	i;
+	int	tilde_count;
+
+	i = 0;
+	tilde_count = 0;
+	while (string[i])
+	{
+		if (string[i] == '~')
+			tilde_count++;
+		i++;
+	}
+	return (tilde_count);
+}
+
+void	write_to_final_token(char *final_token, char *home, t_token *token)
+{
+	int	i;
+
+	i = 0;
+	while (token->value[i])
+	{
+		if (token->value[i] == '~' && i == 0)
+			ft_strcpy(final_token + ft_strlen(final_token), home);
+		else
+			final_token[ft_strlen(final_token)] = token->value[i];
+		i++;
+	}
+	final_token[ft_strlen(final_token)] = '\0';
+	token->value = final_token;
+}
+
+void	expand_tilde(t_token *tokens)
+{
+	int		i;
 	char	*home;
 	int		tilde_count;
 	char	*final_token;
@@ -14,28 +58,17 @@ void    expand_tilde(t_token *tokens)
 	if (!home || !*home)
 		return ;
 	i = 0;
-	tilde_count = 0;
 	while (tokens[i].value)
 	{
-		j = 0;
-		while (tokens[i].value[j])
+		tilde_count = tilde_counter(tokens[i].value);
+		if (!tilde_count)
 		{
-			if (tokens[i].value[j] == '~')
-				tilde_count++;
-			j++;
+			i++;
+			continue ;
 		}
-		final_token = gc_calloc((tilde_count * ft_strlen(home) - tilde_count) + ft_strlen(tokens[i].value) + 1, SECTION_LA);
-		j = 0;
-		while (tokens[i].value[j])
-		{
-			if (tokens[i].value[j] != '~')
-				final_token[ft_strlen(final_token)] = tokens[i].value[j];
-			else
-				ft_strcpy(final_token + ft_strlen(final_token), home);
-			j++;
-		}
-		final_token[ft_strlen(final_token)] = '\0';
-		tokens[i].value = final_token;
+		final_token = gc_calloc((tilde_count * ft_strlen(home) - tilde_count)
+				+ ft_strlen(tokens[i].value) + 1, SECTION_LA);
+		write_to_final_token(final_token, home, tokens + i);
 		i++;
 	}
 }

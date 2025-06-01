@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dollar_env.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 20:42:49 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/30 19:56:36 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/01 21:28:20 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static char	*create_variable(char *token_val)
 static void	insert_dollar_variable(char **val, char **new)
 {
 	char	*var;
-	
+
 	(*val)++;
 	var = create_variable(*val);
 	while (*var)

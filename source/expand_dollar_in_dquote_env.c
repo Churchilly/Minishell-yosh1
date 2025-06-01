@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dollar_in_dquote_env.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 03:56:25 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/30 19:56:36 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/01 21:28:36 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,3 @@ void	get_env_vars(char *token_value, char **env_vars)
 		}
 	}
 }
-

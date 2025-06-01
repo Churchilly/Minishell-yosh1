@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 04:02:11 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/22 01:53:42 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/01 21:29:54 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	is_sequence(char c);
 
 static int	get_new_size(char *token_val)
 {
-	int ret;
+	int	ret;
 
 	ret = 0;
 	while (*token_val)
@@ -36,7 +36,7 @@ char	*expand_quotes(char *token_value)
 	int		i;
 	int		len;
 
-	len =  get_new_size(token_value);
+	len = get_new_size(token_value);
 	ret = gc_calloc(sizeof(char) * (len + 1), SECTION_LA);
 	i = 0;
 	while (*token_value)
