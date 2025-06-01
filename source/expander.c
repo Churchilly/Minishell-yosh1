@@ -20,6 +20,7 @@ char	*expand_dollar_in_dquote(char *token_value);
 t_token	*expand_dollar(t_token *tokens);
 char	*expand_quotes(char *token_value);
 t_token	*expand_heredoc(t_token *tokens);
+void    expand_tilde(t_token *tokens);
 
 int	have_heredoc(t_token *tokens);
 int dollar_in_tokens(t_token *tokens);
@@ -53,7 +54,7 @@ void	expander(t_token **tokens)
 	}
 	if (dollar_in_tokens(*tokens))
 	{
-		(*tokens) = expand_dollar((*tokens));
+		(*tokens) = expand_dollar(*tokens);
 	}
 	if (tilde_in_tokens(*tokens))
 	{

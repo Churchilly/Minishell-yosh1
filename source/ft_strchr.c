@@ -13,6 +13,19 @@
 #include "str.h"
 #include <stddef.h>
 
+char	*ft_strcpy(char *dest, char *src)
+{
+	int	i;
+
+	i = 0;
+	while (src[i])
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	return (dest);
+}
+
 void	*ft_memchr(const void *s, int c, size_t n)
 {
 	register size_t	i;
