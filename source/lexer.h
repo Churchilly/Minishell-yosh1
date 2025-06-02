@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 19:03:49 by obastug           #+#    #+#             */
-/*   Updated: 2025/04/18 18:54:24 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:50:10 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct	s_token{
 }			t_token;
 
 t_token	*lexer(char *input);
-void	expander(t_token **tokens);
+int	expander(t_token **tokens);
 
 #endif
 

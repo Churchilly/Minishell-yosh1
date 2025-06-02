@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:01:22 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/01 18:51:38 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:50:32 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,11 +144,11 @@ int main(void)
 		if (!tokens->value || status)
 		{
 			update_last_pipe(status);
-			gc_clean_list(SECTION_LA);
 			continue ;
 		}
 		add_history(input);
-		expander(&tokens);
+		if (expander(&tokens))
+			continue;
 		ast = create_node(tokens);
 		parser(ast);
 		executer(ast);

@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 08:37:31 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/30 19:54:48 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:27:23 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*ft_strjoin_nl(char const *s1, char const *s2)
 	return (final_string);
 }
 
-static int	count_heredocs(t_token *tokens)
+int	count_heredocs(t_token *tokens)
 {
 	int	ret;
 	int	i;

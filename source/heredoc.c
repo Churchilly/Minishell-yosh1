@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 04:31:33 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/01 23:01:01 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/02 17:00:34 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,29 @@ static void	child_process(t_token *tokens, int pipe_fd[2])
 	exit(0);
 }
 
-static void	parent_process(t_token *tokens, int pipe_fd[2], pid_t pid)
+static int	parent_process(t_token *tokens, int pipe_fd[2], pid_t pid)
 {
 	char	*pipe_buffer;
 	char	**splitted;
+	int		status;
 
 	close(pipe_fd[1]);
-	waitpid(pid, NULL, 0);
+	status = 0;
+	if (waitpid(pid, &status, 0) == -1)
+	{
+		printf("waitpid() failed: %d.\n", errno);
+		exit(1);
+	}
+	if (WIFEXITED(status))
+	{
+		status = WEXITSTATUS(status);
+		return (update_last_pipe(status), 1);
+	}
+	if (WIFSIGNALED(status))
+	{
+		int sig = WTERMSIG(status);
+		return (update_last_pipe(128 + sig), 1);
+	}
 	pipe_buffer = reader(pipe_fd[0]);
 	splitted = ft_split(pipe_buffer, '\n', SECTION_LA);
 	while (*splitted)
@@ -109,6 +125,7 @@ static void	parent_process(t_token *tokens, int pipe_fd[2], pid_t pid)
 		gc_add(tokens->value, SECTION_PATHS);
 		splitted++;
 	}
+	return (0);
 }
 
 int	expand_heredoc(t_token *tokens)
@@ -125,6 +142,7 @@ int	expand_heredoc(t_token *tokens)
 	if (pid == 0)
 		child_process(tokens, pipe_fd);
 	else
-		parent_process(tokens, pipe_fd, pid);
+		if (parent_process(tokens, pipe_fd, pid))
+			return (1);
 	return (0);
 }
