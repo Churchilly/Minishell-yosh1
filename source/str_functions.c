@@ -43,7 +43,7 @@ int	ft_strcmp(char *str1, char *str2)
 int	ft_strlen(char const *s)
 {
 	int	i;
-	
+
 	i = 0;
 	if (!s)
 		return (i);

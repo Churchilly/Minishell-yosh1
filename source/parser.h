@@ -14,20 +14,20 @@
 //NODE_LOGICAL_OR
 #include "lexer.h"
 
-typedef enum
+typedef enum e_redirect_type
 {
 	REDIRECT_LESS,
 	REDIRECT_GREAT,
 	REDIRECT_DGREAT
 }	t_redirect_type;
 
-typedef enum
+typedef enum t_node_type
 {
 	UNINITIALIZED,
 	NODE_COMMAND,
 	NODE_REDIRECT,
 	NODE_PIPE
-} e_node_type;
+}	e_node_type;
 
 typedef struct s_astnode
 {
@@ -37,8 +37,8 @@ typedef struct s_astnode
 	struct s_astnode	*right;
 	char				**args;
 	char				*file;
-	TokenType			redirect_type;
-} t_astnode;
+	t_token_type		redirect_type;
+}	t_astnode;
 
-void	parser(t_astnode *root);
+void		parser(t_astnode *root);
 t_astnode	*create_node(t_token *tokens);

@@ -19,11 +19,11 @@
 
 void	*pointer_storage(int type, void *ptr);
 
-int	safe_fork()
+int	safe_fork(void)
 {
 	t_garbage_collector	*gc;
 	pid_t				pid;
-	
+
 	pid = fork();
 	if (pid == -1)
 	{

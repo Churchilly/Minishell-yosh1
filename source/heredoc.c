@@ -94,6 +94,7 @@ static int	parent_process(t_token *tokens, int pipe_fd[2], pid_t pid)
 	char	*pipe_buffer;
 	char	**splitted;
 	int		status;
+	int		sig;
 
 	close(pipe_fd[1]);
 	status = 0;
@@ -109,7 +110,7 @@ static int	parent_process(t_token *tokens, int pipe_fd[2], pid_t pid)
 	}
 	if (WIFSIGNALED(status))
 	{
-		int sig = WTERMSIG(status);
+		sig = WTERMSIG(status);
 		return (update_last_pipe(128 + sig), 1);
 	}
 	pipe_buffer = reader(pipe_fd[0]);

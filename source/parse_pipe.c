@@ -14,7 +14,6 @@
 #include "parser.h"
 #include <stdio.h>
 
-
 //when it sees a pipe, defines current
 //left and right nodes defined as follows
 t_astnode	*divide_pipe(t_astnode *node, int i)
@@ -36,7 +35,7 @@ t_astnode	*parse_pipe(t_astnode *root)
 	if (!root)
 		return (NULL);
 	while (root->type == UNINITIALIZED && root->tokens[i].value
-			&& root->tokens[i].type != TOKEN_EON)
+		&& root->tokens[i].type != TOKEN_EON)
 	{
 		if (root->tokens[i].type == TOKEN_PIPE)
 			breakpoint = i;

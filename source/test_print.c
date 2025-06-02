@@ -31,7 +31,9 @@ void	print_token(t_token *tokens)
 
 void	print_tokens(t_token *tokens) // for testing purposes
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (tokens[i].value)
 	{
 		printf("tokens: [%s]\n", tokens[i].value);
@@ -42,7 +44,9 @@ void	print_tokens(t_token *tokens) // for testing purposes
 
 void	print_env(t_environment *env) // for testing purposes
 {
-	t_node *head = env->top;
+	t_node	*head;
+
+	head = env->top;
 	while (head)
 	{
 		printf("key: [%s] value: [%s]\n", head->key, head->value);
@@ -72,7 +76,6 @@ void	print_node(t_astnode *node)
 	if (node->type == NODE_COMMAND)
 	{
 		printf("node type: command\n");
-		//print_token(node->tokens);
 		print_str_list(node->args);
 	}
 	else if (node->type == NODE_PIPE)

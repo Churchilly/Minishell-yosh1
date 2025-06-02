@@ -16,12 +16,12 @@
 
 char	*ft_strndup(const char	*str, int len, t_section section)
 {
-	int i;
+	int		i;
 	char	*ret;
 
 	ret = gc_calloc(sizeof(char) * (len + 1), section);
 	i = -1;
-	while(++i < len)
+	while (++i < len)
 		ret[i] = str[i];
 	ret[i] = '\0';
 	return (ret);

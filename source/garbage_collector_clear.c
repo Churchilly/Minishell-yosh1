@@ -75,7 +75,6 @@ void	gc_cleanup(void)
 	t_garbage_collector	*gc;
 
 	gc = pointer_storage(COLLECTOR, NULL);
-	
 	if (!gc->in_fork)
 	{
 		gc_clean_paths();

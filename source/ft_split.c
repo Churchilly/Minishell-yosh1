@@ -80,7 +80,7 @@ char	**ft_split(char const *s, char c, t_section section)
 	if (!s)
 		exit(1);
 	split = (char **)gc_calloc(sizeof(char *) * (ft_count_words(s, c) + 1),
-		section);
+			section);
 	ft_split_words(split, s, c, section);
 	return (split);
 }

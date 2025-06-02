@@ -12,6 +12,7 @@
 
 #include <stdlib.h>
 #include "garbage_collector.h"
+
 char	*ft_strdup(const char *str, t_section section_name);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 int		ft_strlen(char const *s);
