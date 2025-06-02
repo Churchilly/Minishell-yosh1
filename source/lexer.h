@@ -13,29 +13,27 @@
 #ifndef LEXER_H
 # define LEXER_H
 
-#include "environment.h"
-#include "garbage_collector.h"
-# include <stdio.h> // >> for testing purposes <<
-// count the variables once after counted all of them add \n =
-typedef enum
-{ 	// '\n' '\"' '\'' '>' '<' '>>' '<<' '$' '=' '|'
-	TOKEN_WORD,				// Generic word // {{$ARG -> WORD}}
-	TOKEN_ASSIGNMENT_WORD,	// Assignment operation (e.g., VAR=value)
-	TOKEN_NAME,				// Name (e.g., function or variable name)
-	TOKEN_NEWLINE,			// Newline character
-	TOKEN_IO_NUMBER,		// File descriptor number
+# include <stdio.h>
+# include "garbage_collector.h"
+# include "environment.h"
 
-	TOKEN_GREAT,			// '>'
-	TOKEN_LESS,				// '<'
-	TOKEN_DLESS,			// '<<'
-	TOKEN_DGREAT,			// '>>'
-	TOKEN_PIPE,				// '|'
-
-	TOKEN_SKIP,				// Skip
-	TOKEN_EON,				// End of command
-	TOKEN_EOF,				// End of file/input
-	TOKEN_ERROR				// Error token
-} TokenType;
+typedef enum e_token_type
+{
+	TOKEN_WORD,
+	TOKEN_ASSIGNMENT_WORD,
+	TOKEN_NAME,
+	TOKEN_NEWLINE,
+	TOKEN_IO_NUMBER,
+	TOKEN_GREAT,
+	TOKEN_LESS,
+	TOKEN_DLESS,
+	TOKEN_DGREAT,
+	TOKEN_PIPE,
+	TOKEN_SKIP,
+	TOKEN_EON,
+	TOKEN_EOF,
+	TOKEN_ERROR
+}	TokenType;
 
 typedef struct	s_token{
 	TokenType	type;

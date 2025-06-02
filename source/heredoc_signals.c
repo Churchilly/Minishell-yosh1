@@ -16,16 +16,15 @@
 #include <readline/readline.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include "environment.h"
 
-extern volatile int g_signal;
+extern volatile int	g_signal;
 
 void	*pointer_storage(int type, void *ptr);
 
 void	setup_heredoc_child_signals(void)
 {
 	struct sigaction	sa;
-	
+
 	sa.sa_handler = SIG_DFL;
 	sa.sa_flags = SA_RESTART;
 	if (sigemptyset(&sa.sa_mask) == -1 || sigaction(SIGINT, &sa, NULL) == -1)

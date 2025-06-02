@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "lexer.h"
-#include "environment.h"
 #include "str.h"
 #include <stdlib.h>
 #include <sys/wait.h>
@@ -22,22 +20,8 @@
 
 char	*new_document(char *eof);
 void	*pointer_storage(int type, void *ptr);
-int		safe_fork();
-
-static int	count_heredocs(t_token *tokens)
-{
-	int	ret;
-	int	i;
-
-	i = -1;
-	ret = 0;
-	while (tokens[++i].value)
-	{
-		if (tokens[i].type == TOKEN_DLESS)
-			ret++;
-	}
-	return (ret);
-}
+int		safe_fork(void);
+int		count_heredocs(t_token *tokens);
 
 static char	**create_docs(t_token *tokens)
 {
@@ -45,7 +29,7 @@ static char	**create_docs(t_token *tokens)
 	char	*eof;
 	int		count;
 	int		i;
-	
+
 	count = count_heredocs(tokens);
 	paths = (char **)gc_calloc((sizeof(char *) * (count + 1)), SECTION_LA);
 	eof = NULL;
@@ -71,7 +55,7 @@ char	*reader(int fd)
 	char	*buffer;
 	char	reader_buffer[256];
 	int		readen;
-	
+
 	buffer = ft_strdup("\0", SECTION_LA);
 	readen = 1;
 	while (readen)
@@ -92,7 +76,7 @@ static void	child_process(t_token *tokens, int pipe_fd[2])
 {
 	char	**buffer;
 	int		i;
-	
+
 	close(pipe_fd[0]);
 	buffer = create_docs(tokens);
 	i = -1;
@@ -108,11 +92,12 @@ static void	child_process(t_token *tokens, int pipe_fd[2])
 static void	parent_process(t_token *tokens, int pipe_fd[2], pid_t pid)
 {
 	char	*pipe_buffer;
-	
+	char	**splitted;
+
 	close(pipe_fd[1]);
 	waitpid(pid, NULL, 0);
 	pipe_buffer = reader(pipe_fd[0]);
-	char **splitted = ft_split(pipe_buffer, '\n', SECTION_LA);
+	splitted = ft_split(pipe_buffer, '\n', SECTION_LA);
 	while (*splitted)
 	{
 		while (tokens->type != TOKEN_DLESS)
@@ -130,7 +115,7 @@ int	expand_heredoc(t_token *tokens)
 {
 	pid_t	pid;
 	int		pipe_fd[2];
-	
+
 	if (pipe(pipe_fd) == -1)
 	{
 		printf("pipe() failed: %d.\n", errno);
