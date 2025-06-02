@@ -12,6 +12,16 @@
 
 #include "lexer.h"
 #include "parser.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <readline/readline.h>
+#include "executer.h"
+
+static int	check_sequence_complete(char *input);
+int			check_syntax(t_token *tokens);
+
 
 int	main_helper(char *input, t_token *tokens, t_astnode *ast)
 {
