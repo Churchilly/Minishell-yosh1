@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 18:57:30 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/02 16:25:58 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/02 17:04:43 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	print_cd_error(int status, char *dir)
 	else if (status == ENAMETOOLONG)
 		printf("yosh1: cd: %s: File name too long\n", dir);
 	else if (status == ELOOP)
-	    printf("yosh1: cd: %s: Too many levels of symbolic links\n", dir);
+		printf("yosh1: cd: %s: Too many levels of symbolic links\n", dir);
 	else if (status == EIO)
 		printf("yosh1: cd: %s: Input/output error\n", dir);
 	else if (status == ENOMEM)
