@@ -27,11 +27,11 @@ typedef enum t_node_type
 	NODE_COMMAND,
 	NODE_REDIRECT,
 	NODE_PIPE
-}	e_node_type;
+}	t_node_type;
 
 typedef struct s_astnode
 {
-	e_node_type			type;
+	t_node_type			type;
 	t_token				*tokens;
 	struct s_astnode	*left;
 	struct s_astnode	*right;

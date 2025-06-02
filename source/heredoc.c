@@ -22,6 +22,8 @@ char	*new_document(char *eof);
 void	*pointer_storage(int type, void *ptr);
 int		safe_fork(void);
 int		count_heredocs(t_token *tokens);
+void	parent_process_helper(t_token *tokens,
+			char **splitted, char *pipe_buffer, int *pipe_fd);
 
 static char	**create_docs(t_token *tokens)
 {
@@ -113,19 +115,7 @@ static int	parent_process(t_token *tokens, int pipe_fd[2], pid_t pid)
 		sig = WTERMSIG(status);
 		return (update_last_pipe(128 + sig), 1);
 	}
-	pipe_buffer = reader(pipe_fd[0]);
-	splitted = ft_split(pipe_buffer, '\n', SECTION_LA);
-	while (*splitted)
-	{
-		while (tokens->type != TOKEN_DLESS)
-			tokens++;
-		tokens->type = TOKEN_LESS;
-		tokens->value = ft_strdup("<", SECTION_LA);
-		tokens++;
-		tokens->value = *splitted;
-		gc_add(tokens->value, SECTION_PATHS);
-		splitted++;
-	}
+	parent_process_helper(tokens, splitted, pipe_buffer, pipe_fd);
 	return (0);
 }
 

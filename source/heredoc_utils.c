@@ -45,3 +45,21 @@ int	count_heredocs(t_token *tokens)
 	}
 	return (ret);
 }
+
+void	parent_process_helper(t_token *tokens, char **splitted,
+			char *pipe_buffer, int *pipe_fd)
+{
+	pipe_buffer = reader(pipe_fd[0]);
+	splitted = ft_split(pipe_buffer, '\n', SECTION_LA);
+	while (*splitted)
+	{
+		while (tokens->type != TOKEN_DLESS)
+			tokens++;
+		tokens->type = TOKEN_LESS;
+		tokens->value = ft_strdup("<", SECTION_LA);
+		tokens++;
+		tokens->value = *splitted;
+		gc_add(tokens->value, SECTION_PATHS);
+		splitted++;
+	}
+}
