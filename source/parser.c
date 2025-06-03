@@ -6,7 +6,7 @@
 /*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 18:29:28 by obastug           #+#    #+#             */
-/*   Updated: 2025/06/03 14:42:50 by obastug          ###   ########.fr       */
+/*   Updated: 2025/06/03 14:44:39 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 //first we initialize first node
 //then we send it to the parser
 //returns itself
-
 //only pipe can have children
 
 t_astnode	*create_node(t_token *tokens)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 09:06:49 by obastug           #+#    #+#             */
-/*   Updated: 2025/05/31 20:20:20 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:08:53 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ int		builtin_printenv(char **args);
 int		is_builtin(char *command);
 int		execute_builtin(char *command, int argc, char **args);
 void	builtin_exit(void);
+int		is_builtin(char *command);
 
 #endif

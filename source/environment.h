@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obastug <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:31:39 by obastug           #+#    #+#             */
-/*   Updated: 2025/06/03 14:31:51 by obastug          ###   ########.fr       */
+/*   Updated: 2025/06/03 15:18:01 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,6 @@ void	update_last_pipe(int status);
 void	add_variable(char *key, char *value);
 char	*create_env_value(char *str);
 void	clear_environment(void);
-
+int		is_env_char(char c);
+char	**env_mirror(void);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 04:31:33 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/01 23:01:01 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:54:32 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,8 @@
 #include <unistd.h>
 #include <errno.h>
 #include <readline/readline.h>
-
-char	*new_document(char *eof);
-void	*pointer_storage(int type, void *ptr);
-int		safe_fork();
+#include "minishell.h"
+#include "heredoc.h"
 
 static int	count_heredocs(t_token *tokens)
 {

@@ -3,18 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 12:27:19 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/26 12:31:07 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:59:56 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "garbage_collector.h"
-char	*ft_strdup(const char *str, t_section section_name);
-void	*ft_memcpy(void *dest, const void *src, size_t n);
-int		ft_strlen(char const *s);
+#include "str.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len,
 		t_section section)

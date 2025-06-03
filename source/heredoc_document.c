@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_document.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 08:35:50 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/28 14:41:04 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:57:06 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,7 @@ extern volatile int g_signal;
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
-
-char	*ft_strjoin_nl(char const *s1, char const *s2);
-char	*expand_variables(char *input);
-void	setup_heredoc_child_signals(void);
-int	is_quoted(char *str);
-int	have_dollar(char *str);
-int	strcmp_without_quotes(char *input, char *eof);
-
+#include "heredoc.h"
 
 char	*create_content(char *eof, char *ret, char *input)
 {

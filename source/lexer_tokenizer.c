@@ -3,22 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_tokenizer.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 21:54:57 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/18 20:49:28 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:59:44 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include <stddef.h>
 #include <unistd.h>
-
-int	is_token(char c);
-int	is_sequence(char c);
-int	is_space(char c);
-int	ft_strcmp(char *str1, char *str2);
-char	*token_dup(const char *s, int size);
+#include "str.h"
 
 static void	pass_sequence(char token, char	**str)
 {

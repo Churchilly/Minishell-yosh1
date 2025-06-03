@@ -3,21 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 21:06:17 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/18 20:51:47 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:51:58 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include <unistd.h>
 #include <stdlib.h>
-
-int		is_space(char c);
-int		count_tokens(char *str);
-void	split_tokens(char **tokens, char **str);
-void	insert_types(t_token *tokens);
 
 t_token	*lexer(char *input)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 06:08:23 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/01 23:02:35 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:19:28 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 #include "str.h"
 #include <unistd.h>
 #include <stdio.h>
-
-void	*pointer_storage(int type, void *ptr);
+#include "minishell.h"
 
 char	*get_cwd(void)
 {

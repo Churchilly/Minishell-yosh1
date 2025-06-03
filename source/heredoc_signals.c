@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_signals.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 22:22:10 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/28 16:00:23 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:54:46 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,9 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include "environment.h"
+#include "minishell.h"
 
 extern volatile int g_signal;
-
-void	*pointer_storage(int type, void *ptr);
 
 void	setup_heredoc_child_signals(void)
 {

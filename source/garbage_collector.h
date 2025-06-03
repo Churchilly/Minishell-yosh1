@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_collector.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 20:08:32 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/01 18:13:43 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:47:18 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,6 @@ void	*gc_calloc(size_t size, t_section section_name);
 void	gc_clean_list(t_section section_name);
 void	gc_clean_paths(void);
 void	gc_cleanup(void);
+void	**gc_get_section(t_section section);
+
 #endif

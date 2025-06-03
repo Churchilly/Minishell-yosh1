@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   safe_fork.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 22:44:07 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/28 16:08:35 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:15:44 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
+#include "minishell.h"
 
-void	*pointer_storage(int type, void *ptr);
-
-int	safe_fork()
+int	safe_fork(void)
 {
 	t_garbage_collector	*gc;
 	pid_t				pid;

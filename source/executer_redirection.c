@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_redirection.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:41:30 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/27 18:21:19 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:16:58 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,10 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <errno.h>
+#include "minishell.h"
+#include "executer.h"
 
-int			safe_fork(void);
-void		execute_command(t_astnode *node);
 static void	find_redirection_type(t_astnode *node, int red_to, int red_from);
-char		*search_executable_path(char *file_path);
 
 void	create_dup(int red_to, int red_from)
 {

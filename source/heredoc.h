@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executer.h                                         :+:      :+:    :+:   */
+/*   heredoc.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 13:28:21 by obastug           #+#    #+#             */
-/*   Updated: 2025/06/03 15:18:41 by obastug          ###   ########.fr       */
+/*   Created: 2025/06/03 14:53:33 by obastug           #+#    #+#             */
+/*   Updated: 2025/06/03 15:06:53 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTER_H
-# define EXECUTER_H
+#include "lexer.h"
 
-void	executer(t_astnode *root);
-void	execute_pipe(t_astnode *node);
-void	execute_redirection(t_astnode *node);
-void	execute_command(t_astnode *node);
-int		setup_child_signals(void);
-char	*search_executable_path(char *file_path);
-void	update_execute(char *path);
-
-#endif
+char		*new_document(char *eof);
+int			count_variables(char *str);
+char		*crop_variable(char *str);
+char		*expand_variables(char *input);
+void		setup_heredoc_child_signals(void);
+int			is_quoted(char *str);
+int			have_dollar(char *str);
+int			strcmp_without_quotes(char *input, char *eof);
+int			expand_heredoc(t_token *tokens);

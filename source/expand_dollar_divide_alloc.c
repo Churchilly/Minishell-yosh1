@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dollar_divide_alloc.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 23:50:36 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/22 01:20:56 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:08:33 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 #include "garbage_collector.h"
 #include "str.h"
 #include <stdlib.h>
-
-int	is_space(char c);
 
 int	count_divided(char *s)
 {

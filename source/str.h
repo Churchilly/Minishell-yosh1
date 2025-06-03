@@ -16,6 +16,7 @@
 # include <stddef.h>
 # include "garbage_collector.h"
 
+int		ft_isspace(char c);;
 char	*ft_strjoin(char const *s1, char const *s2, t_section sec);
 char	**ft_split(char const *s, char c, t_section sec);
 char	*ft_strdup(const char *str, t_section sec);
@@ -31,5 +32,8 @@ char	*ft_strchr(const char *s, int c);
 int		ft_strcmp(char *str1, char *str2);
 void	*ft_memchr(const void *s, int c, size_t n);
 char	*ft_strcpy(char *dest, char *src);
-
+char	*ft_substr(char const *s, unsigned int start, size_t len,
+			t_section section);
+char	*ft_strjoin_nl(char const *s1, char const *s2);
+int		ft_atoi(char *str);
 #endif

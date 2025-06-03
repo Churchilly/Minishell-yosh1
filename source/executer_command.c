@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_command.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:42:39 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/01 16:24:08 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:19:02 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,9 @@
 #include <stdlib.h>
 #include <errno.h>
 #include "builtins.h"
-
-// assuming node is type of NODE_COMMAND
-// return -1 on error
-// every fucking command must update _= (enviroment variable). 
-char	*search_executable_path(char *file_path);
-char	**env_mirror(void);
-void	update_execute(char *path);
-void	update_last_pipe(int status);
+#include "environment.h"
+#include "executer.h"
+#include "minishell.h"
 
 int	count_args(char **args)
 {

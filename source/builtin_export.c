@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 19:01:29 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/01 16:14:53 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:21:40 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,7 @@
 #include "str.h"
 #include <unistd.h>
 #include <stdio.h>
-
-void	*pointer_storage(int type, void *ptr);
-void	update_last_pipe(int status);
-int		is_env_char(char c);
-char	*ft_substr(char const *s, unsigned int start, size_t len,
-			t_section section);
+#include "minishell.h"
 
 void	print_all_variables(void)
 {

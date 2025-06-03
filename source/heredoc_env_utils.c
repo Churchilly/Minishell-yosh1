@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_env_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 19:27:46 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/30 19:56:36 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:55:49 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "garbage_collector.h"
 #include <stdlib.h>
-
-int	is_env_char(char c);
+#include "environment.h"
 
 int	count_variables(char *str)
 {

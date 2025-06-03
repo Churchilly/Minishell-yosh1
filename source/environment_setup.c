@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment_setup.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 20:23:10 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/01 17:36:35 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:19:37 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
-
-void	*pointer_storage(int type, void *ptr);
-int		ft_atoi(const char *str);
+#include "minishell.h"
 
 static int	check_oldpwd_accessible(char *oldpwd)
 {

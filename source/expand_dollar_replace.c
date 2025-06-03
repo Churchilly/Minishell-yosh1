@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dollar_replace.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 23:56:21 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/01 21:29:25 by obastug          ###   ########.fr       */
+/*   Updated: 2025/06/03 15:03:55 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 #include "environment.h"
 #include "str.h"
 #include <stdlib.h>
-
-char	*create_new_value(char *token_val);
+#include "expander.h"
 
 static int	dollar_in_token(char *token_val)
 {

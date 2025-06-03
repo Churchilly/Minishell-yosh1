@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_collector_clear.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 01:02:35 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/01 18:25:18 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:49:56 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 #include <unistd.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-
-int		ft_strlen(char const *s);
-void	**gc_get_section(t_section section);
-void	*pointer_storage(int type, void *ptr);
+#include "str.h"
+#include "minishell.h"
 
 void	gc_clean_list(t_section section_name)
 {

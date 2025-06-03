@@ -6,7 +6,7 @@
 /*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 19:03:49 by obastug           #+#    #+#             */
-/*   Updated: 2025/06/03 14:27:28 by obastug          ###   ########.fr       */
+/*   Updated: 2025/06/03 14:52:41 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,14 @@ typedef struct	s_token{
 	char		*value;
 }			t_token;
 
+int		is_space(char c);
+int		is_token(char c);
+int		is_sequence(char c);
 t_token	*lexer(char *input);
+int		count_tokens(char *str);
+void	split_tokens(char **tokens, char **str);
+void	insert_types(t_token *tokens);
+char	*token_dup(const char *s, int size);
 
 #endif
 

@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   expand_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 04:02:11 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/01 21:29:54 by obastug          ###   ########.fr       */
+/*   Updated: 2025/06/03 15:02:59 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "garbage_collector.h"
 #include <stdlib.h>
 #include <stdio.h>
-
-int	is_sequence(char c);
+#include "lexer.h"
 
 static int	get_new_size(char *token_val)
 {

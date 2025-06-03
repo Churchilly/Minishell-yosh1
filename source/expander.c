@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 05:04:51 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/01 21:54:54 by obastug          ###   ########.fr       */
+/*   Updated: 2025/06/03 15:05:10 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,8 @@
 #include "environment.h"
 #include "str.h"
 #include <stdlib.h>
-
-void	print_tokens(t_token *tokens); //for testing purposes
-char	*expand_dollar_in_dquote(char *token_value);
-t_token	*expand_dollar(t_token *tokens);
-char	*expand_quotes(char *token_value);
-t_token	*expand_heredoc(t_token *tokens);
-void	expand_tilde(t_token *tokens);
-int		have_heredoc(t_token *tokens);
-int		dollar_in_tokens(t_token *tokens);
-int		dollar_in_dquote(char *str);
-int		have_quotes(char *str);
-int		tilde_in_tokens(t_token *tokens);
+#include "heredoc.h"
+#include "expander.h"
 
 static void	quotes(t_token **tokens)
 {
