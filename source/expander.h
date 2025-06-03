@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   expander.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:26:46 by obastug           #+#    #+#             */
-/*   Updated: 2025/06/03 15:08:23 by obastug          ###   ########.fr       */
+/*   Updated: 2025/06/03 15:53:36 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	expander(t_token **tokens);
+#ifndef EXPANDER_H
+# define EXPANDER_H
+
+int		expander(t_token **tokens);
 char	*expand_dollar_in_dquote(char *token_value);
 t_token	*expand_dollar(t_token *tokens);
 char	*expand_quotes(char *token_value);
@@ -27,3 +30,5 @@ void	pass_env_var(char **token_val, char ***env_vars);
 int		get_env_vars(char *token_value, char **env_vars);
 t_token	*allocate_divided(t_token *tokens);
 int		count_divided(char *s);
+
+#endif
