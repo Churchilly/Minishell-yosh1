@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 19:00:21 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/03 16:55:44 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:29:35 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "str.h"
+#include <stdio.h>
 
 // for -n -nnnn -nnnnnnnnn returns 1 else 0
 int	is_ignore_newline(char *str)
@@ -44,7 +45,7 @@ int	print_args(char **args)
 	{
 		if (j)
 			ft_putchar(' ');
-		if (write(STDOUT_FILENO, args[i], ft_strlen(args[i])) == -1)
+		if (printf("%s", args[i]) == -1)
 			return (1);
 		i++;
 		j = 1;
@@ -70,7 +71,7 @@ int	builtin_echo(char **args)
 	if (print_args(args + i) == 1)
 		return (1);
 	if (newline)
-		if (write(STDOUT_FILENO, "\n", 1) == -1)
+		if (printf("\n") == -1)
 			return (1);
 	return (0);
 }
