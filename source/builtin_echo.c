@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 19:00:21 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/03 16:16:25 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 16:55:44 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	builtin_echo(char **args)
 			break ;
 		i++;
 	}
-	if(print_args(args + i) == 1)
+	if (print_args(args + i) == 1)
 		return (1);
 	if (newline)
 		if (write(STDOUT_FILENO, "\n", 1) == -1)

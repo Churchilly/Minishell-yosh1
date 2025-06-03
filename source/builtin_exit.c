@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 16:40:21 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/03 16:53:04 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 16:55:10 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,22 @@
 
 static int	is_arg_numeric(char *arg)
 {
-    int	i;
+	int	i;
 
-    if (!arg || !*arg)
-        return (0);
-    i = 0;
-    if (arg[0] == '-' || arg[0] == '+')
-        i = 1;
-    if (!arg[i])
-        return (0);
-    while (arg[i])
-    {
-        if (arg[i] < '0' || arg[i] > '9')
-            return (0);
-        i++;
-    }
-    return (1);
+	if (!arg || !*arg)
+		return (0);
+	i = 0;
+	if (arg[0] == '-' || arg[0] == '+')
+		i = 1;
+	if (!arg[i])
+		return (0);
+	while (arg[i])
+	{
+		if (arg[i] < '0' || arg[i] > '9')
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 void	builtin_exit(char **args)
