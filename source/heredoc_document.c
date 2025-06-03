@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_document.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 08:35:50 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/03 15:41:28 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:34:07 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static char	*get_document_content(char *eof)
 	while (42)
 	{
 		input = readline("> ");
+		gc_add(input, SECTION_LA);
 		if (!input || strcmp_without_quotes(input, eof))
 		{
 			if (!input)
