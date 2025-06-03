@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 19:03:49 by obastug           #+#    #+#             */
-/*   Updated: 2025/04/18 18:54:24 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:27:28 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ typedef struct	s_token{
 }			t_token;
 
 t_token	*lexer(char *input);
-void	expander(t_token **tokens);
 
 #endif
 

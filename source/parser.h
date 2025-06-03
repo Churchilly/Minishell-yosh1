@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:00:14 by obastug           #+#    #+#             */
-/*   Updated: 2025/04/29 18:12:20 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:42:43 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,8 @@ typedef struct s_astnode
 	TokenType			redirect_type;
 } t_astnode;
 
-void	parser(t_astnode *root);
+void		parser(t_astnode *root);
 t_astnode	*create_node(t_token *tokens);
+t_astnode	*parse_pipe(t_astnode *root);
+t_astnode	*parse_redirect(t_astnode *root);
+t_astnode	*parse_command(t_astnode *root);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 18:29:28 by obastug           #+#    #+#             */
-/*   Updated: 2025/04/29 18:01:49 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:42:50 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,13 @@
 #include "parser.h"
 #include <stdio.h>
 #include "str.h"
+#include <unistd.h>
 
 //first we initialize first node
 //then we send it to the parser
 //returns itself
 
 //only pipe can have children
-#include <unistd.h>
-
-t_astnode	*parse_pipe(t_astnode *root);
-t_astnode	*parse_redirect(t_astnode *root);
-t_astnode	*parse_command(t_astnode *root);
 
 t_astnode	*create_node(t_token *tokens)
 {

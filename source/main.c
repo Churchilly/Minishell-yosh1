@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:01:22 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/03 14:15:26 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:42:19 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include <stdio.h>
 #include <signal.h>
@@ -25,6 +24,8 @@
 #include "str.h"
 #include "environment.h"
 #include "garbage_collector.h"
+#include "expander.h"
+#include "minishell.h"
 
 volatile int g_signal = 0;
 /*
@@ -33,15 +34,6 @@ and must not provide any additional information or access to data.
 Therefore, using "norm" type structures in the global scope is
 forbidden.
 */
-
-void	print_tokens(t_token *tokens); // for testing purposes
-void	print_env(t_environment *env); // for testing purposes
-void	free_tokens(t_token *tokens);
-int	setup_parent_signals(void);
-void __attribute__((destructor)) bye(void);
-void	*pointer_storage(int type, void *ptr);
-void	print_asttree(t_astnode *parent);
-char	*get_exec_path(char	*command);
 
 static int	check_sequence_complete(char *input)
 /*
