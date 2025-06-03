@@ -6,7 +6,7 @@
 /*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 19:00:21 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/03 18:29:35 by obastug          ###   ########.fr       */
+/*   Updated: 2025/06/03 18:38:32 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	print_args(char **args)
 	while (args[i])
 	{
 		if (j)
-			ft_putchar(' ');
+			printf(" ");
 		if (printf("%s", args[i]) == -1)
 			return (1);
 		i++;
