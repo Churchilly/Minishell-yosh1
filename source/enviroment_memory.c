@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enviroment_memory.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 18:12:29 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/01 18:19:45 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:20:56 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <stdio.h>
-
-void	*pointer_storage(int type, void *ptr);
-void	ft_bzero(void *addr, int size);
+#include "str.h"
+#include "minishell.h"
 
 void	*env_calloc(size_t size)
 {

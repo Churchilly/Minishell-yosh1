@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 04:31:33 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/03 15:18:52 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:42:28 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,23 @@
 #include <unistd.h>
 #include <errno.h>
 #include <readline/readline.h>
+#include "minishell.h"
+#include "heredoc.h"
 
-char	*new_document(char *eof);
-void	*pointer_storage(int type, void *ptr);
-int		safe_fork(void);
-int		count_heredocs(t_token *tokens);
-void	read_from_pipe(t_token *tokens, int pipe_fd[2]);
+static int	count_heredocs(t_token *tokens)
+{
+	int	ret;
+	int	i;
+
+	i = -1;
+	ret = 0;
+	while (tokens[++i].value)
+	{
+		if (tokens[i].type == TOKEN_DLESS)
+			ret++;
+	}
+	return (ret);
+}
 
 static char	**create_docs(t_token *tokens)
 {

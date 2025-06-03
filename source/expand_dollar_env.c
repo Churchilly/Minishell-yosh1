@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dollar_env.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 20:42:49 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/01 21:28:20 by obastug          ###   ########.fr       */
+/*   Updated: 2025/06/03 15:07:08 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 #include "lexer.h"
 #include "str.h"
 #include <stdlib.h>
-
-int	is_env_char(char c);
 
 static char	*crop_key(char *str)
 {

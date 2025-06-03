@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:00:14 by obastug           #+#    #+#             */
-/*   Updated: 2025/06/03 14:51:54 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:46:16 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,7 @@ struct s_astnode
 
 void		parser(t_astnode *root);
 t_astnode	*create_node(t_token *tokens);
-
+t_astnode	*parse_pipe(t_astnode *root);
+t_astnode	*parse_redirect(t_astnode *root);
+t_astnode	*parse_command(t_astnode *root);
 #endif

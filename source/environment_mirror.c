@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment_mirror.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:24:35 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/27 17:56:12 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:20:32 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 #include <stddef.h>
 #include <stdio.h>
 #include "garbage_collector.h"
-
-void	*pointer_storage(int type, void *ptr);
-void	*gc_calloc(size_t size, t_section section_name);
+#include "minishell.h"
 
 static int	count_variables(t_node *head)
 {

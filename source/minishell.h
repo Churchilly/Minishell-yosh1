@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executer.h                                         :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 13:28:21 by obastug           #+#    #+#             */
-/*   Updated: 2025/06/03 15:18:41 by obastug          ###   ########.fr       */
+/*   Created: 2025/06/03 14:36:05 by obastug           #+#    #+#             */
+/*   Updated: 2025/06/03 15:20:25 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTER_H
-# define EXECUTER_H
+#include "lexer.h"
 
-void	executer(t_astnode *root);
-void	execute_pipe(t_astnode *node);
-void	execute_redirection(t_astnode *node);
-void	execute_command(t_astnode *node);
-int		setup_child_signals(void);
-char	*search_executable_path(char *file_path);
-void	update_execute(char *path);
-
-#endif
+void			free_tokens(t_token *tokens);
+int				setup_parent_signals(void);
+void 			__attribute__((destructor)) bye(void);
+void			*pointer_storage(int type, void *ptr);
+char			*get_exec_path(char	*command);
+void			*pointer_storage(int type, void *ptr);
+void			update_last_pipe(int status);
+int				safe_fork(void);
+void			*gc_calloc(size_t size, t_section section_name);

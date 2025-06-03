@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env_unset_pwd_exit.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 02:19:21 by obastug           #+#    #+#             */
-/*   Updated: 2025/05/31 20:20:06 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:21:45 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "environment.h"
-
-void	*pointer_storage(int type, void *ptr);
-int		is_env_char(char c);
-void	update_last_pipe(int status);
-char	*ft_substr(char const *s, unsigned int start, size_t len,
-			t_section section);
+#include "minishell.h"
 
 int	builtin_unset(char **args)
 {

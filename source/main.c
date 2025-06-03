@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:01:22 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/03 15:25:18 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:44:52 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,8 @@
 #include "str.h"
 #include "environment.h"
 #include "garbage_collector.h"
-
-void	free_tokens(t_token *tokens);
-int		setup_parent_signals(void);
-void	*pointer_storage(int type, void *ptr);
-void	print_asttree(t_astnode *parent);
-char	*get_exec_path(char	*command);
-int		check_sequence_complete(char *input);
-int		check_syntax(t_token *tokens);
-void	bye(void) __attribute__((destructor));
+#include "expander.h"
+#include "minishell.h"
 
 volatile int	g_signal = 0;
 

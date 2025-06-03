@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 22:44:07 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/03 14:52:18 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:46:46 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
+#include "minishell.h"
 
 void	*pointer_storage(int type, void *ptr);
 

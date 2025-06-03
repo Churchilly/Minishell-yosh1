@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 18:29:28 by obastug           #+#    #+#             */
-/*   Updated: 2025/06/03 14:44:01 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:45:39 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,7 @@
 #include "parser.h"
 #include <stdio.h>
 #include "str.h"
-
-//first we initialize first node
-//then we send it to the parser
-//returns itself
-
-//only pipe can have children
 #include <unistd.h>
-
-t_astnode	*parse_pipe(t_astnode *root);
-t_astnode	*parse_redirect(t_astnode *root);
-t_astnode	*parse_command(t_astnode *root);
 
 t_astnode	*create_node(t_token *tokens)
 {

@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 08:35:50 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/02 16:57:32 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:41:28 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
-
-char	*ft_strjoin_nl(char const *s1, char const *s2);
-char	*expand_variables(char *input);
-void	setup_heredoc_child_signals(void);
-int		is_quoted(char *str);
-int		have_dollar(char *str);
-int		strcmp_without_quotes(char *input, char *eof);
+#include "heredoc.h"
 
 char	*create_content(char *eof, char *ret, char *input)
 {

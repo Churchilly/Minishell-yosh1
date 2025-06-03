@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 01:02:35 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/03 14:39:43 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:41:07 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 #include <unistd.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-
-int		ft_strlen(char const *s);
-void	**gc_get_section(t_section section);
-void	*pointer_storage(int type, void *ptr);
+#include "str.h"
+#include "minishell.h"
 
 void	gc_clean_list(t_section section_name)
 {

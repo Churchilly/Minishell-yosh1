@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dollar_in_dquote_env.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 03:56:25 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/01 21:28:36 by obastug          ###   ########.fr       */
+/*   Updated: 2025/06/03 15:04:49 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,7 @@
 #include "garbage_collector.h"
 #include <stdlib.h>
 #include "str.h"
-
-int	is_token(char c);
-int	is_sequence(char c);
-int	is_space(char c);
-int	is_env_char(char c);
+#include "lexer.h"
 
 static char	*get_dollar(char *token_value)
 {

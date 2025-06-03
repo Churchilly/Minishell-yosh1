@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment_functions.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 23:29:21 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/01 18:18:22 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:20:41 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 #include "str.h"
 #include <stdlib.h>
 #include <unistd.h>
-
-void	*pointer_storage(int type, void *ptr);
+#include "minishell.h"
 
 t_node	*find_variable(char *key)
 {

@@ -6,18 +6,13 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 21:54:57 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/18 20:49:28 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:42:48 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include <unistd.h>
-
-int		is_token(char c);
-int		is_sequence(char c);
-int		is_space(char c);
-int		ft_strcmp(char *str1, char *str2);
-char	*token_dup(const char *s, int size);
+#include "str.h"
 
 static void	pass_sequence(char token, char	**str)
 {

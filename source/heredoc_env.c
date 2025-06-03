@@ -6,17 +6,15 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 06:39:01 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/30 19:56:36 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:41:51 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "garbage_collector.h"
 #include "environment.h"
 #include "str.h"
-
-int		is_env_char(char c);
-int		count_variables(char *str);
-char	*crop_variable(char *str);
+#include <stdlib.h>
+#include "heredoc.h"
 
 void	insert_heredoc_variable(char *input, char **buffer, int i)
 {

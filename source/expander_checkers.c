@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   expander_checkers.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 21:53:26 by obastug           #+#    #+#             */
-/*   Updated: 2025/06/01 21:54:12 by obastug          ###   ########.fr       */
+/*   Updated: 2025/06/03 15:02:30 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-
-int	ft_isspace(char c);
+#include "str.h"
 
 int	have_heredoc(t_token *tokens)
 {

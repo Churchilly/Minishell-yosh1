@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 01:43:36 by obastug           #+#    #+#             */
-/*   Updated: 2025/06/01 21:26:29 by obastug          ###   ########.fr       */
+/*   Updated: 2025/06/03 15:15:30 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,33 +19,8 @@
 #include "environment.h"
 #include <stdlib.h>
 #include <fcntl.h>
-
-void	execute_pipe(t_astnode *node);
-void	execute_redirection(t_astnode *node);
-void	execute_command(t_astnode *node);
-void	update_last_pipe(int status);
-void	*pointer_storage(int type, void *ptr);
-int		setup_child_signals(void);
-int		is_builtin(char *command);
-
-static int	safe_fork(void)
-{
-	t_garbage_collector	*gc;
-	pid_t				pid;
-
-	pid = fork();
-	if (pid == -1)
-	{
-		printf("fork() failed: %d.\n", errno);
-		exit(1);
-	}
-	gc = pointer_storage(COLLECTOR, NULL);
-	if (pid == 0)
-	{
-		gc->in_fork = 1;
-	}
-	return (pid);
-}
+#include "builtins.h"
+#include "minishell.h"
 
 static int	execute_valid_tree(void (*execute_func)(t_astnode *),
 		t_astnode *node)

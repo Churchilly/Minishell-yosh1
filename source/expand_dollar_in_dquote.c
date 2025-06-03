@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dollar_in_dquote.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 05:48:02 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/01 21:29:14 by obastug          ###   ########.fr       */
+/*   Updated: 2025/06/03 15:04:39 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,8 @@
 #include "environment.h"
 #include "garbage_collector.h"
 #include <stdio.h>
-
-int		is_token(char c);
-int		is_sequence(char c);
-int		is_space(char c);
-void	pass_env_var(char **token_val, char ***env_vars);
-int		get_env_vars(char *token_value, char **env_vars);
-
-char	*expand_quotes(char *token_value);
+#include "lexer.h"
+#include "expander.h"
 
 static int	count_dollars_in_dquotes(const char *str)
 {

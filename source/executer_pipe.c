@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_pipe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 21:14:31 by obastug           #+#    #+#             */
-/*   Updated: 2025/06/01 21:23:34 by obastug          ###   ########.fr       */
+/*   Updated: 2025/06/03 15:17:33 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <errno.h>
-
-int		safe_fork(void);
-void	execute_command(t_astnode *node);
-void	execute_pipe(t_astnode *node);
+#include "minishell.h"
+#include "executer.h"
 
 void	pipe_and_run(int *pipedes, t_astnode *node, int direction)
 {
