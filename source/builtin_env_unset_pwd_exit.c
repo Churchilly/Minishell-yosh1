@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env_unset_pwd_exit.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 02:19:21 by obastug           #+#    #+#             */
-/*   Updated: 2025/06/03 15:21:45 by obastug          ###   ########.fr       */
+/*   Updated: 2025/06/03 16:40:26 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,4 @@ int	builtin_pwd(void)
 	return (0);
 }
 
-void	builtin_exit(void)
-{
-	t_environment	*env;
 
-	env = (t_environment *)pointer_storage(ENVIRONMENT, NULL);
-	exit(env->last_pipe);
-}

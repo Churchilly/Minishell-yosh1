@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 02:19:21 by obastug           #+#    #+#             */
-/*   Updated: 2025/05/31 20:21:13 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 16:39:48 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,6 @@ int	execute_builtin(char *command, int argc, char **args)
 	else if (ft_strcmp(command, "env"))
 		status = builtin_printenv(args);
 	else if (ft_strcmp(command, "exit"))
-		builtin_exit();
+		builtin_exit(args);
 	return (status);
 }
