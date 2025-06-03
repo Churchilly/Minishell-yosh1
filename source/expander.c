@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42kocaeli.com.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 05:04:51 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/02 16:51:05 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/01 21:54:54 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	print_tokens(t_token *tokens); //for testing purposes
 char	*expand_dollar_in_dquote(char *token_value);
 t_token	*expand_dollar(t_token *tokens);
 char	*expand_quotes(char *token_value);
-int		expand_heredoc(t_token *tokens);
+t_token	*expand_heredoc(t_token *tokens);
 void	expand_tilde(t_token *tokens);
 int		have_heredoc(t_token *tokens);
 int		dollar_in_tokens(t_token *tokens);
@@ -45,12 +45,11 @@ static void	quotes(t_token **tokens)
 	}
 }
 
-int	expander(t_token **tokens)
+void	expander(t_token **tokens)
 {
 	if (have_heredoc(*tokens))
 	{
-		if (expand_heredoc(*tokens))
-			return (1);
+		expand_heredoc(*tokens);
 	}
 	if (dollar_in_tokens(*tokens))
 	{
@@ -61,5 +60,4 @@ int	expander(t_token **tokens)
 		expand_tilde(*tokens);
 	}
 	quotes(tokens);
-	return (0);
 }

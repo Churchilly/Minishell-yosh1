@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 18:57:30 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/02 17:04:43 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/01 16:28:00 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,21 @@
 static void	print_cd_error(int status, char *dir)
 {
 	if (status == ENOENT)
-		printf("yosh1: cd: %s: No such file or directory\n", dir);
+		printf("yosh: cd: %s: No such file or directory\n", dir);
 	else if (status == ENOTDIR)
-		printf("yosh1: cd: %s: Not a directory\n", dir);
+		printf("yosh: cd: %s: Not a directory\n", dir);
 	else if (status == EACCES)
-		printf("yosh1: cd: %s: Permission denied\n", dir);
-	else if (status == EISDIR)
-		printf("yosh1: cd: %s: Is a directory\n", dir);
+		printf("yosh: cd: %s: Not a directory\n", dir);
 	else if (status == ENAMETOOLONG)
-		printf("yosh1: cd: %s: File name too long\n", dir);
+		printf("yosh: cd: %s: File name too long\n", dir);
 	else if (status == ELOOP)
-		printf("yosh1: cd: %s: Too many levels of symbolic links\n", dir);
+		printf("yosh: cd: %s: Too many levels of symbolic links\n", dir);
 	else if (status == EIO)
-		printf("yosh1: cd: %s: Input/output error\n", dir);
+		printf("yosh: cd: %s: Input/output error\n", dir);
 	else if (status == ENOMEM)
-		printf("yosh1: cd: %s: Cannot allocate memory\n", dir);
+		printf("yosh: cd: %s: Cannot allocate memory\n", dir);
 	else if (status == EFAULT)
-		printf("yosh1: cd: %s: Bad address\n", dir);
+		printf("yosh: cd: %s: Bad address\n", dir);
 	else
 		printf("yosh: cd: %s: %d\n", dir, errno);
 }

@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:41:30 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/02 17:08:05 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:21:19 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int			safe_fork(void);
 void		execute_command(t_astnode *node);
 static void	find_redirection_type(t_astnode *node, int red_to, int red_from);
 char		*search_executable_path(char *file_path);
-void		safe_open(int *fd, int *red, const char *__file, int __oflag);
 
 void	create_dup(int red_to, int red_from)
 {
@@ -58,6 +57,18 @@ static void	process_redirection(t_astnode *node, int red_to, int red_from)
 			waitpid(pid, NULL, 0);
 		}
 	}
+}
+
+static void	safe_open(int *fd, int *red, const char *__file, int __oflag)
+{
+	(*fd) = open(__file, __oflag, 0666);
+	if ((*fd) == -1)
+	{
+		printf("open() failed: %d.\n", errno);
+		exit(1);
+	}
+	if ((*red) == STDIN_FILENO || (*red) == STDOUT_FILENO)
+		(*red) = (*fd);
 }
 
 static void	find_redirection_type(t_astnode *node, int red_to, int red_from)

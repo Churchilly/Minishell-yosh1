@@ -15,8 +15,8 @@
 
 char	*ft_strdup(const char *str, t_section section_name)
 {
-	int		len;
-	int		i;
+	int	len;
+	int	i;
 	char	*ret;
 
 	if (!str)
@@ -28,7 +28,7 @@ char	*ft_strdup(const char *str, t_section section_name)
 		len++;
 	ret = gc_calloc(sizeof(char) * (len + 1), section_name);
 	i = -1;
-	while (++i < len)
+	while(++i < len)
 		ret[i] = str[i];
 	return (ret);
 }

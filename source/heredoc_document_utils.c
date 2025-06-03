@@ -41,7 +41,7 @@ int	strcmp_without_quotes(char *input, char *eof)
 		if (*eof == '\"' || *eof == '\'')
 		{
 			eof++;
-			continue ;
+			continue;
 		}
 		if (*eof != *input)
 			return (0);

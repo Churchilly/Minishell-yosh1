@@ -17,7 +17,7 @@ int	is_env_char(char c);
 
 int	count_variables(char *str)
 {
-	int	ret;
+	int ret;
 
 	ret = 0;
 	while (*str)
@@ -34,7 +34,7 @@ char	*crop_variable(char *str)
 	char	*cropped;
 	char	*ret;
 	int		size;
-
+	
 	size = 0;
 	while (is_env_char(str[size]))
 		size++;

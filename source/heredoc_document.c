@@ -6,11 +6,15 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 08:35:50 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/02 16:57:32 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:41:04 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+extern volatile int g_signal;
+
 #include <readline/readline.h>
+#include "lexer.h"
+#include "environment.h"
 #include "str.h"
 #include <stdlib.h>
 #include <unistd.h>
@@ -19,9 +23,10 @@
 char	*ft_strjoin_nl(char const *s1, char const *s2);
 char	*expand_variables(char *input);
 void	setup_heredoc_child_signals(void);
-int		is_quoted(char *str);
-int		have_dollar(char *str);
-int		strcmp_without_quotes(char *input, char *eof);
+int	is_quoted(char *str);
+int	have_dollar(char *str);
+int	strcmp_without_quotes(char *input, char *eof);
+
 
 char	*create_content(char *eof, char *ret, char *input)
 {
@@ -42,14 +47,13 @@ static char	*get_document_content(char *eof)
 	while (42)
 	{
 		input = readline("> ");
+		if (g_signal)
+			exit(1);
 		if (!input || strcmp_without_quotes(input, eof))
 		{
 			if (!input)
-			{
 				printf("yosh1: warning: here-document delimited by end-of-file\
- (wanted `%s')\n", eof);
-				exit(127);
-			}
+ (wanted `%s')", eof);
 			break ;
 		}
 		ret = create_content(eof, ret, input);
@@ -62,7 +66,7 @@ static char	*create_unique_path(char *path)
 	int		i;
 	char	*numeric;
 	char	*full;
-
+	
 	i = 1;
 	while (42)
 	{

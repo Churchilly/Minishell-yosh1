@@ -11,12 +11,13 @@
 /* ************************************************************************** */
 
 #include "lexer.h"
+#include <stddef.h>
 #include <unistd.h>
 
-int		is_token(char c);
-int		is_sequence(char c);
-int		is_space(char c);
-int		ft_strcmp(char *str1, char *str2);
+int	is_token(char c);
+int	is_sequence(char c);
+int	is_space(char c);
+int	ft_strcmp(char *str1, char *str2);
 char	*token_dup(const char *s, int size);
 
 static void	pass_sequence(char token, char	**str)
@@ -31,17 +32,17 @@ static void	pass_sequence(char token, char	**str)
 	}
 }
 
-static void	pass_token(char token, char **str)
+static void pass_token(char token, char **str)
 {
 	if (token == '>' || token == '<')
 	{
-		if ((*((*str) + 1)) == token)
+		if ((*((*str)+1)) == token)
 			(*str)++;
 	}
 	else if (token == '$')
 	{
-		while (*((*str) + 1) && *((*str) + 1) != ' '
-			&& !is_token(*((*str) + 1)) && !is_sequence(*((*str) + 1)))
+		while (*((*str) + 1) && *((*str) + 1) != ' ' &&
+			!is_token(*((*str) + 1)) && !is_sequence(*((*str) + 1))) 
 			(*str)++;
 	}
 }
@@ -50,7 +51,7 @@ int	count_tokens(char *str)
 {
 	int	is_compound;
 	int	count;
-
+	
 	count = 0;
 	is_compound = 0;
 	while (*str)
@@ -104,7 +105,7 @@ void	split_tokens(char **tokens, char **str)
 void	insert_types(t_token *tokens)
 {
 	int	i;
-
+	
 	i = 0;
 	while (tokens[i].value)
 	{

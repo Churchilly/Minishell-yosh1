@@ -13,16 +13,17 @@
 #include "garbage_collector.h"
 #include "environment.h"
 #include "str.h"
+#include <stdlib.h>
 
-int		is_env_char(char c);
-int		count_variables(char *str);
+int	is_env_char(char c);
+int	count_variables(char *str);
 char	*crop_variable(char *str);
 
 void	insert_heredoc_variable(char *input, char **buffer, int i)
 {
 	char	*key;
 	char	*var;
-
+	
 	key = crop_variable(input);
 	var = get_variable(key);
 	buffer[i] = var;
@@ -33,10 +34,9 @@ char	**get_variables(char *input)
 	char	**buffer;
 	int		size;
 	int		i;
-
+	
 	size = count_variables(input);
-	buffer = (char **)gc_calloc(sizeof(char *)
-			* (size + 1), SECTION_LA);
+	buffer = (char **)gc_calloc(sizeof(char *) * (size + 1), SECTION_LA);
 	i = -1;
 	while (*input)
 	{
@@ -80,7 +80,7 @@ int	get_new_len(char *input, char **buffer)
 void	insert_variables(char *input, char **buffer, char *new)
 {
 	int	i;
-	int	j;
+	int j;
 
 	i = 0;
 	while (*input)
@@ -109,7 +109,7 @@ char	*expand_variables(char *input)
 	char	**buffer;
 	int		len;
 	char	*ret;
-
+	
 	buffer = get_variables(input);
 	len = get_new_len(input, buffer);
 	ret = gc_calloc((sizeof(char) * len) + 1, SECTION_LA);
