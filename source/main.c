@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
+/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:01:22 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/03 15:44:52 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 20:17:02 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ static t_token	*get_tokens(t_environment *env)
 		write(1, "exit\n", 5);
 		exit(env->last_pipe);
 	}
+	if (g_signal)
+		return (NULL);
 	gc_add(input, SECTION_LA);
 	if (check_sequence_complete(input))
 		exit(1);
@@ -69,6 +71,8 @@ int	main(void)
 		gc_clean_list(SECTION_LA);
 		setup_parent_signals();
 		tokens = get_tokens(&env);
+		if (!tokens)
+			continue;
 		if (expander(&tokens))
 			continue ;
 		ast = create_node(tokens);
