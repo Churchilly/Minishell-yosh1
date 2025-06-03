@@ -6,33 +6,23 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 00:12:15 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/01 23:03:19 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:54:12 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-extern volatile int g_signal;
 
 #include <signal.h>
 #include <stddef.h>
 #include <unistd.h>
 #include <readline/readline.h>
 #include "environment.h"
-/*
-   The termios structure
-       Many of the functions described here have a termios_p argument that is a pointer to a
-       termios structure.  This structure contains at least the following members:
 
-           tcflag_t c_iflag;       input modes 
-           tcflag_t c_oflag;       output modes 
-           tcflag_t c_cflag;       control modes 
-           tcflag_t c_lflag;       local modes 
-           cc_t     c_cc[NCCS];    special characters 
-*/
 void	*pointer_storage(int type, void *ptr);
+
+extern volatile int	g_signal;
 
 static void	handle_sigint(int sig)
 {
-	t_environment *env;
+	t_environment	*env;
 
 	g_signal = sig;
 	env = pointer_storage(ENVIRONMENT, NULL);
@@ -46,7 +36,7 @@ static void	handle_sigint(int sig)
 int	setup_parent_signals(void)
 {
 	struct sigaction	sa;
-	
+
 	sa.sa_handler = handle_sigint;
 	sa.sa_flags = SA_RESTART;
 	if (sigemptyset(&sa.sa_mask) == -1 || sigaction(SIGINT, &sa, NULL) == -1)
@@ -58,14 +48,13 @@ int	setup_parent_signals(void)
 	return (0);
 }
 
-
 void	handle_child_sigint(int sig)
 {
 	g_signal = sig;
 	write(1, "\n", 1);
 }
 
-int setup_child_signals(void)
+int	setup_child_signals(void)
 {
 	struct sigaction	sa;
 

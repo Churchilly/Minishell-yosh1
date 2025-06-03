@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:56:21 by obastug           #+#    #+#             */
-/*   Updated: 2025/04/29 14:00:52 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:42:43 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 #include "parser.h"
 #include <stdio.h>
 
-
-//when it sees a pipe, defines current
-//left and right nodes defined as follows
 t_astnode	*divide_pipe(t_astnode *node, int i)
 {
 	node->left = create_node(node->tokens);
@@ -36,7 +33,7 @@ t_astnode	*parse_pipe(t_astnode *root)
 	if (!root)
 		return (NULL);
 	while (root->type == UNINITIALIZED && root->tokens[i].value
-			&& root->tokens[i].type != TOKEN_EON)
+		&& root->tokens[i].type != TOKEN_EON)
 	{
 		if (root->tokens[i].type == TOKEN_PIPE)
 			breakpoint = i;

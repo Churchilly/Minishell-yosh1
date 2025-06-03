@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 23:04:04 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/04/29 18:38:24 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:37:52 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 char	*ft_strdup(const char *str, t_section section_name)
 {
-	int	len;
-	int	i;
+	int		len;
+	int		i;
 	char	*ret;
 
 	if (!str)
@@ -28,7 +28,7 @@ char	*ft_strdup(const char *str, t_section section_name)
 		len++;
 	ret = gc_calloc(sizeof(char) * (len + 1), section_name);
 	i = -1;
-	while(++i < len)
+	while (++i < len)
 		ret[i] = str[i];
 	return (ret);
 }

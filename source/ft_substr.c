@@ -6,12 +6,13 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 12:27:19 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/26 12:31:07 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:39:16 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "garbage_collector.h"
+
 char	*ft_strdup(const char *str, t_section section_name);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 int		ft_strlen(char const *s);

@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 22:44:07 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/05/28 16:08:35 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:52:18 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 
 void	*pointer_storage(int type, void *ptr);
 
-int	safe_fork()
+int	safe_fork(void)
 {
 	t_garbage_collector	*gc;
 	pid_t				pid;
-	
+
 	pid = fork();
 	if (pid == -1)
 	{

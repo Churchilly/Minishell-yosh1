@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:53:09 by obastug           #+#    #+#             */
-/*   Updated: 2025/04/29 19:02:48 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:37:12 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	**ft_split(char const *s, char c, t_section section)
 	if (!s)
 		exit(1);
 	split = (char **)gc_calloc(sizeof(char *) * (ft_count_words(s, c) + 1),
-		section);
+			section);
 	ft_split_words(split, s, c, section);
 	return (split);
 }

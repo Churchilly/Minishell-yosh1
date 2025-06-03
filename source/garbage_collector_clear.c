@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 01:02:35 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/01 18:25:18 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:39:43 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void	gc_cleanup(void)
 	t_garbage_collector	*gc;
 
 	gc = pointer_storage(COLLECTOR, NULL);
-	
 	if (!gc->in_fork)
 	{
 		gc_clean_paths();

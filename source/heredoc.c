@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 04:31:33 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/02 17:00:34 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:18:52 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ char	*new_document(char *eof);
 void	*pointer_storage(int type, void *ptr);
 int		safe_fork(void);
 int		count_heredocs(t_token *tokens);
+void	read_from_pipe(t_token *tokens, int pipe_fd[2]);
 
 static char	**create_docs(t_token *tokens)
 {
@@ -50,28 +51,6 @@ static char	**create_docs(t_token *tokens)
 	return (paths);
 }
 
-char	*reader(int fd)
-{
-	char	*buffer;
-	char	reader_buffer[256];
-	int		readen;
-
-	buffer = ft_strdup("\0", SECTION_LA);
-	readen = 1;
-	while (readen)
-	{
-		readen = read(fd, reader_buffer, 256);
-		if (readen == -1)
-		{
-			printf("read() failed: %d\n", errno);
-			exit(1);
-		}
-		reader_buffer[readen] = '\0';
-		buffer = ft_strjoin(buffer, reader_buffer, SECTION_LA);
-	}
-	return (buffer);
-}
-
 static void	child_process(t_token *tokens, int pipe_fd[2])
 {
 	char	**buffer;
@@ -91,9 +70,8 @@ static void	child_process(t_token *tokens, int pipe_fd[2])
 
 static int	parent_process(t_token *tokens, int pipe_fd[2], pid_t pid)
 {
-	char	*pipe_buffer;
-	char	**splitted;
 	int		status;
+	int		sig;
 
 	close(pipe_fd[1]);
 	status = 0;
@@ -109,22 +87,10 @@ static int	parent_process(t_token *tokens, int pipe_fd[2], pid_t pid)
 	}
 	if (WIFSIGNALED(status))
 	{
-		int sig = WTERMSIG(status);
+		sig = WTERMSIG(status);
 		return (update_last_pipe(128 + sig), 1);
 	}
-	pipe_buffer = reader(pipe_fd[0]);
-	splitted = ft_split(pipe_buffer, '\n', SECTION_LA);
-	while (*splitted)
-	{
-		while (tokens->type != TOKEN_DLESS)
-			tokens++;
-		tokens->type = TOKEN_LESS;
-		tokens->value = ft_strdup("<", SECTION_LA);
-		tokens++;
-		tokens->value = *splitted;
-		gc_add(tokens->value, SECTION_PATHS);
-		splitted++;
-	}
+	read_from_pipe(tokens, pipe_fd);
 	return (0);
 }
 

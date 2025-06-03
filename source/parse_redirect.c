@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 13:59:22 by obastug           #+#    #+#             */
-/*   Updated: 2025/04/29 14:00:51 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:43:51 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
-//when a redirection comes by
 t_astnode	*redirect(t_astnode *node, int i)
 {
 	node->left = create_node(node->tokens);
@@ -37,17 +35,17 @@ t_astnode	*parse_redirect(t_astnode *root)
 	if (!root)
 		return (NULL);
 	while (root->type == UNINITIALIZED && root->tokens[i].type != TOKEN_EON
-			&& root->tokens[i].value)
+		&& root->tokens[i].value)
 	{
 		if (root->tokens[i].type == TOKEN_DGREAT
-				|| root->tokens[i].type == TOKEN_LESS
-				|| root->tokens[i].type == TOKEN_GREAT)
+			|| root->tokens[i].type == TOKEN_LESS
+			|| root->tokens[i].type == TOKEN_GREAT)
 			breakpoint = i;
 		i++;
 	}
 	if (root->type == UNINITIALIZED && breakpoint != -1)
 		redirect(root, breakpoint);
 	parse_redirect(root->left);
-	parse_redirect(root->right);	
+	parse_redirect(root->right);
 	return (root);
 }
