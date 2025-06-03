@@ -6,7 +6,7 @@
 /*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 21:14:31 by obastug           #+#    #+#             */
-/*   Updated: 2025/06/03 18:17:32 by obastug          ###   ########.fr       */
+/*   Updated: 2025/06/03 18:22:04 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	pipe_and_run(int *pipedes, t_astnode *node, int direction)
 	{
 		if (node->right->type == NODE_PIPE)
 			execute_pipe(node->right);
-		else if (node->left->type == NODE_REDIRECT)
+		else if (node->right->type == NODE_REDIRECT)
 			execute_redirection(node->right);
 		else
 			execute_command(node->right);
