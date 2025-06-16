@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 18:57:30 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/03 15:38:43 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:43:25 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	builtin_cd(int argc, char **args)
 	else if (argc == 2)
 		target_dir = args[1];
 	else if (argc != 1)
-		return (printf("yosh1: cd: too many arguments\n"));
+		return (printf("yosh1: cd: too many arguments\n"), 1);
 	old_dir = ft_strdup(get_cwd(), SECTION_LA);
 	status = chdir(target_dir);
 	if (status == -1)

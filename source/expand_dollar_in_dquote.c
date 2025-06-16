@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dollar_in_dquote.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 05:48:02 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/03 15:04:39 by obastug          ###   ########.fr       */
+/*   Updated: 2025/06/16 16:31:40 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ static void	get_new_size(char *token_val, char **env_vars, int *len)
 
 	*len = 0;
 	dquote = 0;
-	i = -1;
 	while (*token_val)
 	{
 		if (dquote && *token_val == '$')
 		{
+			i = -1;
 			while ((*env_vars)[++i])
 			{
 				(*len)++;
@@ -70,11 +70,11 @@ static void	place_env_vars(char *token_val, char **env_vars, char *expanded)
 	int	i;
 
 	dquote = 0;
-	i = -1;
 	while (*token_val)
 	{
 		if (dquote && *token_val == '$')
 		{
+			i = -1;
 			while ((*env_vars)[++i])
 			{
 				*expanded = (*env_vars)[i];
@@ -109,5 +109,6 @@ char	*expand_dollar_in_dquote(char *token_value)
 	place_env_vars(token_value, env_vars, tmp);
 	tmp[len] = '\0';
 	ret = expand_quotes(tmp);
+	free(tmp);
 	return (ret);
 }

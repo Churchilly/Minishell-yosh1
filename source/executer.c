@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 01:43:36 by obastug           #+#    #+#             */
-/*   Updated: 2025/06/03 15:15:30 by obastug          ###   ########.fr       */
+/*   Updated: 2025/06/16 15:46:46 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ static int	execute_valid_tree(void (*execute_func)(t_astnode *),
 	return (0);
 }
 
-// returns 0 on success
-// returns 1 on error
 void	executer(t_astnode *root)
 {
 	setup_child_signals();

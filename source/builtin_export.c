@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obastug <obastug@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 19:01:29 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/03 15:21:40 by obastug          ###   ########.fr       */
+/*   Updated: 2025/06/16 17:11:00 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	add_export(char	*args, char *equal_pos)
 	return (0);
 }
 
-void	builtin_export(char **args)
+int	builtin_export(char **args)
 {
 	int		i;
 	int		status;
@@ -86,7 +86,7 @@ void	builtin_export(char **args)
 	if (!args[1])
 	{
 		print_all_variables();
-		return ;
+		return (0);
 	}
 	i = 1;
 	while (args[i])
@@ -94,7 +94,9 @@ void	builtin_export(char **args)
 		equal_pos = ft_strchr(args[i], '=');
 		status = add_export(args[i], equal_pos);
 		if (status)
-			printf("yosh1: export: `%s': not a valid identifier\n", args[i]);
+			return (printf("yosh1: export: `%s': not a valid identifier\n",
+					args[i]), 1);
 		i++;
 	}
+	return (0);
 }

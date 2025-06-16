@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:56:04 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/03 15:28:41 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:58:21 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	check_sequence_complete(char *input)
 	dquote = 0;
 	while (*input)
 	{
-		if (*input == '\\')
+		if (!quote && *input == '\\')
 			return (1);
-		else if (*input == ';')
+		else if (!quote && !dquote && *input == ';')
 			return (1);
 		else if (*input == '\"' && !(quote))
 			dquote = !(dquote);

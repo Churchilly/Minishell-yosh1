@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 22:22:10 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/03 15:54:02 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/16 15:26:07 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 #include <fcntl.h>
 #include "environment.h"
 #include "minishell.h"
-
-extern volatile int	g_signal;
 
 void	setup_heredoc_child_signals(void)
 {

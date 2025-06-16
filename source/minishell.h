@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:36:05 by obastug           #+#    #+#             */
-/*   Updated: 2025/06/03 15:52:23 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:12:16 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,5 @@ void	safe_open(int *fd, int *red, const char *__file, int __oflag);
 void	*gc_calloc(size_t size, t_section section_name);
 int		check_syntax(t_token *tokens);
 int		check_sequence_complete(char *input);
+
 #endif
