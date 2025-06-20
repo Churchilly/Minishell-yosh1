@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 01:02:35 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/03 15:41:07 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/20 14:26:04 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	gc_clean_paths(void)
 			write(2, "Failed to delete temp file\n", 28);
 			exit (1);
 		}
+		free(curr);
 		curr = next;
 	}
 	*section = NULL;
