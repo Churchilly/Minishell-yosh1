@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 08:35:50 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/16 15:28:17 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/20 14:04:21 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static char	*get_document_content(char *eof)
 			{
 				printf("yosh1: warning: here-document delimited by end-of-file\
  (wanted `%s')\n", eof);
-				exit(127);
 			}
 			break ;
 		}

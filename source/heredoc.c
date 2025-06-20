@@ -6,7 +6,7 @@
 /*   By: yusudemi <yusudemi@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 04:31:33 by yusudemi          #+#    #+#             */
-/*   Updated: 2025/06/20 01:21:49 by yusudemi         ###   ########.fr       */
+/*   Updated: 2025/06/20 14:01:49 by yusudemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,8 @@ static int	parent_process(t_token *tokens, int pipe_fd[2], pid_t pid)
 	if (WIFSIGNALED(status))
 	{
 		sig = WTERMSIG(status);
-		return (update_last_pipe(128 + sig), 1);
+		if (sig == 2)
+			return (update_last_pipe(128 + sig), 1);
 	}
 	read_from_pipe(tokens, pipe_fd);
 	return (0);
